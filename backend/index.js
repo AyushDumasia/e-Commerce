@@ -15,9 +15,8 @@ const itemRoutes = require('./routes/item.routes.js')
 
 dotenv.config()
 const PORT = process.env.PORT || 3000
-const clientId =
-    '792889636083-d73apctca50phmsutvgoc5vqq3bmalgr.apps.googleusercontent.com'
-const clientSecret = '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'
+const clientId = process.env.CLIENT_ID
+const clientSecret = process.env.CLIENT_SECRET
 
 const sessionOption = {
     secret: '123ayush5871541544448918978818dumasia105459487',
