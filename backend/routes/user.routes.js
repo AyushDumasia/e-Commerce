@@ -6,8 +6,8 @@ const passport = require('passport')
 const User = require('../models/user.models.js')
 const {signUp, logIn} = require('../controllers/user.controller.js')
 
-router.post('/sign-up', signUp)
+router.post('/signup', signUp)
 
-router.post('/log-in', logIn)
+router.post('/login', logIn)
 
 module.exports = router

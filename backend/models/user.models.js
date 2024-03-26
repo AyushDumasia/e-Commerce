@@ -1,31 +1,33 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const passportLocalMongoose = require('passport-local-mongoose')
+const Item = require('../models/item.models.js')
 
 const userSchema = new Schema(
     {
+        googleId: {
+            type: String,
+        },
+        username: {
+            type: String,
+        },
         email: {
             type: String,
             required: [true, 'Please add email contact email'],
             unique: [true, 'Email already Register'],
         },
-        phone: {
-            type: String,
-            required: [true, 'Please add the Phone email'],
-            unique: [true, 'Phone Number already Register'],
-            validate: {
-                validator: function (value) {
-                    return value && value.length === 10
-                },
-                message: 'Phone number must be exactly 10 characters long',
+        cart: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'item',
             },
-        },
+        ],
     },
     {
         timestamps: true,
     },
 )
 
-userSchema.plugin(passportLocalMongoose)
+// userSchema.plugin(passportLocalMongoose)
 
 module.exports = mongoose.model('User', userSchema)

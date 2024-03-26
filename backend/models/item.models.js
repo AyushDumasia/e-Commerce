@@ -3,11 +3,11 @@ const Schema = mongoose.Schema
 
 const itemSchema = new Schema(
     {
-        posted_By: {
+        postedBy: {
             type: Schema.Types.ObjectId,
             ref: 'User',
         },
-        name: {
+        productName: {
             type: String,
             required: true,
         },
@@ -24,11 +24,10 @@ const itemSchema = new Schema(
         },
         images: {
             type: String,
-            required: true,
+            // required: true,
         },
         gender: {
             type: String,
-            required: true,
         },
     },
     {
