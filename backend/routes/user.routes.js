@@ -1,13 +1,10 @@
-const express = require('express')
-const mongoose = require('mongoose')
-const router = express.Router()
-const passport = require('passport')
+import express from 'express'
+import {logIn, signUp} from '../controllers/user.controller.js'
 
-const User = require('../models/user.models.js')
-const {signUp, logIn} = require('../controllers/user.controller.js')
+const router = express.Router()
 
 router.post('/signup', signUp)
 
 router.post('/login', logIn)
 
-module.exports = router
+export default router

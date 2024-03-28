@@ -1,15 +1,14 @@
-const express = require('express')
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
-function connectDB() {
+const connectDB = () => {
     mongoose
-        .connect(process.env.MONGODB_URL)
+        .connect('mongodb://127.0.0.1:27017/e-Commerce')
         .then(() => {
-            console.log('Connect with server')
+            console.log('Connect with Databases')
         })
         .catch((err) => {
-            console.log(err.message)
+            console.log('Error connecting with Database')
         })
 }
 
-module.exports = connectDB()
+export default connectDB
