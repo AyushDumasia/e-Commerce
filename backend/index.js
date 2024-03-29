@@ -10,13 +10,24 @@ import connectDB from './db/connectDB.js' //Database connection
 //Routes
 import userAuthRoutes from './routes/user.routes.js'
 import productRoutes from './routes/product.routes.js'
+import merchantRoutes from './routes/merchant.routes.js'
 
 const PORT = 3000
 const app = express()
 
 //Middlewares
 app.use(express.json())
-app.use(cors())
+const corsOptions = {
+    origin: function (origin, callback) {
+        // Allow requests from the specified origin or if it's undefined (e.g., same-origin)
+        callback(null, origin && origin.startsWith('http://localhost:5173'))
+    },
+    credentials: true, // Allow credentials
+}
+
+// Use CORS middleware with the defined options
+app.use(cors(corsOptions))
+
 app.use(cookieParser())
 
 app.use((req, res, next) => {
@@ -27,6 +38,7 @@ app.use((req, res, next) => {
 })
 
 app.use('/api/auth', userAuthRoutes)
+app.use('/api/merchant', merchantRoutes)
 app.use('/api/product', productRoutes)
 
 app.listen(PORT, () => {

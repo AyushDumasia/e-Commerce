@@ -20,7 +20,7 @@ export const signUp = async (req, res) => {
             password: newUser.password,
         })
     } catch (err) {
-        res.status(401).json({error: err.message}) // Send error message in the response
+        res.status(401).json({error: err.message})
     }
 }
 
@@ -47,12 +47,11 @@ export const logIn = async (req, res) => {
         // console.log("Req  :", req);
 
         res.cookie('userCookie', accessToken, {
-            expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
             httpOnly: true,
         })
-
+            .status(200)
+            .json({user, accessToken})
         // console.log(req.user);
-        res.status(200).json({status: 201, user, accessToken})
     } catch (error) {
         console.error('Login error:', error)
         res.status(500).json({message: 'Internal server error'})
