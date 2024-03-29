@@ -57,3 +57,46 @@ export const logIn = async (req, res) => {
         res.status(500).json({message: 'Internal server error'})
     }
 }
+
+export const getUserInfo = async (req, res) => {
+    try {
+        const user = req.user
+        if (!user) {
+            return res.status(404).json({message: 'User not found in request'})
+        }
+        const findUser = await User.findById(user.id)
+        if (!findUser) {
+            return res.status(404).json({message: 'User not found'})
+        }
+        res.status(200).json({
+            user: findUser,
+        })
+    } catch (error) {
+        console.error('Login error:', error)
+        res.status(500).json({message: 'Internal server error'})
+    }
+}
+
+export const updateUser = async (req, res) => {
+    try {
+        const user = req.user
+        const email = req.body.email
+        const password = req.body.password
+        const updateUser = await User.findByIdAndUpdate(
+            {_id: user.id},
+            {password: password, email: email},
+            {new: true},
+        )
+        if (!updateUser) {
+            return res.status(404).json({message: 'User not found'})
+        }
+
+        res.status(200).json({
+            message: 'User updated successfully',
+            user: updateUser,
+        })
+    } catch (error) {
+        console.error('Login error:', error)
+        res.status(500).json({message: 'Internal server error'})
+    }
+}
