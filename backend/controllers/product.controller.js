@@ -1,6 +1,7 @@
 import Product from '../models/product.schema.js'
 import User from '../models/user.schema.js'
 import Cart from '../models/cart.schema.js'
+import TempProduct from '../models/pendingProduct.schema.js'
 // import cloudinary from 'cloudinary'
 // import {v2 as cloudinary} from 'cloudinary'
 
@@ -37,7 +38,7 @@ export const createProduct = async (req, res) => {
         //     const result = await cloudinary.uploader.upload(file.path)
         //     uploadedImages.push(result.secure_url)
         // }
-        const newProduct = new Product({
+        const newProduct = new TempProduct({
             productName,
             category,
             description,

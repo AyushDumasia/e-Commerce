@@ -11,7 +11,7 @@ import connectDB from './db/connectDB.js' //Database connection
 import userAuthRoutes from './routes/user.routes.js'
 import productRoutes from './routes/product.routes.js'
 import merchantRoutes from './routes/merchant.routes.js'
-
+import adminRoutes from './routes/admin.routes.js'
 const PORT = 3000
 const app = express()
 
@@ -19,13 +19,11 @@ const app = express()
 app.use(express.json())
 const corsOptions = {
     origin: function (origin, callback) {
-        // Allow requests from the specified origin or if it's undefined (e.g., same-origin)
         callback(null, origin && origin.startsWith('http://localhost:5173'))
     },
     credentials: true, // Allow credentials
 }
 
-// Use CORS middleware with the defined options
 app.use(cors(corsOptions))
 
 app.use(cookieParser())
@@ -40,6 +38,7 @@ app.use((req, res, next) => {
 app.use('/api/auth', userAuthRoutes)
 app.use('/api/merchant', merchantRoutes)
 app.use('/api/product', productRoutes)
+app.use('/api/admin', adminRoutes)
 
 app.listen(PORT, () => {
     console.log(`App is listening on ${PORT}`)

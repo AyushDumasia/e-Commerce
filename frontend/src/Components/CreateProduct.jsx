@@ -23,6 +23,7 @@ function CreateProduct() {
             const response = await axios.post(
                 'http://localhost:3000/api/product/createProduct',
                 formData,
+                {withCredentials: true},
             )
             console.log(response)
         } catch (error) {
