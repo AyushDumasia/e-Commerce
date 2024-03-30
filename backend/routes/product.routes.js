@@ -6,7 +6,7 @@ import {
     fetchProduct,
     getCart,
     showProduct,
-    updateCart,
+    // updateCart,
 } from '../controllers/product.controller.js'
 import {validateMerchant} from '../middlewares/authMerchant.js'
 import {upload} from './../middlewares/multer.js'
@@ -32,9 +32,6 @@ router.post(
 
 //Add to Cart
 router.post('/addToCart/:id', validateToken, addCart)
-
-//Update Cart
-router.get('/updateCart/:id', validateToken, updateCart)
 
 //Get Cart
 router.get('/cart', validateToken, getCart)
