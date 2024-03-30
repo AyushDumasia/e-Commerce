@@ -1,5 +1,4 @@
 import express from 'express'
-import asyncHandler from 'async-handler'
 import validateToken from '../middlewares/validateUser.js'
 import {
     addCart,
@@ -7,15 +6,35 @@ import {
     fetchProduct,
     getCart,
     showProduct,
+    updateCart,
 } from '../controllers/product.controller.js'
 import {validateMerchant} from '../middlewares/authMerchant.js'
+import {upload} from './../middlewares/multer.js'
 const router = express.Router()
 
 //Create Product
-router.post('/createProduct', validateToken, validateMerchant, createProduct)
+router.post(
+    '/createProduct',
+    validateToken,
+    // validateMerchant,
+    upload.fields([
+        {
+            name: 'coverImage',
+            maxCount: 1,
+        },
+        {
+            name: 'imageUrls',
+            maxCount: 5,
+        },
+    ]),
+    createProduct,
+)
 
 //Add to Cart
 router.post('/addToCart/:id', validateToken, addCart)
+
+//Update Cart
+router.get('/updateCart/:id', validateToken, updateCart)
 
 //Get Cart
 router.get('/cart', validateToken, getCart)
