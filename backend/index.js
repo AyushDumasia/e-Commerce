@@ -1,10 +1,7 @@
 import express from 'express'
-import mongoose from 'mongoose'
-import session from 'express-session'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
-import jwt from 'jsonwebtoken'
-import bcrypt from 'bcryptjs'
+import dotenv from 'dotenv'
 import connectDB from './db/connectDB.js' //Database connection
 
 //Routes
@@ -12,21 +9,29 @@ import userAuthRoutes from './routes/user.routes.js'
 import productRoutes from './routes/product.routes.js'
 import merchantRoutes from './routes/merchant.routes.js'
 import adminRoutes from './routes/admin.routes.js'
-const PORT = 3000
+const PORT = process.env.PORT || 3000
 const app = express()
 
 //Middlewares
-app.use(express.json())
+dotenv.config({
+    path: './.env',
+})
+app.use(express.urlencoded({extended: true, limit: '16kb'}))
+app.use(express.static('public'))
+app.use(express.json({limit: '16kb'}))
+app.use(cookieParser())
+
+//Cors Configuration
 const corsOptions = {
     origin: function (origin, callback) {
-        callback(null, origin && origin.startsWith('http://localhost:5173'))
+        callback(
+            null,
+            (origin && origin.startsWith(process.env.CORS_ORIGIN)) || '*',
+        )
     },
-    credentials: true, // Allow credentials
+    credentials: true,
 }
-
 app.use(cors(corsOptions))
-
-app.use(cookieParser())
 
 app.use((req, res, next) => {
     if (req.path !== '/favicon.ico') {

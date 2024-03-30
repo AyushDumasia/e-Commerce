@@ -1,6 +1,9 @@
 import React, {useState} from 'react'
 import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
+import Input from './Input/Input'
+import Button from './Button/Button'
+import Password from './Password/Password'
 
 function SignUp() {
     const navigate = useNavigate()
@@ -11,7 +14,7 @@ function SignUp() {
         gender: '',
         password: '',
     })
-    const handleChange = (e) => {
+    const handleData = (e) => {
         const {name, value} = e.target
         setFormData((prevData) => ({
             ...prevData,
@@ -34,85 +37,80 @@ function SignUp() {
     }
 
     return (
-        <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-            <h2 className="text-2xl font-semibold text-center mb-4">Sign Up</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                    <label htmlFor="username" className="block">
-                        Username
-                    </label>
-                    <input
-                        type="text"
-                        placeholder="Enter Your Username"
-                        onChange={handleChange}
-                        name="username"
-                        id="username"
+        <div className="mt-[100px] flex justify-center items-center">
+            <div className="flex flex-col justify-center items-start w-[450px] bg-white p-8 rounded-lg">
+                <h1 className="font-bold text-3xl mb-3">Sign Up</h1>
+                <form onSubmit={handleSubmit} className="w-full">
+                    <Input
+                        label={'Name'}
+                        type={'text'}
+                        placeholder={'Name'}
+                        name={'username'}
                         value={formData.username}
-                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                        handler={handleData}
                     />
-                </div>
-                <div>
-                    <label htmlFor="email" className="block">
-                        Email
-                    </label>
-                    <input
-                        type="email"
-                        placeholder="Enter Your Email"
-                        onChange={handleChange}
-                        name="email"
-                        id="email"
+                    <div className="mb-[5px] w-full">
+                        <label htmlFor="Number" className="text-lg">
+                            Number
+                        </label>
+                        <input
+                            // max={10}
+                            type="number"
+                            placeholder="Mobile Number"
+                            id="Number"
+                            name="phone"
+                            value={
+                                formData.phone !== ''
+                                    ? parseInt(formData.phone).toString()
+                                    : ''
+                            }
+                            onChange={handleData}
+                            className="border p-2 rounded mt-[3px] w-full text-base focus:outline-none no-arrow"
+                        />
+                    </div>
+                    <Input
+                        label={'Email'}
+                        type={'email'}
+                        placeholder={'abc@xyz.com'}
+                        name={'email'}
                         value={formData.email}
-                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                        handler={handleData}
                     />
-                </div>
-                <div>
-                    <label htmlFor="phone" className="block">
-                        Phone
-                    </label>
-                    <input
-                        type="tel"
-                        placeholder="Enter Your Phone"
-                        onChange={handleChange}
-                        name="phone"
-                        id="phone"
-                        value={formData.phone}
-                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-                    />
-                </div>
-                <div>
-                    <label htmlFor="gender" className="block">
-                        Gender
-                    </label>
-                    <select
-                        id="gender"
-                        name="gender"
-                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-                    >
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                    </select>
-                </div>
-                <div>
-                    <label htmlFor="password" className="block">
-                        Password
-                    </label>
-                    <input
-                        type="password"
-                        placeholder="Enter Your Password"
-                        onChange={handleChange}
-                        name="password"
-                        id="password"
+                    <div className="mb-[5px] w-full">
+                        <label htmlFor="Gender" className="text-lg">
+                            Gender
+                        </label>
+                        <select
+                            id="Gender"
+                            value={formData.gender}
+                            name={'gender'}
+                            onChange={handleData}
+                            className="border p-2 cursor-pointer rounded mt-[3px] w-full text-base focus:outline-none no-arrow text-placeholder"
+                        >
+                            <option value="" disabled hidden>
+                                Select Gender
+                            </option>
+                            <option value="Male" className="text-black">
+                                Male
+                            </option>
+                            <option value="Female" className="text-black">
+                                Female
+                            </option>
+                            {/* <option value="Other" className="text-black">
+                                Other
+                            </option> */}
+                        </select>
+                    </div>
+                    <Password
+                        label={'Password'}
+                        placeholder={'Password'}
+                        name={'password'}
                         value={formData.password}
-                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                        handler={handleData}
                     />
-                </div>
-                <button
-                    type="submit"
-                    className="w-full bg-blue-500 text-white px-4 py-2 rounded-md"
-                >
-                    Sign Up
-                </button>
-            </form>
+                    <Button text={'Submit'} />
+                </form>
+            </div>
         </div>
     )
 }

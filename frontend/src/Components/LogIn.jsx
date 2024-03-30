@@ -1,5 +1,9 @@
 import React, {useState} from 'react'
 import {NavLink, useNavigate} from 'react-router-dom'
+import Button from './Button/Button.jsx'
+import Password from './Password/Password.jsx'
+import Input from './Input/Input'
+
 import axios from 'axios'
 
 function LogIn() {
@@ -29,35 +33,34 @@ function LogIn() {
             if (response.status === 200) {
                 localStorage.setItem('userCookie', response.data.accessToken)
             }
-            // axios.defaults.headers.common['Authorization'] =
-            // `Bearer ${response.data.accessToken}`
             navigate('/cart')
         } catch (err) {
             console.log(err)
         }
     }
     return (
-        <div>
-            <h1>Log In </h1>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="Enter Your Email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                />
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Enter Your Password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                />
-                <button type="submit">Log in</button>
-            </form>
+        <div className="mt-[100px] flex justify-center items-center">
+            <div className="flex flex-col justify-center items-start w-[450px] bg-white p-8 rounded-lg">
+                <h1 className="font-bold text-3xl mb-3">Sign In</h1>
+                <form onSubmit={handleSubmit} className="w-full">
+                    <Input
+                        label={'Email'}
+                        type={'email'}
+                        placeholder={'abc@xyz.com'}
+                        value={formData.email}
+                        name={'email'}
+                        handler={handleChange}
+                    />
+                    <Password
+                        label={'Password'}
+                        placeholder={'Password'}
+                        name={'password'}
+                        value={formData.password}
+                        handler={handleChange}
+                    />
+                    <Button text={'Submit'} />
+                </form>
+            </div>
         </div>
     )
 }

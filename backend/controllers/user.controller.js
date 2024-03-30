@@ -9,9 +9,8 @@ export const signUp = async (req, res) => {
     try {
         const {username, email, phone, sex, password} = req.body
         let validEmail = await User.findOne({email: email})
-        if (validEmail) {
-            res.status(401).json({message: 'Email already in use'})
-        }
+        if (validEmail)
+            return res.status(401).json({message: 'Email already in use'})
         let hashedPassword = await bcrypt.hash(password, saltRounds)
         const newUser = new User({username, email, password: hashedPassword})
         await newUser.save()
