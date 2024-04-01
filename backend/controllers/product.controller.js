@@ -24,19 +24,20 @@ export const showProduct = asyncHandler(async (req, res) => {
 })
 
 export const createProduct = asyncHandler(async (req, res) => {
-    console.log(req.files)
+    // console.log(req.files)
     const {productName, category, description, price} = req.body
     const userId = req.user.id
-    const coverImageLocalPath = req.files?.coverImage[0]?.path
+    const coverImageLocalPath = await req.file.path
     // const imageLocalPath = req.files?.imageUrls[0]?.path
+    console.log(coverImageLocalPath)
     if (!coverImageLocalPath) {
-        throw new ApiError(406, 'Both images required') //Not Acceptable
+        throw new ApiError(406, 'images required') //Not Acceptable
     }
     const coverImage = await uploadOnCloudinary(coverImageLocalPath)
     // const imageUrls = await uploadOnCloudinary(imageLocalPath)
 
     if (!coverImage) {
-        throw new ApiError(406, 'Both images required')
+        throw new ApiError(406, ' images required')
     }
     console.log('Req Files : ' + req.file)
     const newProduct = new TempProduct({

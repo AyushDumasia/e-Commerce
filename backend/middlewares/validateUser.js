@@ -22,8 +22,8 @@ import User from '../models/user.schema.js'
 //     }
 // }
 
-const validateToken = (req, res, next) => {
-    const cookie = req.cookies.userCookie
+const validateToken = async (req, res, next) => {
+    const cookie = req.cookies?.userCookie
     console.log(cookie)
     if (cookie) {
         jwt.verify(cookie, '123', (err, decoded) => {

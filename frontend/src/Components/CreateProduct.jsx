@@ -13,7 +13,7 @@ function CreateProduct() {
         price: '',
     })
 
-    const [selectedFiles, setSelectedFiles] = useState(null)
+    const [selectedFile, setSelectedFile] = useState(null)
 
     const handleChange = (e) => {
         const {name, value} = e.target
@@ -24,28 +24,51 @@ function CreateProduct() {
     }
 
     const handleFileChange = (e) => {
-        const files = e.target.files
-        setSelectedFiles(files)
+        const files = e.target.file
+        setSelectedFile(files)
     }
+
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault()
+
+    //     try {
+    //         const formDataWithFiles = new FormData()
+    //         formDataWithFiles.append('file', selectedFile)
+
+    //         const response = await axios.post(
+    //             'http://localhost:3000/api/product/createProduct',
+    //             formDataWithFiles,
+    //             {
+    //                 withCredentials: true,
+    //                 headers: {
+    //                     'Content-Type': 'multipart/form-data',
+    //                 },
+    //             },
+    //         )
+
+    //         console.log(response)
+    //     } catch (error) {
+    //         console.error('Error:', error)
+    //         toast.error('An error occurred. Please try again later.')
+    //     }
+    // }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
         try {
             const formDataWithFiles = new FormData()
-
-            selectedFiles((file) => {
-                formDataWithFiles.append('coverImage', file)
-            })
+            formDataWithFiles.append('file', selectedFile)
+            // Add other form data
 
             const response = await axios.post(
                 'http://localhost:3000/api/product/createProduct',
                 formDataWithFiles,
                 {
+                    withCredentials: true,
                     headers: {
                         'Content-Type': 'multipart/form-data',
                     },
-                    withCredentials: true,
                 },
             )
 
