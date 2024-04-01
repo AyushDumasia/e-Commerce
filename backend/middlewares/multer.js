@@ -5,9 +5,8 @@ const storage = multer.diskStorage({
         cb(null, './public/temp')
     },
     filename: function (req, file, cb) {
-        const uniqueSuffix = Data.now() + '-' + Math.round(Math.random() * 1e9)
-        cb(null, file.originalname + '-' + file.filename)
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9)
     },
 })
 
-export const upload = multer({storage})
+export const upload = multer({storage: storage})

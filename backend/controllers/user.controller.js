@@ -15,7 +15,13 @@ export const signUp = asyncHandler(async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, saltRounds)
 
-    const newUser = new User({username, email, password: hashedPassword})
+    const newUser = new User({
+        username,
+        email,
+        phone,
+        sex,
+        password: hashedPassword,
+    })
     await newUser.save()
     // res.status(200).json({
     //     email: newUser.email,
@@ -32,7 +38,7 @@ export const logIn = asyncHandler(async (req, res) => {
     const user = await User.findOne({email: email})
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
-        throw new ApiError(400, 'Invalid Details')
+        throw new ApiError(401, 'Invalid Details')
     }
 
     const accessToken = jwt.sign(

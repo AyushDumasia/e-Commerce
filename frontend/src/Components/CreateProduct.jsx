@@ -2,6 +2,8 @@ import React, {useState} from 'react'
 import Input from './Input/Input'
 import Button from './Button/Button'
 import axios from 'axios'
+import {ToastContainer, toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 function CreateProduct() {
     const [formData, setFormData] = useState({
@@ -11,7 +13,7 @@ function CreateProduct() {
         price: '',
     })
 
-    const [selectedFiles, setSelectedFiles] = useState([])
+    const [selectedFiles, setSelectedFiles] = useState(null)
 
     const handleChange = (e) => {
         const {name, value} = e.target
@@ -22,7 +24,8 @@ function CreateProduct() {
     }
 
     const handleFileChange = (e) => {
-        setSelectedFiles(Array.from(e.target.files))
+        const files = e.target.files
+        setSelectedFiles(files)
     }
 
     const handleSubmit = async (e) => {
@@ -31,14 +34,8 @@ function CreateProduct() {
         try {
             const formDataWithFiles = new FormData()
 
-            // Append form data fields to FormData object
-            Object.entries(formData).forEach(([key, value]) => {
-                formDataWithFiles.append(key, value)
-            })
-
-            // Append selected files to FormData object
-            selectedFiles.forEach((file) => {
-                formDataWithFiles.append('images', file)
+            selectedFiles((file) => {
+                formDataWithFiles.append('coverImage', file)
             })
 
             const response = await axios.post(
@@ -55,13 +52,15 @@ function CreateProduct() {
             console.log(response)
         } catch (error) {
             console.error('Error:', error)
+            toast.error('An error occurred. Please try again later.')
         }
     }
 
     return (
         <div className="mt-[100px] flex justify-center items-center">
+            <ToastContainer />
             <div className="flex flex-col justify-center items-start w-[450px] bg-white p-8 rounded-lg">
-                <form onSubmit={handleSubmit} encType="multiple/form-data">
+                <form onSubmit={handleSubmit} encType="multipart/form-data">
                     <label htmlFor="productName">Product Name:</label>
                     <Input
                         type={'text'}
@@ -78,9 +77,10 @@ function CreateProduct() {
                         id={'coverImage'}
                         name={'coverImage'}
                         accept={'image/*'}
+                        // value={selectedFiles}
                         handler={handleFileChange}
                     />
-                    <label htmlFor="images">Other Image:</label>
+                    {/* <label htmlFor="images">Other Image:</label>
                     <Input
                         type={'file'}
                         multiple
@@ -88,7 +88,7 @@ function CreateProduct() {
                         name={'imageUrls'}
                         accept="image/*"
                         handler={handleFileChange}
-                    />
+                    /> */}
 
                     <label htmlFor="category">Category:</label>
                     <Input

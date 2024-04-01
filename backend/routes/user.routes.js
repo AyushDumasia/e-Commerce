@@ -1,5 +1,4 @@
 import express from 'express'
-import asyncHandler from 'async-handler'
 import validateToken from './../middlewares/validateUser.js'
 import {
     getUserInfo,

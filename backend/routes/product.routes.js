@@ -6,7 +6,7 @@ import {
     fetchProduct,
     getCart,
     showProduct,
-    // updateCart,
+    RemoveCart,
 } from '../controllers/product.controller.js'
 import {validateMerchant} from '../middlewares/authMerchant.js'
 import {upload} from './../middlewares/multer.js'
@@ -17,21 +17,15 @@ router.post(
     '/createProduct',
     validateToken,
     // validateMerchant,
-    upload.fields([
-        {
-            name: 'coverImage',
-            maxCount: 1,
-        },
-        {
-            name: 'imageUrls',
-            maxCount: 5,
-        },
-    ]),
+    upload.single('coverImage'),
     createProduct,
 )
 
 //Add to Cart
 router.post('/addToCart/:id', validateToken, addCart)
+
+//Remove from Cart
+router.post('/removeCart/:id', validateToken, RemoveCart)
 
 //Get Cart
 router.get('/cart', validateToken, getCart)

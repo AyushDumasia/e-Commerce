@@ -21,8 +21,6 @@ function Navbar() {
                 <div className="flex justify-between items-center ">
                     <ul className="flex space-x-4">
                         <List goto="/" content="Home" />
-                        {/* <List goto="/explore" content="Explore" /> */}
-                        {/* <List goto="/about" content="About" /> */}
                     </ul>
                     <SignInButton />
                 </div>

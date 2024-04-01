@@ -9,11 +9,12 @@ function Home() {
             const response = await axios.get(
                 'http://localhost:3000/api/product/fetchProduct',
             )
-            if (Array.isArray(response.data)) {
-                setProducts(response.data)
-            } else {
-                console.error('Invalid response format:', response.data)
-            }
+            setProducts(response.data.data)
+            // if (Array.isArray(response.data)) {
+            //     setProducts(response.data)
+            // } else {
+            //     console.error('Invalid response format:', response.data)
+            // }
         } catch (error) {
             console.error('Error fetching products:', error)
         }
@@ -28,7 +29,7 @@ function Home() {
             <h2>Products</h2>
             <div>
                 {products.map((product) => (
-                    <div key={product.id}>
+                    <div key={product._id}>
                         <h3>{product.name}</h3>
                         <p>Category: {product.category}</p>
                         <p>Description: {product.description}</p>

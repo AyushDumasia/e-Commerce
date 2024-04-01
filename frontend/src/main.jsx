@@ -15,6 +15,7 @@ import ShowProduct from './Components/ShowProduct'
 import CreateProduct from './Components/CreateProduct'
 import Cart from './Components/Cart'
 import './index.css'
+import ImageUploader from './Components/ImageUploader.jsx'
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -25,6 +26,8 @@ const router = createBrowserRouter(
             <Route path="/home" element={<Home />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/showDetails/:id" element={<ShowProduct />} />
+            <Route path="/imageUp" element={<ImageUploader />} />
+            {/* <Route path="/becomeMerchant" element={<BecomeMerchant />} /> */}
         </Route>,
     ),
 )

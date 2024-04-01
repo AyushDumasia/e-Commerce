@@ -16,9 +16,9 @@ const app = express()
 dotenv.config({
     path: './.env',
 })
-app.use(express.urlencoded({extended: true, limit: '16kb'}))
+app.use(express.urlencoded({extended: true, limit: '1660kb'}))
 app.use(express.static('public'))
-app.use(express.json({limit: '16kb'}))
+app.use(express.json({limit: '1660kb'}))
 app.use(cookieParser())
 
 //Cors Configuration

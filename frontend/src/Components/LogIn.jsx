@@ -1,5 +1,8 @@
 import React, {useState} from 'react'
-import {NavLink, useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
+import {ToastContainer, toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 import Button from './Button/Button.jsx'
 import Password from './Password/Password.jsx'
 import Input from './Input/Input'
@@ -32,14 +35,21 @@ function LogIn() {
             console.log('response : ', response)
             if (response.status === 200) {
                 localStorage.setItem('userCookie', response.data.accessToken)
+                navigate('/home')
             }
-            navigate('/cart')
         } catch (err) {
             console.log(err)
+            if (err.response && err.response.status === 401) {
+                toast.error('Email or Password incorrect')
+            } else {
+                toast.error('An error occurred. Please try again later.')
+            }
         }
     }
+
     return (
         <div className="mt-[100px] flex justify-center items-center">
+            <ToastContainer />
             <div className="flex flex-col justify-center items-start w-[450px] bg-white p-8 rounded-lg">
                 <h1 className="font-bold text-3xl mb-3">Sign In</h1>
                 <form onSubmit={handleSubmit} className="w-full">

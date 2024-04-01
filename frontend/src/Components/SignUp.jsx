@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
+import {ToastContainer, toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import Input from './Input/Input'
 import Button from './Button/Button'
 import Password from './Password/Password'
@@ -33,11 +35,17 @@ function SignUp() {
             navigate('/home')
         } catch (error) {
             console.error('Error:', error)
+            if (error.status === 409) {
+                toast.error('Email is already registered')
+            } else {
+                toast.error('An error occurred. Please try again later.')
+            }
         }
     }
 
     return (
         <div className="mt-[100px] flex justify-center items-center">
+            <ToastContainer />
             <div className="flex flex-col justify-center items-start w-[450px] bg-white p-8 rounded-lg">
                 <h1 className="font-bold text-3xl mb-3">Sign Up</h1>
                 <form onSubmit={handleSubmit} className="w-full">

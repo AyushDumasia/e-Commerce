@@ -24,18 +24,19 @@ export const showProduct = asyncHandler(async (req, res) => {
 })
 
 export const createProduct = asyncHandler(async (req, res) => {
+    console.log(req.files)
     const {productName, category, description, price} = req.body
     const userId = req.user.id
     const coverImageLocalPath = req.files?.coverImage[0]?.path
-    const imageLocalPath = req.files?.imageUrls[0]?.path
-    if (!coverImageLocalPath || !imageLocalPath) {
-        throw new ApiError(400, 'Both images required')
+    // const imageLocalPath = req.files?.imageUrls[0]?.path
+    if (!coverImageLocalPath) {
+        throw new ApiError(406, 'Both images required') //Not Acceptable
     }
     const coverImage = await uploadOnCloudinary(coverImageLocalPath)
-    const imageUrls = await uploadOnCloudinary(imageLocalPath)
+    // const imageUrls = await uploadOnCloudinary(imageLocalPath)
 
-    if (!coverImage || !imageUrls) {
-        throw new ApiError(400, 'Both images required')
+    if (!coverImage) {
+        throw new ApiError(406, 'Both images required')
     }
     console.log('Req Files : ' + req.file)
     const newProduct = new TempProduct({
@@ -44,7 +45,7 @@ export const createProduct = asyncHandler(async (req, res) => {
         description,
         price,
         coverImage: coverImage.url,
-        imageUrls: imageUrls?.url || '',
+        // imageUrls: imageUrls?.url || '',
         userId,
     })
     await newProduct.save()
@@ -85,6 +86,40 @@ export const addCart = asyncHandler(async (req, res) => {
     )
 })
 
+//Remover Cart
+export const RemoveCart = asyncHandler(async (req, res) => {
+    const user = req?.user
+    const productId = req.params?.id
+    const quantity = req.body?.quantity
+
+    let cartItem = null
+
+    const currUser = await User.findOne({email: user.email})
+    if (!currUser) {
+        return res.status(404).json({message: 'User not found'})
+    }
+
+    if (quantity <= 0) {
+        return res
+            .status(400)
+            .json(new ApiResponse(400, 'Quantity should be greater than 0'))
+    }
+
+    const existingCartItem = await Cart.findOne({productId, userId: user.id})
+    if (!existingCartItem) {
+        return res.status(404).json({message: 'Cart item not found'})
+    }
+
+    // Updating quantity
+    existingCartItem.quantity -= quantity
+    await existingCartItem.save()
+    cartItem = existingCartItem
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, cartItem, 'Item removed successfully'))
+})
+
 export const getCart = asyncHandler(async (req, res) => {
     const user = req.user
     const findUser = await User.findOne({_id: user.id})
@@ -97,7 +132,7 @@ export const getCart = asyncHandler(async (req, res) => {
         return res.status(404).json({message: 'Cart items not found'})
     }
 
-    let totalPrice = 0
+    const totalPrice = 0
     for (const cartItem of cartItems) {
         const product = await Product.findById(cartItem.productId)
         if (product) {
