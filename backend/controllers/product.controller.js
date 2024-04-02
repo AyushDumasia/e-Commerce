@@ -128,22 +128,32 @@ export const getCart = asyncHandler(async (req, res) => {
         return res.status(404).json({message: 'User not found'})
     }
 
-    const cartItems = await Cart.find({userId: findUser._id})
+    const cartItems = await Cart.find({userId: findUser._id}).populate(
+        'productId',
+    )
     if (!cartItems) {
         return res.status(404).json({message: 'Cart items not found'})
     }
 
-    const totalPrice = 0
+    let totalPrice = 0
     for (const cartItem of cartItems) {
         const product = await Product.findById(cartItem.productId)
         if (product) {
             totalPrice += parseFloat(product.price) * cartItem.quantity
         }
     }
-
+    // console.log(product)
     res.status(200).json({
         count: cartItems.length,
         cartItems: cartItems,
         totalPrice: totalPrice.toFixed(2),
     })
+})
+
+//for Temp products
+export const fetchTempProducts = asyncHandler(async (req, res) => {
+    const products = await TempProduct.find()
+    res.status(200).json(
+        new ApiResponse(200, products, 'Product fetched successfully'),
+    )
 })

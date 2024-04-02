@@ -24,8 +24,8 @@ function CreateProduct() {
     }
 
     const handleFileChange = (e) => {
-        const files = e.target.file
-        setSelectedFile(files)
+        const files = e.target.files
+        setSelectedFile(files[0]) // Assuming you only want to upload one file
     }
 
     // const handleSubmit = async (e) => {
@@ -58,8 +58,11 @@ function CreateProduct() {
 
         try {
             const formDataWithFiles = new FormData()
-            formDataWithFiles.append('file', selectedFile)
-            // Add other form data
+            formDataWithFiles.append('coverImage', selectedFile) // Append the selected file
+            formDataWithFiles.append('productName', formData.productName) // Append other form data
+            formDataWithFiles.append('category', formData.category)
+            formDataWithFiles.append('description', formData.description)
+            formDataWithFiles.append('price', formData.price)
 
             const response = await axios.post(
                 'http://localhost:3000/api/product/createProduct',

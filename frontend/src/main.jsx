@@ -11,11 +11,11 @@ import App from './App.jsx'
 import Home from './Components/Home'
 import LogIn from './Components/LogIn'
 import SignUp from './Components/SignUp'
-import ShowProduct from './Components/ShowProduct'
 import CreateProduct from './Components/CreateProduct'
 import Cart from './Components/Cart'
 import './index.css'
-import ImageUploader from './Components/ImageUploader.jsx'
+import AdminPage from './AdminPage.jsx'
+import ShowInfo from './Components/ShowInfo.jsx'
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -25,9 +25,8 @@ const router = createBrowserRouter(
             <Route path="/createProduct" element={<CreateProduct />} />
             <Route path="/home" element={<Home />} />
             <Route path="/cart" element={<Cart />} />
-            <Route path="/showDetails/:id" element={<ShowProduct />} />
-            <Route path="/imageUp" element={<ImageUploader />} />
-            {/* <Route path="/becomeMerchant" element={<BecomeMerchant />} /> */}
+            <Route path="/admin" element={<AdminPage />} />
+            <Route path="/showProduct/:id" element={<ShowInfo />} />
         </Route>,
     ),
 )

@@ -44,7 +44,7 @@ export const logIn = asyncHandler(async (req, res) => {
     const accessToken = jwt.sign(
         {user: {username: user.username, email: user.email, id: user.id}},
         '123',
-        {expiresIn: '15m'},
+        {expiresIn: '90m'},
     )
     req.user = {
         username: user.username,

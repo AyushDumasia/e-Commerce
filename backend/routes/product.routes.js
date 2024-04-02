@@ -7,6 +7,7 @@ import {
     getCart,
     showProduct,
     RemoveCart,
+    fetchTempProducts,
 } from '../controllers/product.controller.js'
 import {validateMerchant} from '../middlewares/authMerchant.js'
 import {upload} from './../middlewares/multer.js'
@@ -16,8 +17,8 @@ const router = express.Router()
 router.post(
     '/createProduct',
     validateToken,
-    // validateMerchant,
-    upload,
+    validateMerchant,
+    upload.single('coverImage'),
     createProduct,
 )
 
@@ -35,5 +36,8 @@ router.get('/fetchProduct', fetchProduct)
 
 //Show Product
 router.get('/showProduct/:id', showProduct)
+
+//Fetch Temp products
+router.get('/showTempProduct', fetchTempProducts)
 
 export default router

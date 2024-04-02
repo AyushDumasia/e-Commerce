@@ -16,6 +16,7 @@ export const validProduct = async (req, res) => {
             productName: tempProduct.productName,
             category: tempProduct.category,
             description: tempProduct.description,
+            coverImage: tempProduct.coverImage,
             price: tempProduct.price,
             userId: tempProduct.userId,
         })

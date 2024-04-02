@@ -11,8 +11,9 @@ export const becomeMerchant = async (req, res) => {
         }
 
         const alreadyUser = await Merchant.findOne({merchant: user.id})
+        console.log(alreadyUser)
         if (alreadyUser) {
-            return res.status(201).json({message: 'You are already a Merchant'})
+            return res.status(400).json({message: 'You are already a Merchant'})
         }
 
         const licenseId = uuidv4().toString()

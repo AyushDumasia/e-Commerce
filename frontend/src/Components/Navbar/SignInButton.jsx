@@ -14,11 +14,15 @@ function SignInButton() {
     let timeoutId
 
     const fetchMerchantData = async () => {
-        const response = await axios.get(
-            'http://localhost:3000/api/merchant/becomeMerchant',
-            {withCredentials: true},
-        )
-        console.log(response)
+        try {
+            const response = await axios.get(
+                'http://localhost:3000/api/merchant/becomeMerchant',
+                {withCredentials: true},
+            )
+            console.log(response)
+        } catch (error) {
+            console.error('Error fetching merchant data:', error)
+        }
     }
 
     const handleMouseEnter = () => {
