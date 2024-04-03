@@ -81,7 +81,6 @@ export const addCart = asyncHandler(async (req, res) => {
         await currUser.save()
     }
 
-    console.log('Cart Item: ', cartItem)
     res.status(200).json(
         new ApiResponse(200, cartItem, 'Cart updated successfully'),
     )
@@ -90,36 +89,35 @@ export const addCart = asyncHandler(async (req, res) => {
 //Remover Cart
 export const RemoveCart = asyncHandler(async (req, res) => {
     const user = req?.user
-    const productId = req.params?.id
-    const quantity = req.body?.quantity
+    const productId = req.params.id
 
-    let cartItem = null
-
-    const currUser = await User.findOne({email: user.email})
-    if (!currUser) {
-        return res.status(404).json({message: 'User not found'})
+    if (!user) {
+        throw new ApiError(404, 'User not found')
     }
 
-    if (quantity <= 0) {
+    if (!productId) {
+        throw new ApiError(404, 'Product not found')
+    }
+
+    const product = await Cart.findOne({productId: productId})
+
+    if (product.quantity <= 0) {
+        throw new ApiError(400, 'Quantity must be greater than zero')
+    }
+    product.quantity--
+    await product.save()
+    if (product.quantity === 0) {
+        console.log('PRODUCT : ', product)
+        await product.deleteOne()
         return res
-            .status(400)
-            .json(new ApiResponse(400, 'Quantity should be greater than 0'))
+            .status(200)
+            .json(
+                new ApiResponse(200, 'Product removed successfully from Cart'),
+            )
     }
-
-    let existingCartItem = await Cart.findOne({productId, userId: user.id})
-    console.log('ITEM', existingCartItem)
-    if (!existingCartItem) {
-        return res.status(404).json({message: 'Cart item not found'})
-    }
-
-    // Updating quantity
-    existingCartItem.quantity--
-    await existingCartItem.save()
-    cartItem = existingCartItem
-
     return res
         .status(200)
-        .json(new ApiResponse(200, cartItem, 'Item removed successfully'))
+        .json(new ApiResponse(200, 'Product removed successfully'))
 })
 
 export const getCart = asyncHandler(async (req, res) => {
@@ -143,7 +141,6 @@ export const getCart = asyncHandler(async (req, res) => {
             totalPrice += parseFloat(product.price) * cartItem.quantity
         }
     }
-    // console.log(product)
     res.status(200).json({
         count: cartItems.length,
         cartItems: cartItems,

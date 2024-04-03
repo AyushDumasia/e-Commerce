@@ -3,6 +3,7 @@ import axios from 'axios'
 
 function Cart() {
     const [cart, setCart] = useState({cartItems: [], totalPrice: '0.00'})
+    // const [count , setCount] = useState()
     const fetchData = async () => {
         try {
             const response = await axios.get(
