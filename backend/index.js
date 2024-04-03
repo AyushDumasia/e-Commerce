@@ -9,6 +9,7 @@ import userAuthRoutes from './routes/user.routes.js'
 import productRoutes from './routes/product.routes.js'
 import merchantRoutes from './routes/merchant.routes.js'
 import adminRoutes from './routes/admin.routes.js'
+import feedbackRoutes from './routes/feedback.routes.js'
 const PORT = process.env.PORT || 3000
 const app = express()
 
@@ -44,6 +45,7 @@ app.use('/api/auth', userAuthRoutes)
 app.use('/api/merchant', merchantRoutes)
 app.use('/api/product', productRoutes)
 app.use('/api/admin', adminRoutes)
+app.use('/api/feedback', feedbackRoutes)
 
 app.listen(PORT, () => {
     console.log(`App is listening on ${PORT}`)

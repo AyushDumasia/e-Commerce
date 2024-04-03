@@ -11,11 +11,12 @@ import App from './App.jsx'
 import Home from './Components/Home'
 import LogIn from './Components/LogIn'
 import SignUp from './Components/SignUp'
-import CreateProduct from './Components/CreateProduct'
+import CreateProduct from './Components/CreateProduct.jsx'
 import Cart from './Components/Cart'
 import './index.css'
-import AdminPage from './AdminPage.jsx'
+import AdminPage from './Components/AdminPage.jsx'
 import ShowInfo from './Components/ShowInfo.jsx'
+import Temp from './Components/Temp.jsx'
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -27,6 +28,7 @@ const router = createBrowserRouter(
             <Route path="/cart" element={<Cart />} />
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/showProduct/:id" element={<ShowInfo />} />
+            <Route path="/temp" element={<Temp />} />
         </Route>,
     ),
 )
