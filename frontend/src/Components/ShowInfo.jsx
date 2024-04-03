@@ -9,13 +9,11 @@ function ShowInfo() {
 
     const addCart = async (id) => {
         try {
-            const response = await axios.post(
+            const response = await axios.get(
                 `http://localhost:3000/api/product/addToCart/${id}`,
-                null, // no data needs to be sent in the request body
-                {withCredentials: true}, // withCredentials should be passed as part of the request options
+                {withCredentials: true},
             )
             console.log('Product added to cart:', response.data)
-            // Optionally, you can handle the response here
         } catch (err) {
             console.log('Error adding product to cart:', err)
         }

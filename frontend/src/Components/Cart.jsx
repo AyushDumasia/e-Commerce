@@ -3,13 +3,13 @@ import axios from 'axios'
 
 function Cart() {
     const [cart, setCart] = useState({cartItems: [], totalPrice: '0.00'})
-
     const fetchData = async () => {
         try {
             const response = await axios.get(
                 'http://localhost:3000/api/product/cart',
                 {withCredentials: true},
             )
+            console.log(response.data)
             setCart(response.data)
         } catch (error) {
             console.error('Error fetching cart data:', error)
@@ -20,88 +20,68 @@ function Cart() {
         fetchData()
     }, [])
 
-    const increaseQuantity = (itemId) => {
-        const updatedCart = {...cart}
-        const itemIndex = updatedCart.cartItems.findIndex(
-            (item) => item._id === itemId,
+    const increaseQuantity = async (id) => {
+        const response = await axios.get(
+            `http://localhost:3000/api/product/addToCart/${id}`,
+            {withCredentials: true},
         )
-        if (itemIndex !== -1) {
-            updatedCart.cartItems[itemIndex].quantity++
-            setCart(updatedCart)
-        }
+        console.log(response)
     }
 
-    const decreaseQuantity = (itemId) => {
-        const updatedCart = {...cart}
-        const itemIndex = updatedCart.cartItems.findIndex(
-            (item) => item._id === itemId,
+    const decreaseQuantity = async (id) => {
+        // const updatedCart = {...cart}
+        // const itemIndex = updatedCart.cartItems.findIndex(
+        //     (item) => item._id === id,
+        // )
+        // if (itemIndex !== -1 && updatedCart.cartItems[itemIndex].quantity > 1) {
+        //     updatedCart.cartItems[itemIndex].quantity--
+        //     setCart(updatedCart)
+        // }
+        const response = await axios.get(
+            `http://localhost:3000/api/product/removeCart/${id}`,
+            {withCredentials: true},
         )
-        if (itemIndex !== -1 && updatedCart.cartItems[itemIndex].quantity > 1) {
-            updatedCart.cartItems[itemIndex].quantity--
-            setCart(updatedCart)
-        }
+        console.log(response)
     }
 
     return (
-        <div>
-            <div style={{textAlign: 'center', padding: '20px'}}>
-                <h2>Cart</h2>
-                <div
-                    style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                    }}
-                >
+        <div className="container mx-auto">
+            <div className="text-center py-8">
+                <h2 className="text-2xl font-bold mb-4">Cart</h2>
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                     {cart.cartItems.map((item) => (
                         <div
                             key={item._id}
-                            style={{
-                                border: '1px solid #ccc',
-                                borderRadius: '5px',
-                                padding: '10px',
-                                marginBottom: '10px',
-                                width: '80%',
-                            }}
+                            className="border border-gray-200 rounded-lg p-4"
                         >
-                            <img
-                                src={item.productId.coverImage}
-                                alt={item.productId.productName}
-                                style={{
-                                    width: '100px',
-                                    height: 'auto',
-                                    marginRight: '20px',
-                                }}
-                            />
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                }}
-                            >
-                                <h3>{item.productId.productName}</h3>
-                                <p>Category: {item.productId.category}</p>
-                                <p>Description: {item.productId.description}</p>
-                                <p>Price: ${item.productId.price}</p>
-                                <div
-                                    style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                    }}
-                                >
+                            <div>
+                                <p>{item.productId._id}</p>
+                                <h3 className="text-lg font-semibold mb-2">
+                                    {item.productId.productName}
+                                </h3>
+                                <p className="text-sm mb-2">
+                                    Category: {item.productId.category}
+                                </p>
+                                <p className="text-sm mb-2">
+                                    Description: {item.productId.description}
+                                </p>
+                                <p className="text-sm mb-2">
+                                    Price: ${item.productId.price}
+                                </p>
+                                <div className="flex items-center">
                                     <button
+                                        className="bg-gray-200 text-gray-700 px-2 py-1 rounded"
                                         onClick={() =>
-                                            decreaseQuantity(item._id)
+                                            decreaseQuantity(item.productId._id)
                                         }
                                     >
                                         -
                                     </button>
-                                    <p style={{margin: '0 10px'}}>
-                                        {item.quantity}
-                                    </p>
+                                    <p className="mx-2">{item.quantity}</p>
                                     <button
+                                        className="bg-gray-200 text-gray-700 px-2 py-1 rounded"
                                         onClick={() =>
-                                            increaseQuantity(item._id)
+                                            increaseQuantity(item.productId._id)
                                         }
                                     >
                                         +
@@ -111,7 +91,7 @@ function Cart() {
                         </div>
                     ))}
                 </div>
-                <p style={{fontWeight: 'bold', marginTop: '20px'}}>
+                <p className="font-bold mt-4">
                     Total Price: ${cart.totalPrice}
                 </p>
             </div>

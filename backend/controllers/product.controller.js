@@ -106,13 +106,14 @@ export const RemoveCart = asyncHandler(async (req, res) => {
             .json(new ApiResponse(400, 'Quantity should be greater than 0'))
     }
 
-    const existingCartItem = await Cart.findOne({productId, userId: user.id})
+    let existingCartItem = await Cart.findOne({productId, userId: user.id})
+    console.log('ITEM', existingCartItem)
     if (!existingCartItem) {
         return res.status(404).json({message: 'Cart item not found'})
     }
 
     // Updating quantity
-    existingCartItem.quantity -= quantity
+    existingCartItem.quantity--
     await existingCartItem.save()
     cartItem = existingCartItem
 

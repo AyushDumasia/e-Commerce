@@ -23,10 +23,10 @@ router.post(
 )
 
 //Add to Cart
-router.post('/addToCart/:id', validateToken, addCart)
+router.get('/addToCart/:id', validateToken, addCart)
 
 //Remove from Cart
-router.post('/removeCart/:id', validateToken, RemoveCart)
+router.get('/removeCart/:id', validateToken, RemoveCart)
 
 //Get Cart
 router.get('/cart', validateToken, getCart)
