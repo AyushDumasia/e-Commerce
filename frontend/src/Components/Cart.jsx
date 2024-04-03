@@ -10,7 +10,7 @@ function Cart() {
                 'http://localhost:3000/api/product/cart',
                 {withCredentials: true},
             )
-            console.log(response.data)
+            // console.log(response.data)
             setCart(response.data)
         } catch (error) {
             console.error('Error fetching cart data:', error)
@@ -19,30 +19,20 @@ function Cart() {
 
     useEffect(() => {
         fetchData()
-    }, [])
+    }, [cart])
 
     const increaseQuantity = async (id) => {
         const response = await axios.get(
             `http://localhost:3000/api/product/addToCart/${id}`,
             {withCredentials: true},
         )
-        console.log(response)
     }
 
     const decreaseQuantity = async (id) => {
-        // const updatedCart = {...cart}
-        // const itemIndex = updatedCart.cartItems.findIndex(
-        //     (item) => item._id === id,
-        // )
-        // if (itemIndex !== -1 && updatedCart.cartItems[itemIndex].quantity > 1) {
-        //     updatedCart.cartItems[itemIndex].quantity--
-        //     setCart(updatedCart)
-        // }
         const response = await axios.get(
             `http://localhost:3000/api/product/removeCart/${id}`,
             {withCredentials: true},
         )
-        console.log(response)
     }
 
     return (
