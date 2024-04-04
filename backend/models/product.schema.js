@@ -21,11 +21,14 @@ const productSchema = new Schema(
         },
         imageUrls: {
             type: [String],
-            // required: true,
         },
         price: {
             type: String,
             required: true,
+        },
+        rating: {
+            type: Number,
+            default: 0,
         },
         userId: {
             type: Schema.Types.ObjectId,

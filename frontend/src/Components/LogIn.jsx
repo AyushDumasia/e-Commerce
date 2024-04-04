@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {ToastContainer, toast} from 'react-toastify'
+import {Link} from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css'
 
 import Button from './Button/Button.jsx'
@@ -37,7 +38,7 @@ function LogIn() {
                 navigate('/')
             }
         } catch (err) {
-            console.log(err)
+            // console.log(err)
             if (err.response && err.response.status === 401) {
                 toast.error('Email or Password incorrect')
             } else {
@@ -52,6 +53,9 @@ function LogIn() {
             <ToastContainer />
             <div className="flex flex-col justify-center items-start w-[450px] bg-white p-8 rounded-lg">
                 <h1 className="font-bold text-3xl mb-3">Sign In</h1>
+                <Link to="/signup" className="text-sm text-gray-500 ml-auto">
+                    Already have an account
+                </Link>{' '}
                 <form onSubmit={handleSubmit} className="w-full">
                     <Input
                         label={'Email'}

@@ -10,7 +10,7 @@ export const showPendingProduct = async (req, res) => {
 export const validProduct = async (req, res) => {
     try {
         const productId = req.params.id
-        console.log(productId)
+        // console.log(productId)
         const tempProduct = await TempProduct.findById(productId)
         const approvedProduct = new Product({
             productName: tempProduct.productName,

@@ -1,33 +1,29 @@
 import {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
-import {
-    FaRegUserCircle,
-    FaHeadset,
-    FaRegHeart,
-    FaAngleUp,
-    FaShoppingCart,
-} from 'react-icons/fa'
+import {FaRegUserCircle, FaAngleUp, FaShoppingCart} from 'react-icons/fa'
 
 function SignInButton() {
     const [showMenu, setShowMenu] = useState(false)
-    let timeoutId
+    const [user, setUser] = useState(null) // Store user data
 
-    const fetchUser = async () => {
+    useEffect(() => {
+        // Check user authentication status when component mounts
+        checkAuthentication()
+    }, [])
+
+    const checkAuthentication = async () => {
         try {
             const response = await axios.get(
                 'http://localhost:3000/api/auth/currentUser',
                 {withCredentials: true},
             )
-            console.log(response)
+            setUser(response.data) // Set user data
         } catch (error) {
-            console.error('Error fetching merchant data:', error)
+            console.error('Error fetching user data:', error)
+            setUser(null)
         }
     }
-
-    useEffect(() => {
-        fetchUser()
-    }, [])
 
     const fetchMerchantData = async () => {
         try {
@@ -35,35 +31,33 @@ function SignInButton() {
                 'http://localhost:3000/api/merchant/becomeMerchant',
                 {withCredentials: true},
             )
-            console.log(response)
+            // console.log(response)
         } catch (error) {
             console.error('Error fetching merchant data:', error)
         }
     }
 
     const handleMouseEnter = () => {
-        clearTimeout(timeoutId)
-        setShowMenu(true)
+        setShowMenu(true) // Show the menu on mouse enter
     }
 
     const handleMouseLeave = () => {
-        timeoutId = setTimeout(() => {
-            setShowMenu(false)
-        }, 100)
+        setShowMenu(false) // Hide the menu on mouse leave
     }
+
     return (
         <div className="relative">
-            <Link
-                to="/signin"
+            <div
                 className={`${
                     showMenu
-                        ? 'bg-secondary text-white'
+                        ? 'bg-secondary text-black'
                         : 'bg-floralWhite text-black'
                 } flex p-2 ml-2 rounded justify-evenly items-center`}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
             >
-                <FaRegUserCircle /> &nbsp; Sign In &nbsp;{' '}
+                <FaRegUserCircle /> &nbsp; {user ? user.username : 'Sign In'}{' '}
+                &nbsp;
                 <FaAngleUp
                     className={`transform ${
                         showMenu
@@ -71,7 +65,7 @@ function SignInButton() {
                             : 'rotate-[-180deg] transition-transform duration-[450ms]'
                     }`}
                 />
-            </Link>
+            </div>
             {showMenu && (
                 <div
                     className="absolute p-[15px] border-gray-300 border border-grey top-[40px] left-[-150px] bg-white shadow rounded-lg w-[250px]"
@@ -79,24 +73,30 @@ function SignInButton() {
                     onMouseLeave={handleMouseLeave}
                 >
                     <ul className="list-none p-0 m-0">
-                        <Link to="/signup">
-                            <li className="p-3 pl-3 hover:bg-gray-100 cursor-pointer border-gray-300 border-b flex justify-between">
-                                New here?
-                                <p className="text-secondary">Sign Up</p>
-                            </li>
-                        </Link>
-                        <Link to="/profile">
-                            <li className="p-2 hover:bg-gray-100 cursor-pointer flex items-center">
-                                <FaRegUserCircle /> &nbsp; My Profile
-                            </li>
-                        </Link>
-                        <Link to="/cart">
-                            <li className="p-2 hover:bg-gray-100 cursor-pointer flex items-center">
-                                <FaShoppingCart /> &nbsp; My Cart
-                            </li>
-                        </Link>
+                        {!user && ( // Show sign-up option only if user is not authenticated
+                            <Link to="/signup">
+                                <li className="p-3 pl-3 hover:bg-gray-100 cursor-pointer border-gray-300 border-b flex justify-between">
+                                    New here?
+                                    <p className="text-secondary">Sign Up</p>
+                                </li>
+                            </Link>
+                        )}
+                        {user && ( // Show profile and cart options if user is authenticated
+                            <>
+                                <Link to="/profile">
+                                    <li className="p-2 hover:bg-gray-100 cursor-pointer flex items-center">
+                                        <FaRegUserCircle /> &nbsp; My Profile
+                                    </li>
+                                </Link>
+                                <Link to="/cart">
+                                    <li className="p-2 hover:bg-gray-100 cursor-pointer flex items-center">
+                                        <FaShoppingCart /> &nbsp; My Cart
+                                    </li>
+                                </Link>
+                            </>
+                        )}
                         <button onClick={fetchMerchantData}>
-                            become a Merchant
+                            Become a Merchant
                         </button>
                     </ul>
                 </div>

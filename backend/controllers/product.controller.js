@@ -43,7 +43,7 @@ export const createProduct = asyncHandler(async (req, res) => {
     const userId = req.user.id
     const coverImageLocalPath = await req.file.path
     // const imageLocalPath = req.files?.imageUrls[0]?.path
-    console.log(coverImageLocalPath)
+    // console.log(coverImageLocalPath)
     if (!coverImageLocalPath) {
         throw new ApiError(406, 'images required') //Not Acceptable
     }
@@ -53,7 +53,7 @@ export const createProduct = asyncHandler(async (req, res) => {
     if (!coverImage) {
         throw new ApiError(406, ' images required')
     }
-    console.log('Req Files : ' + req.file)
+    // console.log('Req Files : ' + req.file)
     const newProduct = new TempProduct({
         productName,
         category,
@@ -121,7 +121,7 @@ export const RemoveCart = asyncHandler(async (req, res) => {
     product.quantity--
     await product.save()
     if (product.quantity === 0) {
-        console.log('PRODUCT : ', product)
+        // console.log('PRODUCT : ', product)
         await product.deleteOne()
         return res
             .status(200)

@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import Rating from 'react-rating-stars-component'
+
 import {useNavigate} from 'react-router-dom'
 
 function Home() {
@@ -13,7 +15,6 @@ function Home() {
 
     const handlePrevious = () => {
         setPage((p) => {
-            console.log('Previous page:', p)
             if (p === 1) return p
             fetchProduct(p - 1)
             return p - 1
@@ -21,7 +22,6 @@ function Home() {
     }
     const handleNext = () => {
         setPage((p) => {
-            console.log('Next page:', p)
             if (p === pageCount) return p
             fetchProduct(p + 1)
             return p + 1
@@ -33,7 +33,6 @@ function Home() {
             const response = await axios.get(
                 `http://localhost:3000/api/product/fetchProduct?page=${page}`,
             )
-            console.log(response.data.products)
             setProducts(response.data.products)
             setPagination(response.data.pagination)
             setPageCount(response.data.pagination.pageCount) // Update pageCount state
@@ -58,7 +57,7 @@ function Home() {
                 {products.map((product) => (
                     <div
                         key={product._id}
-                        className="w-[80%]  self-start bg-[#cbdeed] flex h-[300px] p-4 mb-4 border-black border-b"
+                        className="w-[80%]  self-start bg-[#d9dfe4] flex h-[300px] p-4 mb-4 border-black border-b"
                         onClick={() => showProduct(product._id)}
                     >
                         <img
@@ -70,6 +69,14 @@ function Home() {
                             <h1 className=" text-4xl font-semibold mb-2">
                                 {product.productName}
                             </h1>
+                            <Rating
+                                value={product.rating}
+                                count={5}
+                                size={30}
+                                activeColor="orange"
+                                edit={false}
+                                isHalf={true}
+                            />
                             <p className=" mb-2">{product.category}</p>
                             <p className=" mb-2">{product.description}</p>
                             <p className=" mb-2"> ₹{product.price}</p>

@@ -6,21 +6,46 @@ import CustomToastContainer from './Toast/CustomToastContainer'
 import {toast} from 'react-toastify'
 
 function ShowInfo() {
-    const [feedback, setFeedback] = useState(null)
-    const [comment, setComment] = useState('')
-    const [rating, setRating] = useState(0)
     const {id} = useParams()
     const [product, setProduct] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [feedback, setFeedback] = useState([])
+    const [comment, setComment] = useState('')
+    const [rating, setRating] = useState(0)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const [productResponse, feedbackResponse] = await Promise.all([
+                    axios.get(
+                        `http://localhost:3000/api/product/showProduct/${id}`,
+                        {withCredentials: true},
+                    ),
+                    axios.get(
+                        `http://localhost:3000/api/feedback/fetchFeedback/${id}`,
+                        {withCredentials: true},
+                    ),
+                ])
+                setProduct(productResponse.data.product)
+                setFeedback(feedbackResponse.data.data)
+                setLoading(false)
+            } catch (error) {
+                console.error('Error fetching data:', error)
+                setLoading(false)
+            }
+        }
+
+        fetchData()
+    }, [id])
 
     const ratingChanged = (newRating) => {
         setRating(newRating)
     }
 
-    const addCart = async (id) => {
+    const addCart = async (productId) => {
         try {
             const response = await axios.get(
-                `http://localhost:3000/api/product/addToCart/${id}`,
+                `http://localhost:3000/api/product/addToCart/${productId}`,
                 {withCredentials: true},
             )
             if (response.status === 200) {
@@ -38,50 +63,25 @@ function ShowInfo() {
         try {
             const response = await axios.post(
                 'http://localhost:3000/api/feedback/createFeedback',
-                {
-                    productId: id,
-                    rating: rating,
-                    comment: comment,
-                },
+                {productId: id, rating: rating, comment: comment},
                 {withCredentials: true},
             )
             if (response.status === 200) {
                 toast.success(response.data.message)
+                setRating(0)
+                setComment('')
+                const feedbackResponse = await axios.get(
+                    `http://localhost:3000/api/feedback/fetchFeedback/${id}`,
+                    {withCredentials: true},
+                )
+                setFeedback(feedbackResponse.data.data)
             }
         } catch (err) {
             if (err.response && err.response.status === 401) {
                 toast.error('Please Login')
             }
         }
-        setRating(1)
-        setComment('')
     }
-
-    const fetchFeedback = async (id) => {
-        const response = await axios.get(
-            `http://localhost:3000/api/feedback/fetchFeedback/${id}`,
-            {withCredentials: true},
-        )
-        setFeedback(response.data.data)
-    }
-
-    useEffect(() => {
-        const fetchProduct = async () => {
-            try {
-                const response = await axios.get(
-                    `http://localhost:3000/api/product/showProduct/${id}`,
-                    null,
-                    {withCredentials: true},
-                )
-                setProduct(response.data.product)
-                setLoading(false)
-            } catch (error) {
-                console.error('Error fetching product details:', error)
-            }
-        }
-        fetchFeedback(id)
-        fetchProduct()
-    }, [id, feedback])
 
     return (
         <div className="container mx-auto px-4 py-8">
@@ -90,7 +90,7 @@ function ShowInfo() {
                 <p>Loading...</p>
             ) : product ? (
                 <div className="flex flex-col md:flex-row items-center">
-                    <div className="md:mr-12  md:mb-0">
+                    <div className="md:mr-12 md:mb-0">
                         <div className="mb-6 h-1/2 bg-blue-500">
                             <img
                                 src={product.coverImage}
@@ -155,7 +155,7 @@ function ShowInfo() {
             </form>
             <h1>Feedback</h1>
             <div>
-                {feedback !== null ? (
+                {feedback.length > 0 ? (
                     feedback.map((feedbackItem) => (
                         <div
                             className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
@@ -176,7 +176,7 @@ function ShowInfo() {
                             </p>
                             <div className="flex items-center">
                                 <p className="text-blue-500 text-base">
-                                    Reviewd on :{' '}
+                                    Reviewed on :{' '}
                                     {new Date(
                                         feedbackItem.createdAt,
                                     ).toLocaleDateString('en-US', {
@@ -189,7 +189,7 @@ function ShowInfo() {
                         </div>
                     ))
                 ) : (
-                    <p>Loading feedback...</p>
+                    <p>No feedback available.</p>
                 )}
             </div>
         </div>

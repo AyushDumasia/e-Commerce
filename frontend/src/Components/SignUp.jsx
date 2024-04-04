@@ -5,6 +5,7 @@ import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Input from './Input/Input'
 import Button from './Button/Button'
+import {Link} from 'react-router-dom'
 import Password from './Password/Password'
 
 function SignUp() {
@@ -31,7 +32,7 @@ function SignUp() {
                 'http://localhost:3000/api/auth/signup',
                 formData,
             )
-            console.log(response.data)
+            // console.log(response.data)
             if (response.status === 201) {
                 toast.success('User logged in successfully')
             }
@@ -47,10 +48,13 @@ function SignUp() {
     }
 
     return (
-        <div className="mt-[100px] flex justify-center items-center">
+        <div className="mt-[20px] flex justify-center items-center">
             <ToastContainer />
             <div className="flex flex-col justify-center items-start w-[450px] bg-white p-8 rounded-lg">
                 <h1 className="font-bold text-3xl mb-3">Sign Up</h1>
+                <Link to="/login" className="text-sm text-gray-500 ml-auto">
+                    Already have an account
+                </Link>{' '}
                 <form onSubmit={handleSubmit} className="w-full">
                     <Input
                         label={'Name'}
