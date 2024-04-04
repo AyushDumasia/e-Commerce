@@ -1,15 +1,20 @@
 import {useEffect, useState} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import axios from 'axios'
+import {ToastContainer, toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import {FaRegUserCircle, FaAngleUp, FaShoppingCart} from 'react-icons/fa'
 
 function SignInButton() {
+    const navigate = useNavigate()
     const [showMenu, setShowMenu] = useState(false)
-    const [user, setUser] = useState(null) // Store user data
+    const [user, setUser] = useState(null)
+    const [merchant, setMerchant] = useState(null)
 
     useEffect(() => {
         // Check user authentication status when component mounts
         checkAuthentication()
+        fetchMerchantData()
     }, [])
 
     const checkAuthentication = async () => {
@@ -28,13 +33,19 @@ function SignInButton() {
     const fetchMerchantData = async () => {
         try {
             const response = await axios.get(
-                'http://localhost:3000/api/merchant/becomeMerchant',
+                'http://localhost:3000/api/merchant/currentMerchant',
                 {withCredentials: true},
             )
-            // console.log(response)
-        } catch (error) {
-            console.error('Error fetching merchant data:', error)
+            setMerchant(response.data.licenseId)
+            console.log(response.data.licenseId)
+            console.log(response)
+        } catch (err) {
+            console.error('Error fetching')
         }
+    }
+
+    const becomeMerchant = () => {
+        navigate('/becomeMerchant')
     }
 
     const handleMouseEnter = () => {
@@ -95,9 +106,19 @@ function SignInButton() {
                                 </Link>
                             </>
                         )}
-                        <button onClick={fetchMerchantData}>
-                            Become a Merchant
-                        </button>
+                        {merchant ? (
+                            <>
+                                <p className="text-sm">
+                                    {' '}
+                                    MerchantId : {merchant}
+                                </p>
+                                <Link to="/createProduct">Create Product</Link>
+                            </>
+                        ) : (
+                            <button onClick={becomeMerchant}>
+                                Become a Merchant
+                            </button>
+                        )}
                     </ul>
                 </div>
             )}

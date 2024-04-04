@@ -16,8 +16,7 @@ import Cart from './Components/Cart'
 import './index.css'
 import AdminPage from './Components/AdminPage.jsx'
 import ShowInfo from './Components/ShowInfo.jsx'
-import Temp from './Components/Temp.jsx'
-import Navbar from './Components/Navbar/Navbar.jsx'
+import MerchantForm from './Components/MerchantForm.jsx'
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -29,7 +28,7 @@ const router = createBrowserRouter(
             <Route path="/cart" element={<Cart />} />
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/showProduct/:id" element={<ShowInfo />} />
-            <Route path="/temp" element={<Temp />} />
+            <Route path="/becomeMerchant" element={<MerchantForm />} />
         </Route>,
     ),
 )

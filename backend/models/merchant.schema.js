@@ -7,10 +7,10 @@ const merchantSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'User',
         },
-        // documents :{
-        //     type : String,
-        //     required : true
-        // },
+        document: {
+            type: String,
+            // required: true,
+        },
         licenseId: {
             type: String,
             required: true,
