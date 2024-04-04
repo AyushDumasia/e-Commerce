@@ -17,6 +17,7 @@ import './index.css'
 import AdminPage from './Components/AdminPage.jsx'
 import ShowInfo from './Components/ShowInfo.jsx'
 import MerchantForm from './Components/MerchantForm.jsx'
+import AddressForm from './Components/AddressForm.jsx'
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -29,6 +30,7 @@ const router = createBrowserRouter(
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/showProduct/:id" element={<ShowInfo />} />
             <Route path="/becomeMerchant" element={<MerchantForm />} />
+            <Route path="/createAddress" element={<AddressForm />} />
         </Route>,
     ),
 )
