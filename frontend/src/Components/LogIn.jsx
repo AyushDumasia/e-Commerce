@@ -32,10 +32,9 @@ function LogIn() {
                 formData,
                 {withCredentials: true},
             )
-            console.log('response : ', response)
             if (response.status === 200) {
                 localStorage.setItem('userCookie', response.data.accessToken)
-                navigate('/home')
+                navigate('/')
             }
         } catch (err) {
             console.log(err)
@@ -45,6 +44,7 @@ function LogIn() {
                 toast.error('An error occurred. Please try again later.')
             }
         }
+        setFormData({email: '', password: ''})
     }
 
     return (

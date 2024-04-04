@@ -19,10 +19,13 @@ function ShowInfo() {
 
     const addCart = async (id) => {
         try {
-            await axios.get(
+            const response = await axios.get(
                 `http://localhost:3000/api/product/addToCart/${id}`,
                 {withCredentials: true},
             )
+            if (response.status === 200) {
+                toast.success(response.data.message)
+            }
         } catch (err) {
             if (err.response && err.response.status === 401) {
                 toast.error('Please Login')
@@ -33,7 +36,7 @@ function ShowInfo() {
     const handleFeedback = async (e) => {
         e.preventDefault()
         try {
-            await axios.post(
+            const response = await axios.post(
                 'http://localhost:3000/api/feedback/createFeedback',
                 {
                     productId: id,
@@ -42,12 +45,16 @@ function ShowInfo() {
                 },
                 {withCredentials: true},
             )
+            if (response.status === 200) {
+                toast.success(response.data.message)
+            }
         } catch (err) {
-            console.error('Error submitting feedback:', err)
             if (err.response && err.response.status === 401) {
                 toast.error('Please Login')
             }
         }
+        setRating(1)
+        setComment('')
     }
 
     const fetchFeedback = async (id) => {

@@ -74,8 +74,15 @@ function CreateProduct() {
                     },
                 },
             )
-
-            console.log(response)
+            if (response.status === 200) {
+                toast.success('Product created successfully')
+            }
+            setFormData({
+                productName: '',
+                category: '',
+                description: '',
+                price: '',
+            })
         } catch (error) {
             console.error('Error:', error)
             toast.error('An error occurred. Please try again later.')

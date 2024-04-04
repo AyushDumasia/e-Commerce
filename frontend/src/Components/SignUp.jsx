@@ -32,7 +32,10 @@ function SignUp() {
                 formData,
             )
             console.log(response.data)
-            navigate('/home')
+            if (response.status === 201) {
+                toast.success('User logged in successfully')
+            }
+            navigate('/')
         } catch (error) {
             console.error('Error:', error)
             if (error.status === 409) {

@@ -17,7 +17,9 @@ export const createFeedback = asyncHandler(async (req, res) => {
         comment: req.body.comment,
     })
     await newFeedback.save()
-    res.status(200).json(newFeedback)
+    res.status(200).json(
+        new ApiResponse(200, newFeedback, 'Feedback saved successfully'),
+    )
 })
 
 export const fetchFeedback = asyncHandler(async (req, res) => {

@@ -100,7 +100,7 @@ export const addCart = asyncHandler(async (req, res) => {
     )
 })
 
-//Remover Cart
+//Remove Cart
 export const RemoveCart = asyncHandler(async (req, res) => {
     const user = req?.user
     const productId = req.params.id
