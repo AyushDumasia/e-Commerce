@@ -5,6 +5,10 @@ import {ApiResponse} from './../utils/ApiResponse.js'
 
 export const createFeedback = asyncHandler(async (req, res) => {
     const user = req?.user
+    if (!user) {
+        return res.status(401).json('User is not logged in')
+    }
+
     // console.log(product)
     const newFeedback = new Feedback({
         productId: req.body.productId,
@@ -20,9 +24,14 @@ export const fetchFeedback = asyncHandler(async (req, res) => {
     const productId = req.params
     console.log(productId.id)
 
-    const feedback = await Feedback.find({productId: productId.id})
-    if (!feedback) {
+    const feedbacks = await Feedback.find({productId: productId.id}).populate(
+        'userId',
+    )
+    if (!feedbacks) {
         throw new ApiError(404, 'Feedback not found')
     }
-    res.status(200).json(new ApiResponse(201, feedback))
+    for (let feedback of feedbacks) {
+        console.log(feedback.userId.username)
+    }
+    res.status(200).json(new ApiResponse(201, feedbacks))
 })

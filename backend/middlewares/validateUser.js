@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 import User from '../models/user.schema.js'
+import {ApiError} from '../utils/ApiError.js'
 
 // const validateToken = async (req, res, next) => {
 //     let token
@@ -34,7 +35,7 @@ const validateToken = async (req, res, next) => {
             next()
         })
     } else {
-        res.sendStatus(401)
+        res.status(401).json('User not authenticated')
     }
 }
 

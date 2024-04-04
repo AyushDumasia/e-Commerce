@@ -1,6 +1,7 @@
 import express from 'express'
 import validateToken from './../middlewares/validateUser.js'
 import {
+    currentUser,
     getUserInfo,
     logIn,
     signUp,
@@ -12,6 +13,8 @@ const router = express.Router()
 router.post('/signup', signUp)
 
 router.post('/login', logIn)
+
+router.get('/currentUser', validateToken, currentUser)
 
 router.get('/passInfo', validateToken, getUserInfo)
 

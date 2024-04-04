@@ -1,12 +1,11 @@
 import {Link} from 'react-router-dom'
 import SearchBar from './SearchBar.jsx'
 import List from './List'
-
 import SignInButton from './SignInButton.jsx'
 
 function Navbar() {
     return (
-        <nav className="bg-white p-4 fixed w-full top-0 z-50 ">
+        <nav className="bg-white p-4 fixed w-full top-0 z-50">
             <div className="container mx-auto flex justify-between items-center">
                 <div className="flex justify-center items-center">
                     <Link to="/" className="text-2xl font-bold">

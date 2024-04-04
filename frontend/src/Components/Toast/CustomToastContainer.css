@@ -1,0 +1,17 @@
+/* Custom toast notification background color */
+.Toastify__toast--success {
+    /* background-color: green; */
+}
+
+.Toastify__toast--error {
+    /* color: white; */
+    /* background-color: red; */
+}
+
+.Toastify__toast--warning {
+    /* background-color: orange; */
+}
+
+.Toastify__toast--info {
+    /* background-color: blue; */
+}

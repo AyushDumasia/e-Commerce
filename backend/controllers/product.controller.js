@@ -8,10 +8,24 @@ import {uploadOnCloudinary} from './../utils/cloudinary.js'
 import {ApiResponse} from './../utils/ApiResponse.js'
 
 export const fetchProduct = asyncHandler(async (req, res) => {
-    const product = await Product.find()
-    res.status(200).json(
-        new ApiResponse(200, product, 'Data fetched successfully'),
-    )
+    const page = parseInt(req.query.page) || 1
+    const limit = parseInt(req.query.limit) || 5
+    const skip = (page - 1) * limit
+
+    const query = {}
+    const count = await Product.countDocuments(query)
+    const pageCount = Math.ceil(count / limit)
+
+    const products = await Product.find(query).skip(skip).limit(limit)
+
+    res.status(200).json({
+        pagination: {
+            count,
+            pageCount,
+            currentPage: page,
+        },
+        products,
+    })
 })
 
 export const showProduct = asyncHandler(async (req, res) => {

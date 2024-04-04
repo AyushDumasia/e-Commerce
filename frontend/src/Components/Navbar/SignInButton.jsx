@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
 import {
@@ -12,6 +12,22 @@ import {
 function SignInButton() {
     const [showMenu, setShowMenu] = useState(false)
     let timeoutId
+
+    const fetchUser = async () => {
+        try {
+            const response = await axios.get(
+                'http://localhost:3000/api/auth/currentUser',
+                {withCredentials: true},
+            )
+            console.log(response)
+        } catch (error) {
+            console.error('Error fetching merchant data:', error)
+        }
+    }
+
+    useEffect(() => {
+        fetchUser()
+    }, [])
 
     const fetchMerchantData = async () => {
         try {
@@ -58,7 +74,7 @@ function SignInButton() {
             </Link>
             {showMenu && (
                 <div
-                    className="absolute top-[40px] left-[-150px] bg-white shadow rounded-lg w-[250px]"
+                    className="absolute p-[15px] border-gray-300 border border-grey top-[40px] left-[-150px] bg-white shadow rounded-lg w-[250px]"
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                 >
@@ -79,21 +95,9 @@ function SignInButton() {
                                 <FaShoppingCart /> &nbsp; My Cart
                             </li>
                         </Link>
-                        {/* <Link> */}
                         <button onClick={fetchMerchantData}>
                             become a Merchant
                         </button>
-                        {/* </Link> */}
-                        {/* <Link to="/wishlist">
-              <li className="p-2 hover:bg-gray-100 cursor-pointer flex items-center">
-                <FaRegHeart /> &nbsp; Wishlist
-              </li>
-            </Link> */}
-                        {/* <Link to="/contact">
-                            <li className="p-2 hover:bg-gray-100 cursor-pointer flex items-center">
-                                <FaHeadset /> &nbsp; Contact Us
-                            </li>
-                        </Link> */}
                     </ul>
                 </div>
             )}

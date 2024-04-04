@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import {useParams} from 'react-router-dom'
 import Rating from 'react-rating-stars-component'
+import CustomToastContainer from './Toast/CustomToastContainer'
+import {toast} from 'react-toastify'
 
 function ShowInfo() {
     const [feedback, setFeedback] = useState(null)
@@ -12,25 +14,26 @@ function ShowInfo() {
     const [loading, setLoading] = useState(true)
 
     const ratingChanged = (newRating) => {
-        setRating(newRating) // Update the rating state when it changes
+        setRating(newRating)
     }
 
     const addCart = async (id) => {
         try {
-            const response = await axios.get(
+            await axios.get(
                 `http://localhost:3000/api/product/addToCart/${id}`,
                 {withCredentials: true},
             )
-            console.log('Product added to cart:', response.data)
         } catch (err) {
-            console.log('Error adding product to cart:', err)
+            if (err.response && err.response.status === 401) {
+                toast.error('Please Login')
+            }
         }
     }
 
     const handleFeedback = async (e) => {
         e.preventDefault()
         try {
-            const response = await axios.post(
+            await axios.post(
                 'http://localhost:3000/api/feedback/createFeedback',
                 {
                     productId: id,
@@ -39,19 +42,20 @@ function ShowInfo() {
                 },
                 {withCredentials: true},
             )
-            console.log('Feedback submitted successfully:', response.data)
         } catch (err) {
             console.error('Error submitting feedback:', err)
+            if (err.response && err.response.status === 401) {
+                toast.error('Please Login')
+            }
         }
     }
 
     const fetchFeedback = async (id) => {
-        console.log('ID :', id)
         const response = await axios.get(
             `http://localhost:3000/api/feedback/fetchFeedback/${id}`,
             {withCredentials: true},
         )
-        console.log(response)
+        setFeedback(response.data.data)
     }
 
     useEffect(() => {
@@ -70,10 +74,11 @@ function ShowInfo() {
         }
         fetchFeedback(id)
         fetchProduct()
-    }, [id])
+    }, [id, feedback])
 
     return (
         <div className="container mx-auto px-4 py-8">
+            <CustomToastContainer />
             {loading ? (
                 <p>Loading...</p>
             ) : product ? (
@@ -112,7 +117,6 @@ function ShowInfo() {
             ) : (
                 <p>No product found with ID: {id}</p>
             )}
-
             <h1>Rate this</h1>
             <form className="flex flex-col" onSubmit={handleFeedback}>
                 <div className="mb-4">
@@ -122,6 +126,7 @@ function ShowInfo() {
                         onChange={ratingChanged}
                         size={35}
                         activeColor="#ffd700"
+                        required
                     />
                 </div>
                 <textarea
@@ -132,6 +137,7 @@ function ShowInfo() {
                     id="comment"
                     cols="30"
                     value={comment}
+                    required
                     rows="10"
                     className="border-black resize-none w-1/4 mb-4 p-2"
                     placeholder="Enter your comment here..."
@@ -140,6 +146,45 @@ function ShowInfo() {
                     Submit
                 </button>
             </form>
+            <h1>Feedback</h1>
+            <div>
+                {feedback !== null ? (
+                    feedback.map((feedbackItem) => (
+                        <div
+                            className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+                            key={feedbackItem._id}
+                        >
+                            <p className="font-bold text-xl mb-2">
+                                {feedbackItem.userId.username}
+                            </p>
+                            <Rating
+                                value={feedbackItem.rating}
+                                count={5}
+                                size={24}
+                                activeColor="#ffd700"
+                                edit={false}
+                            />
+                            <p className="text-gray-700 text-base">
+                                {feedbackItem.comment}
+                            </p>
+                            <div className="flex items-center">
+                                <p className="text-blue-500 text-base">
+                                    Reviewd on :{' '}
+                                    {new Date(
+                                        feedbackItem.createdAt,
+                                    ).toLocaleDateString('en-US', {
+                                        day: 'numeric',
+                                        month: 'long',
+                                        year: 'numeric',
+                                    })}
+                                </p>
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <p>Loading feedback...</p>
+                )}
+            </div>
         </div>
     )
 }

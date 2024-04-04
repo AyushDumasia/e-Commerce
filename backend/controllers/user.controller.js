@@ -93,3 +93,8 @@ export const updateUser = asyncHandler(async (req, res) => {
         user: updateUser,
     })
 })
+
+export const currentUser = asyncHandler(async (req, res) => {
+    const user = req?.user
+    console.log(user)
+})

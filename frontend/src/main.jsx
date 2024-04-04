@@ -17,14 +17,15 @@ import './index.css'
 import AdminPage from './Components/AdminPage.jsx'
 import ShowInfo from './Components/ShowInfo.jsx'
 import Temp from './Components/Temp.jsx'
+import Navbar from './Components/Navbar/Navbar.jsx'
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<App />}>
+            <Route path="/" element={<Home />} />
             <Route path="/login" element={<LogIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/createProduct" element={<CreateProduct />} />
-            <Route path="/home" element={<Home />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/showProduct/:id" element={<ShowInfo />} />
