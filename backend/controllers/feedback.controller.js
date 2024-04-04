@@ -25,9 +25,9 @@ export const createFeedback = asyncHandler(async (req, res) => {
 
 export const fetchFeedback = asyncHandler(async (req, res) => {
     const productId = req.params
-    console.log(productId)
+    // console.log(productId)
     const product = await Product.findById(productId.id)
-    console.log(product)
+    // console.log(product)
     const feedbacks = await Feedback.find({productId: productId.id}).populate(
         'userId',
     )
@@ -40,7 +40,7 @@ export const fetchFeedback = asyncHandler(async (req, res) => {
             totalRating += feedback.rating
         })
         averageRating = totalRating / feedbacks.length
-        console.log('Average Rating: ', averageRating)
+        // console.log('Average Rating: ', averageRating)
     } else {
         console.log('No feedback available for this product.')
     }

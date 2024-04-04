@@ -2,8 +2,10 @@ import {useEffect, useState} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import {ToastContainer, toast} from 'react-toastify'
+import {MdCreateNewFolder} from 'react-icons/md'
 import 'react-toastify/dist/ReactToastify.css'
 import {FaRegUserCircle, FaAngleUp, FaShoppingCart} from 'react-icons/fa'
+import {IoStorefront} from 'react-icons/io5'
 
 function SignInButton() {
     const navigate = useNavigate()
@@ -12,7 +14,6 @@ function SignInButton() {
     const [merchant, setMerchant] = useState(null)
 
     useEffect(() => {
-        // Check user authentication status when component mounts
         checkAuthentication()
         fetchMerchantData()
     }, [])
@@ -23,9 +24,9 @@ function SignInButton() {
                 'http://localhost:3000/api/auth/currentUser',
                 {withCredentials: true},
             )
-            setUser(response.data) // Set user data
+            setUser(response.data)
         } catch (error) {
-            console.error('Error fetching user data:', error)
+            toast.error('Error fetching')
             setUser(null)
         }
     }
@@ -37,10 +38,8 @@ function SignInButton() {
                 {withCredentials: true},
             )
             setMerchant(response.data.licenseId)
-            console.log(response.data.licenseId)
-            console.log(response)
         } catch (err) {
-            console.error('Error fetching')
+            // toast.error('Error fetching')
         }
     }
 
@@ -49,26 +48,26 @@ function SignInButton() {
     }
 
     const handleMouseEnter = () => {
-        setShowMenu(true) // Show the menu on mouse enter
+        setShowMenu(true)
     }
 
     const handleMouseLeave = () => {
-        setShowMenu(false) // Hide the menu on mouse leave
+        setShowMenu(false)
     }
 
     return (
-        <div className="relative">
+        <div className="relative ">
             <div
                 className={`${
                     showMenu
-                        ? 'bg-secondary text-black'
-                        : 'bg-floralWhite text-black'
+                        ? 'bg-secondary text-white'
+                        : 'bg-floralWhite text-white'
                 } flex p-2 ml-2 rounded justify-evenly items-center`}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
             >
-                <FaRegUserCircle /> &nbsp; {user ? user.username : 'Sign In'}{' '}
-                &nbsp;
+                <FaRegUserCircle /> &nbsp;{' '}
+                {user ? user.username : <Link to="/login">Sign In</Link>} &nbsp;
                 <FaAngleUp
                     className={`transform ${
                         showMenu
@@ -79,28 +78,28 @@ function SignInButton() {
             </div>
             {showMenu && (
                 <div
-                    className="absolute p-[15px] border-gray-300 border border-grey top-[40px] left-[-150px] bg-white shadow rounded-lg w-[250px]"
+                    className="absolute p-[15px] border-gray-300 border border-grey top-[40px] left-[-150px] bg-[#131921] shadow rounded-lg w-[250px] h-auto"
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                 >
                     <ul className="list-none p-0 m-0">
                         {!user && ( // Show sign-up option only if user is not authenticated
                             <Link to="/signup">
-                                <li className="p-3 pl-3 hover:bg-gray-100 cursor-pointer border-gray-300 border-b flex justify-between">
+                                <li className="p-3 pl-3 cursor-pointer border-gray-300 border-b flex justify-between">
                                     New here?
-                                    <p className="text-secondary">Sign Up</p>
+                                    <p className="text-white">Sign Up</p>
                                 </li>
                             </Link>
                         )}
                         {user && ( // Show profile and cart options if user is authenticated
                             <>
-                                <Link to="/profile">
-                                    <li className="p-2 hover:bg-gray-100 cursor-pointer flex items-center">
+                                <Link to="/">
+                                    <li className="p-2  cursor-pointer flex items-center border-b">
                                         <FaRegUserCircle /> &nbsp; My Profile
                                     </li>
                                 </Link>
                                 <Link to="/cart">
-                                    <li className="p-2 hover:bg-gray-100 cursor-pointer flex items-center">
+                                    <li className="p-2 cursor-pointer flex items-center border-b">
                                         <FaShoppingCart /> &nbsp; My Cart
                                     </li>
                                 </Link>
@@ -108,15 +107,23 @@ function SignInButton() {
                         )}
                         {merchant ? (
                             <>
-                                <p className="text-sm">
+                                <Link
+                                    to="/createProduct"
+                                    className="p-2 cursor-pointer flex items-center border-b"
+                                >
+                                    <MdCreateNewFolder /> &nbsp;Create Product
+                                </Link>
+                                <p className="text-sm p-[5px] border-b">
                                     {' '}
                                     MerchantId : {merchant}
                                 </p>
-                                <Link to="/createProduct">Create Product</Link>
                             </>
                         ) : (
-                            <button onClick={becomeMerchant}>
-                                Become a Merchant
+                            <button
+                                onClick={becomeMerchant}
+                                className="p-2 cursor-pointer flex items-center border-b"
+                            >
+                                <IoStorefront /> &nbsp; Become a Merchant
                             </button>
                         )}
                     </ul>

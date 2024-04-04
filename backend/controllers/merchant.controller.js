@@ -16,7 +16,7 @@ export const becomeMerchant = async (req, res) => {
         const document = await uploadOnCloudinary(localDocument)
 
         const alreadyUser = await Merchant.findOne({merchant: user.id})
-        console.log(alreadyUser)
+        // console.log(alreadyUser)
         if (alreadyUser) {
             return res.status(400).json({message: 'You are already a Merchant'})
         }
@@ -33,7 +33,7 @@ export const becomeMerchant = async (req, res) => {
             .status(200)
             .json(new ApiResponse(200, newMerchant, 'Now, you are a Merchant'))
     } catch (error) {
-        console.error('Error becoming merchant:', error)
+        // console.error('Error becoming merchant:', error)
         return res
             .status(error.statusCode || 500)
             .json({message: error.message || 'Internal Server Error'})
@@ -42,8 +42,8 @@ export const becomeMerchant = async (req, res) => {
 
 export const currentMerchant = asyncHandler(async (req, res) => {
     const user = req.user.id
-    console.log(user)
+    // console.log(user)
     const merchant = await Merchant.findOne({merchant: user})
-    console.log('Merchant : ', merchant)
+    // console.log('Merchant : ', merchant)
     res.status(200).json(merchant)
 })

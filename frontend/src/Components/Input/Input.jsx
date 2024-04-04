@@ -17,7 +17,7 @@ function Input({label, type, placeholder, value, name, handler}) {
                 name={name}
                 value={value}
                 onChange={handler}
-                className="border p-2 rounded mt-[3px] w-full text-base focus:outline-none"
+                className="border border-[grey] p-2 rounded-[5px] mt-[3px] w-full text-base focus:outline-none"
                 required
             />
         </div>

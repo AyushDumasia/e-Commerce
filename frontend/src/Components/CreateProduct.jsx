@@ -4,6 +4,7 @@ import Button from './Button/Button'
 import axios from 'axios'
 import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import {FaSpinner} from 'react-icons/fa' // Import loading spinner icon
 
 function CreateProduct() {
     const [formData, setFormData] = useState({
@@ -12,8 +13,8 @@ function CreateProduct() {
         description: '',
         price: '',
     })
-
     const [selectedFile, setSelectedFile] = useState(null)
+    const [loading, setLoading] = useState(false) // State for loading animation
 
     const handleChange = (e) => {
         const {name, value} = e.target
@@ -28,33 +29,9 @@ function CreateProduct() {
         setSelectedFile(files[0]) // Assuming you only want to upload one file
     }
 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault()
-
-    //     try {
-    //         const formDataWithFiles = new FormData()
-    //         formDataWithFiles.append('file', selectedFile)
-
-    //         const response = await axios.post(
-    //             'http://localhost:3000/api/product/createProduct',
-    //             formDataWithFiles,
-    //             {
-    //                 withCredentials: true,
-    //                 headers: {
-    //                     'Content-Type': 'multipart/form-data',
-    //                 },
-    //             },
-    //         )
-
-    //         console.log(response)
-    //     } catch (error) {
-    //         console.error('Error:', error)
-    //         toast.error('An error occurred. Please try again later.')
-    //     }
-    // }
-
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setLoading(true) // Set loading to true when submitting
 
         try {
             const formDataWithFiles = new FormData()
@@ -86,6 +63,8 @@ function CreateProduct() {
         } catch (error) {
             console.error('Error:', error)
             toast.error('An error occurred. Please try again later.')
+        } finally {
+            setLoading(false) // Reset loading state when finished
         }
     }
 
@@ -110,18 +89,8 @@ function CreateProduct() {
                         id={'coverImage'}
                         name={'coverImage'}
                         accept={'image/*'}
-                        // value={selectedFiles}
                         handler={handleFileChange}
                     />
-                    {/* <label htmlFor="images">Other Image:</label>
-                    <Input
-                        type={'file'}
-                        multiple
-                        id={'imageUrls'}
-                        name={'imageUrls'}
-                        accept="image/*"
-                        handler={handleFileChange}
-                    /> */}
 
                     <label htmlFor="category">Category:</label>
                     <Input
@@ -154,7 +123,11 @@ function CreateProduct() {
                         required
                     />
 
-                    <Button text="Submit" type="submit" />
+                    {loading ? (
+                        <FaSpinner className="animate-spin text-blue-500" />
+                    ) : (
+                        <Button text="Submit" type="submit" />
+                    )}
                 </form>
             </div>
         </div>

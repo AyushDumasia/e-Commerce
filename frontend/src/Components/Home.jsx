@@ -37,7 +37,8 @@ function Home() {
             setPagination(response.data.pagination)
             setPageCount(response.data.pagination.pageCount) // Update pageCount state
         } catch (error) {
-            console.error('Error fetching products:', error)
+            // console.error('Error fetching products:', error)
+            toast.error(error.message)
         }
     }
 
@@ -53,46 +54,60 @@ function Home() {
     return (
         <div className="flex p-7">
             <ToastContainer />
-            <div className="flex flex-col w-screen item-center">
+            <div className="flex flex-col w-screen items-center">
                 {products.map((product) => (
                     <div
                         key={product._id}
-                        className="w-[80%]  self-start bg-[#d9dfe4] flex h-[300px] p-4 mb-4 border-black border-b"
+                        className="w-[80%] self-start bg-white flex h-[300px] p-4 mb-4 border border-gray-300 rounded-lg shadow-md cursor-pointer transition duration-300 hover:shadow-lg"
                         onClick={() => showProduct(product._id)}
                     >
                         <img
                             src={product.coverImage}
-                            alt=""
-                            className="w-[250px] h-[250px] object-contain rounded-lg mx-4"
+                            alt={product.productName}
+                            className="w-[250px] h-[250px] object-cover rounded-lg mr-4"
                         />
-                        <div>
-                            <h1 className=" text-4xl font-semibold mb-2">
-                                {product.productName}
-                            </h1>
-                            <Rating
-                                value={product.rating}
-                                count={5}
-                                size={30}
-                                activeColor="orange"
-                                edit={false}
-                                isHalf={true}
-                            />
-                            <p className=" mb-2">{product.category}</p>
-                            <p className=" mb-2">{product.description}</p>
-                            <p className=" mb-2"> ₹{product.price}</p>
+                        <div className="flex flex-col justify-between">
+                            <div>
+                                <h1 className="text-2xl font-semibold mb-2">
+                                    {product.productName}
+                                </h1>
+                                {/* <p className="text-gray-600 mb-2">
+                                    {product.category}
+                                </p> */}
+                                <p className="text-gray-800 mb-2">
+                                    {product.description}
+                                </p>
+                                <p className="text-gray-800 font-semibold">
+                                    ₹{product.price}
+                                </p>
+                                <Rating
+                                    value={product.rating}
+                                    count={5}
+                                    size={20}
+                                    activeColor="orange"
+                                    edit={false}
+                                    isHalf={true}
+                                />
+                                {/* <p className="text-gray-700">
+                                    {product.rating} {product.reviews}reviews
+                                </p> */}
+                            </div>
+                            <div className="flex items-center  justify-between">
+                                <div className="flex items-center"></div>
+                            </div>
                         </div>
                     </div>
                 ))}
-                <footer className="flex justify-between">
+                <footer className="flex justify-between w-full mt-8">
                     <button
-                        className="bg-[#000000] text-[white] p-[5px] rounded-sm"
+                        className="bg-gray-800 text-white px-4 py-2 rounded-sm disabled:opacity-50"
                         disabled={page === 1}
                         onClick={handlePrevious}
                     >
                         Previous
                     </button>
                     <button
-                        className="bg-[#000000] text-[white] p-[5px] rounded-sm"
+                        className="bg-gray-800 text-white px-4 py-2 rounded-sm disabled:opacity-50"
                         disabled={page === pageCount}
                         onClick={handleNext}
                     >

@@ -9,7 +9,7 @@ const merchantSchema = new Schema(
         },
         document: {
             type: String,
-            // required: true,
+            required: true,
         },
         licenseId: {
             type: String,

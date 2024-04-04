@@ -38,7 +38,7 @@ function SignUp() {
             }
             navigate('/')
         } catch (error) {
-            console.error('Error:', error)
+            // console.error('Error:', error)
             if (error.status === 409) {
                 toast.error('Email is already registered')
             } else {

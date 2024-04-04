@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import {FiPlus, FiMinus} from 'react-icons/fi'
+import {toast} from 'react-toastify'
+import ToastContainer from './Toast/CustomToastContainer'
 
 function Cart() {
     const [cart, setCart] = useState({cartItems: [], totalPrice: '0.00'})
@@ -13,7 +15,7 @@ function Cart() {
             )
             setCart(response.data)
         } catch (error) {
-            console.error('Error fetching cart data:', error)
+            toast.error(error.message)
         }
     }
 
@@ -31,69 +33,63 @@ function Cart() {
             )
             fetchData()
         } catch (error) {
-            console.error(
-                `Error ${action === 'addToCart' ? 'increasing' : 'decreasing'} quantity:`,
-                error,
-            )
+            toast.error(error.message)
         }
     }
 
     return (
         <div className="container mx-auto">
+            <ToastContainer />
             <div className="text-center py-8">
                 <h1 className="font-bold text-start text-2xl">My Cart</h1>
                 {cart.cartItems.map((item) => (
                     <div
                         key={item._id}
-                        className="border border-gray-200 rounded-lg p-4 flex bg-amber-100 w-4/6 my-1 h-56"
+                        className="border border-gray-200 rounded-lg p-4 flex items-center justify-between bg-white my-4"
                     >
                         <img
                             src={item.productId.coverImage}
                             alt=""
-                            className="w-48 h-48 object-contain rounded mr-4"
+                            className="w-32 h-32 object-contain rounded mr-4"
                         />
-                        <div className="text-start flex justify-between w-full justify-self-start">
-                            <div>
-                                <h3 className="text-lg font-semibold mb-2">
-                                    {item.productId.productName}
-                                </h3>
-                                <p className="text-sm mb-2">
-                                    {item.productId.category}
-                                </p>
-                                <p className="text-sm mb-2">
-                                    {item.productId.description}
-                                </p>
-                                <p className="text-sm mb-2">
-                                    ₹{item.productId.price}
-                                </p>
-                            </div>
-                            <div className="flex items-center self-center flex-col px-3">
-                                <div className="flex">
-                                    <button
-                                        className="text-black px-2 py-1 rounded"
-                                        onClick={() =>
-                                            updateQuantity(
-                                                item.productId._id,
-                                                'removeCart',
-                                            )
-                                        }
-                                    >
-                                        <FiMinus />
-                                    </button>
-                                    <p className="mx-2">{item.quantity}</p>
-                                    <button
-                                        className="text-black px-2 py-1 rounded"
-                                        onClick={() =>
-                                            updateQuantity(
-                                                item.productId._id,
-                                                'addToCart',
-                                            )
-                                        }
-                                    >
-                                        <FiPlus />
-                                    </button>
-                                </div>
-                            </div>
+                        <div className="flex-grow">
+                            <h3 className="text-lg  font-semibold mb-2">
+                                {item.productId.productName}
+                            </h3>
+                            {/* <p className="text-sm mb-2">
+                                Category: {item.productId.category}
+                            </p>
+                            <p className="text-sm mb-2">
+                                Description: {item.productId.description}
+                            </p> */}
+                            <p className="text-sm mb-2">
+                                Price: ₹{item.productId.price}
+                            </p>
+                        </div>
+                        <div className="flex items-center">
+                            <button
+                                className="text-black px-2 py-1 rounded"
+                                onClick={() =>
+                                    updateQuantity(
+                                        item.productId._id,
+                                        'removeCart',
+                                    )
+                                }
+                            >
+                                <FiMinus />
+                            </button>
+                            <p className="mx-2">{item.quantity}</p>
+                            <button
+                                className="text-black px-2 py-1 rounded"
+                                onClick={() =>
+                                    updateQuantity(
+                                        item.productId._id,
+                                        'addToCart',
+                                    )
+                                }
+                            >
+                                <FiPlus />
+                            </button>
                         </div>
                     </div>
                 ))}

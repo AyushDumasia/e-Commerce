@@ -21,9 +21,9 @@ function MerchantForm() {
                     },
                 },
             )
-            console.log(response)
+            // console.log(response)
         } catch (error) {
-            console.error('Error:', error)
+            // console.error('Error:', error)
             toast.error('An error occurred. Please try again later.')
         }
     }

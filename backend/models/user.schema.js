@@ -33,11 +33,10 @@ const userSchema = new Schema(
                 ref: 'Product',
             },
         ],
-        token: [
+        address: [
             {
-                token: {
-                    type: String,
-                },
+                type: Schema.Types.ObjectId,
+                ref: 'Address',
             },
         ],
     },
