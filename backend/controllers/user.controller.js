@@ -23,7 +23,7 @@ export const signUp = asyncHandler(async (req, res) => {
         password: hashedPassword,
     })
     await newUser.save()
-
+    console.log('User saved')
     const accessToken = jwt.sign(
         {
             user: {
@@ -35,16 +35,18 @@ export const signUp = asyncHandler(async (req, res) => {
         '123',
         {expiresIn: '90m'},
     )
+
     req.user = {
         username: newUser.username,
         email: newUser.email,
         id: newUser.id,
     }
-    // console.log("Req  :", req);
+    console.log('Req  :', req)
 
     res.cookie('userCookie', accessToken, {
         httpOnly: true,
     })
+    console.log('Cookie saved')
 
     res.status(201).json(
         new ApiResponse(201, newUser, 'User logged in successfully'),
@@ -61,7 +63,13 @@ export const logIn = asyncHandler(async (req, res) => {
     }
 
     const accessToken = jwt.sign(
-        {user: {username: user.username, email: user.email, id: user.id}},
+        {
+            user: {
+                username: user.username,
+                email: user.email,
+                id: user.id,
+            },
+        },
         '123',
         {expiresIn: '90m'},
     )

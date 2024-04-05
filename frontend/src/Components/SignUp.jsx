@@ -31,14 +31,15 @@ function SignUp() {
             const response = await axios.post(
                 'http://localhost:3000/api/auth/signup',
                 formData,
+                {
+                    withCredentials: true,
+                },
             )
-            // console.log(response.data)
             if (response.status === 201) {
                 toast.success('User logged in successfully')
             }
             navigate('/')
         } catch (error) {
-            // console.error('Error:', error)
             if (error.status === 409) {
                 toast.error('Email is already registered')
             } else {
