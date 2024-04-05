@@ -1,11 +1,22 @@
 import bcrypt from 'bcryptjs'
 import mongoose from 'mongoose'
 import jwt from 'jsonwebtoken'
+import nodemailer from 'nodemailer'
 import User from '../models/user.schema.js'
 import {asyncHandler} from '../utils/asyncHandler.js'
 import {ApiError} from './../utils/apiError.js'
 import {ApiResponse} from './../utils/ApiResponse.js'
 const saltRounds = 10
+
+const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
+    auth: {
+        user: 'adumasia1@gmail.com',
+        pass: 'xkbs ydsp qess vkrr',
+    },
+})
 
 //Sign Up , post
 export const signUp = asyncHandler(async (req, res) => {
@@ -47,6 +58,16 @@ export const signUp = asyncHandler(async (req, res) => {
         httpOnly: true,
     })
     console.log('Cookie saved')
+
+    const info = await transporter.sendMail({
+        from: '<adumasia1@gmail.com>',
+        to: newUser.email,
+        subject: 'Welcome to Our Platform! ✔',
+        text: 'Welcome to Our Platform!',
+        html: '<b>Welcome to Our Platform!</b>',
+    })
+
+    console.log('Message sent: %s', info.messageId)
 
     res.status(201).json(
         new ApiResponse(201, newUser, 'User logged in successfully'),

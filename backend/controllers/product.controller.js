@@ -134,6 +134,7 @@ export const RemoveCart = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, 'Product removed successfully'))
 })
 
+//Fetch the data of cart
 export const getCart = asyncHandler(async (req, res) => {
     const user = req.user
     const findUser = await User.findOne({_id: user.id})
@@ -168,4 +169,22 @@ export const fetchTempProducts = asyncHandler(async (req, res) => {
     res.status(200).json(
         new ApiResponse(200, products, 'Product fetched successfully'),
     )
+})
+
+export const checkBox = asyncHandler(async (req, res) => {
+    const {checkedProducts} = req.body // Array of checked product IDs
+
+    // Fetch cart items for the checked products
+    const checkedCartItems = await Cart.find({
+        productId: {$in: checkedProducts},
+    }).populate('productId')
+
+    // Calculate the total price of checked items
+    let totalPrice = 0
+    for (const cartItem of checkedCartItems) {
+        totalPrice += parseFloat(cartItem.productId.price) * cartItem.quantity
+    }
+
+    // Send the total price in the response
+    res.status(200).json({total: totalPrice})
 })

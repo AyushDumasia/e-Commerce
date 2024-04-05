@@ -18,6 +18,7 @@ import AdminPage from './Components/AdminPage.jsx'
 import ShowInfo from './Components/ShowInfo.jsx'
 import MerchantForm from './Components/MerchantForm.jsx'
 import AddressForm from './Components/AddressForm.jsx'
+import Order from './Components/Order.jsx'
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -28,6 +29,7 @@ const router = createBrowserRouter(
             <Route path="/createProduct" element={<CreateProduct />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/admin" element={<AdminPage />} />
+            <Route path="/order" element={<Order />} />
             <Route path="/showProduct/:id" element={<ShowInfo />} />
             <Route path="/becomeMerchant" element={<MerchantForm />} />
             <Route path="/createAddress" element={<AddressForm />} />
@@ -35,7 +37,7 @@ const router = createBrowserRouter(
     ),
 )
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <React.StrictMode>
-        <RouterProvider router={router} />
-    </React.StrictMode>,
+    // <React.StrictMode>
+    <RouterProvider router={router} />,
+    // </React.StrictMode>,
 )

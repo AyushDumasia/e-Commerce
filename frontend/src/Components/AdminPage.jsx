@@ -11,7 +11,6 @@ function AdminPage() {
             const response = await axios.post(
                 `http://localhost:3000/api/admin/validProduct/${id}`,
             )
-            // console.log(response)
             if (response.status === 200) {
                 toast.success('Product approved successfully')
             }
@@ -22,10 +21,12 @@ function AdminPage() {
 
     const notApprovedProduct = async (id) => {
         try {
-            const product = await axios.post(
+            const response = await axios.post(
                 `http://localhost:3000/api/admin/notApproved/${id}`,
             )
-            // console.log(product)
+            if (response.status === 200) {
+                toast.success('Product not approved ')
+            }
         } catch (err) {
             toast.error(err.message)
         }
@@ -51,6 +52,7 @@ function AdminPage() {
     }, [])
     return (
         <div className="container mx-auto px-4 py-8">
+            <ToastContainer />
             <h2 className="text-3xl font-semibold mb-4">Admin Page</h2>
             <div>
                 <h3 className="text-xl font-semibold mb-2">Products:</h3>

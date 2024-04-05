@@ -92,16 +92,70 @@ function CreateProduct() {
                         handler={handleFileChange}
                     />
 
-                    <label htmlFor="category">Category:</label>
-                    <Input
-                        type={'text'}
-                        id={'category'}
-                        name={'category'}
-                        placeholder={'Category'}
-                        value={formData.category}
-                        handler={handleChange}
-                        required
-                    />
+                    <div className="mb-[5px] w-full">
+                        <label htmlFor="Gender" className="text-lg">
+                            Category
+                        </label>
+                        <select
+                            id="category"
+                            value={formData.category}
+                            name={'category'}
+                            onChange={handleChange}
+                            className="border p-2 cursor-pointer rounded mt-[3px] w-full text-base focus:outline-none no-arrow text-placeholder"
+                        >
+                            <option value="" disabled hidden>
+                                Select Category
+                            </option>
+                            <option value="Electronics" className="text-black">
+                                Electronics
+                            </option>
+                            <option
+                                value="Home & Kitchen"
+                                className="text-black"
+                            >
+                                Home & Kitchen
+                            </option>
+                            <option value="Books" className="text-black">
+                                Books
+                            </option>
+                            <option
+                                value="Health & Personal Care"
+                                className="text-black"
+                            >
+                                Health & Personal Care
+                            </option>
+                            <option
+                                value="Beauty & Personal Care"
+                                className="text-black"
+                            >
+                                Beauty & Personal Care
+                            </option>
+                            <option value="Toys & Games" className="text-black">
+                                Toys & Games
+                            </option>
+                            <option
+                                value="Sports & Outdoors"
+                                className="text-black"
+                            >
+                                Sports & Outdoors
+                            </option>
+                            <option value="Food" className="text-black">
+                                Food
+                            </option>
+                            <option
+                                value="pickles and Papad"
+                                className="text-black"
+                            >
+                                pickles and Papad
+                            </option>
+                            <option
+                                value="Clothing & Accessories"
+                                className="text-black"
+                            >
+                                Clothing & Accessories
+                            </option>
+                        </select>
+                    </div>
 
                     <label htmlFor="description">Description:</label>
                     <Input

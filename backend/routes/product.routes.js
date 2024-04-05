@@ -8,6 +8,7 @@ import {
     showProduct,
     RemoveCart,
     fetchTempProducts,
+    checkBox,
 } from '../controllers/product.controller.js'
 import {validateMerchant} from '../middlewares/authMerchant.js'
 import {upload} from './../middlewares/multer.js'
@@ -27,6 +28,8 @@ router.get('/addToCart/:id', validateToken, addCart)
 
 //Remove from Cart
 router.get('/removeCart/:id', validateToken, RemoveCart)
+
+// router.post('/checkBox/:id', validateToken, checkBox)
 
 //Get Cart
 router.get('/cart', validateToken, getCart)
