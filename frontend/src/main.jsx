@@ -12,7 +12,7 @@ import Home from './Components/Home.jsx'
 import LogIn from './Components/LogIn'
 import SignUp from './Components/SignUp'
 import CreateProduct from './Components/CreateProduct.jsx'
-import Cart from './Components/Cart'
+import Cart from './Components/Cart.jsx'
 import './index.css'
 import AdminPage from './Components/AdminPage.jsx'
 import ShowInfo from './Components/ShowInfo.jsx'
@@ -22,6 +22,7 @@ import Order from './Components/Order.jsx'
 import Explore from './Components/Explore.jsx'
 import ShowAddress from './Components/ShowAddress.jsx'
 import Dashboard from './Components/Dashboard.jsx'
+import SearchPage from './Components/SearchPage.jsx'
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -39,6 +40,7 @@ const router = createBrowserRouter(
             <Route path="/showProduct/:id" element={<ShowInfo />} />
             <Route path="/becomeMerchant" element={<MerchantForm />} />
             <Route path="/createAddress" element={<AddressForm />} />
+            <Route path="/search/:searchTerm" element={<SearchPage />} />
         </Route>,
     ),
 )

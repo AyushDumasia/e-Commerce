@@ -1,28 +1,39 @@
-import {useState} from 'react'
-import {IoSearch} from 'react-icons/io5'
+import React, {useState} from 'react'
+import {FiSearch} from 'react-icons/fi'
+import {useNavigate} from 'react-router-dom'
 
 function SearchBar() {
     const [search, setSearch] = useState('')
-    const [records, setRecords] = useState(search)
+    const navigate = useNavigate()
+
+    const handleSubmit = async (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault() // Prevent default form submission behavior
+            try {
+                navigate(`/search/${search}`)
+            } catch (err) {
+                console.log(err)
+            }
+        }
+    }
 
     const filter = async (e) => {
-        setRecords(
-            search.filter((f) =>
-                f.category.toLoweCase().includes(e.target.value),
-            ),
-        )
-        setSearch(e.target.value)
+        const searchTerm = e.target.value
+        setSearch(searchTerm)
     }
 
     return (
         <>
-            <button className="flex items-center justify-center text-gray-600  focus:outline-none rounded-l-3xl h-[40px] p-[7px] bg-white border border-black border-r-0">
-                <IoSearch className="h-[40px]" />
+            <button
+                className="flex items-center justify-center text-gray-600  focus:outline-none rounded-l-3xl h-[40px] p-[7px] bg-white border border-black border-r-0"
+                onClick={handleSubmit} // Call handleSubmit function on button click
+            >
+                <FiSearch />{' '}
             </button>
             <input
                 value={search}
                 onChange={filter}
-                name={search}
+                onKeyPress={handleSubmit} // Call handleSubmit function on key press
                 type="text"
                 placeholder="Search..."
                 className="border border-black rounded-r-3xl focus:outline-none h-[40px] p-[7px] border-l-0 pl-0 w-full"

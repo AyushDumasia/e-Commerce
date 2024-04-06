@@ -281,8 +281,8 @@ export const search = asyncHandler(async (req, res) => {
     })
     if (!results || results.length === 0) {
         return res
-            .json(201)
+            .status(201)
             .json(new ApiResponse(201, results, 'There are no products'))
     }
-    return res.json(201).json(new ApiResponse(201, results, 'Products find'))
+    return res.status(201).json(new ApiResponse(201, results, 'Products find'))
 })
