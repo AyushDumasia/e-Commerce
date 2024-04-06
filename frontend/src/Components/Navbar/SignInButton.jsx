@@ -26,7 +26,7 @@ function SignInButton() {
             )
             setUser(response.data)
         } catch (error) {
-            toast.error('Error fetching')
+            // toast.error('Error fetching')
             setUser(null)
         }
     }
@@ -60,8 +60,8 @@ function SignInButton() {
             <div
                 className={`${
                     showMenu
-                        ? 'bg-secondary text-white'
-                        : 'bg-floralWhite text-white'
+                        ? 'bg-secondary text-black'
+                        : 'bg-floralWhite text-black'
                 } flex p-2 ml-2 rounded justify-evenly items-center`}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
@@ -78,7 +78,7 @@ function SignInButton() {
             </div>
             {showMenu && (
                 <div
-                    className="absolute p-[15px] border-gray-300 border border-grey top-[40px] left-[-150px] bg-[#131921] shadow rounded-lg w-[250px] h-auto"
+                    className="absolute p-[15px] border-gray-300 border border-grey top-[40px] left-[-150px] bg-[#ffffff] shadow rounded-lg w-[250px] h-auto"
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                 >
@@ -87,7 +87,7 @@ function SignInButton() {
                             <Link to="/signup">
                                 <li className="p-3 pl-3 cursor-pointer border-gray-300 border-b flex justify-between">
                                     New here?
-                                    <p className="text-white">Sign Up</p>
+                                    <p className="text-black">Sign Up</p>
                                 </li>
                             </Link>
                         )}

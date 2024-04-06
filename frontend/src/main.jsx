@@ -8,7 +8,7 @@ import {
     createRoutesFromElements,
 } from 'react-router-dom'
 import App from './App.jsx'
-import Home from './Components/Home'
+import Home from './Components/Home.jsx'
 import LogIn from './Components/LogIn'
 import SignUp from './Components/SignUp'
 import CreateProduct from './Components/CreateProduct.jsx'
@@ -19,14 +19,20 @@ import ShowInfo from './Components/ShowInfo.jsx'
 import MerchantForm from './Components/MerchantForm.jsx'
 import AddressForm from './Components/AddressForm.jsx'
 import Order from './Components/Order.jsx'
+import Explore from './Components/Explore.jsx'
+import ShowAddress from './Components/ShowAddress.jsx'
+import Dashboard from './Components/Dashboard.jsx'
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<App />}>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<LogIn />} />
+            <Route path="/explore" element={<Explore />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/createProduct" element={<CreateProduct />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/address" element={<ShowAddress />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/order" element={<Order />} />

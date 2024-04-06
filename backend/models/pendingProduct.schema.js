@@ -23,6 +23,10 @@ const pendingProduct = new Schema(
             type: [String],
             // required: true,
         },
+        stock: {
+            type: Number,
+            required: true,
+        },
         price: {
             type: String,
             required: true,

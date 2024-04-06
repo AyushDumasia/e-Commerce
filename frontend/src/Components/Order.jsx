@@ -3,7 +3,7 @@ import axios from 'axios'
 
 function Order() {
     const [orders, setOrders] = useState([])
-
+    const [address, setAddress] = useState([])
     useEffect(() => {
         const fetchOrder = async () => {
             try {
@@ -11,7 +11,9 @@ function Order() {
                     'http://localhost:3000/api/order/fetchOrder',
                     {withCredentials: true},
                 )
-                setOrders(response.data)
+                console.log(response.data)
+                setOrders(response.data.order)
+                setAddress(response.data.address)
             } catch (err) {
                 console.log(err)
             }
@@ -20,7 +22,6 @@ function Order() {
         fetchOrder()
     }, [])
 
-    // Render the order cards
     const renderOrderCards = () => {
         return orders.map((order) => (
             <div
@@ -39,6 +40,11 @@ function Order() {
                     <p className="text-gray-700 text-base">
                         Price: ₹{order.price}
                     </p>
+                    {order.address && ( // Check if address is not null
+                        <p className="text-gray-700 text-base">
+                            {order.address.state} {order.address.pinCode}
+                        </p>
+                    )}
                 </div>
             </div>
         ))

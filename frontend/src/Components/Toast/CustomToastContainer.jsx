@@ -12,11 +12,10 @@ function CustomToastContainer() {
                 newestOnTop={false}
                 closeOnClick
                 rtl={true}
-                hideProgressBar={true}
                 draggable
             />
         </div>
     )
 }
 
-export default ToastContainer
+export default CustomToastContainer

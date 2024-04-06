@@ -22,6 +22,10 @@ const productSchema = new Schema(
         imageUrls: {
             type: [String],
         },
+        stock: {
+            type: Number,
+            required: true,
+        },
         price: {
             type: String,
             required: true,

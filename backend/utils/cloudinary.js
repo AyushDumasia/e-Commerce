@@ -1,5 +1,6 @@
 import {v2 as cloudinary} from 'cloudinary'
 import fs from 'fs'
+import sharp from 'sharp'
 
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
@@ -21,3 +22,37 @@ export const uploadOnCloudinary = async (localFilePath) => {
         fs.unlinkSync(localFilePath)
     }
 }
+// const uploadProcessedToCloudinary = async (processedBuffer) => {
+//     try {
+//         const uploadResult = await cloudinary.uploader.upload(processedBuffer, {
+//             resource_type: 'image',
+//         })
+//         console.log('Upload Successfully 1 : ', uploadResult)
+//         // .end(processedBuffer)
+//         return uploadResult
+//     } catch (error) {
+//         console.error('Error uploading to Cloudinary:', error)
+//         throw error
+//     }
+// }
+
+// export const uploadOnCloudinary = async (localFilePath) => {
+//     try {
+//         if (!localFilePath) return null
+
+//         const processedBuffer = await sharp(localFilePath)
+//             .toFormat('jpeg', {quality: 70})
+//             .toBuffer()
+
+//         const uploadResult = await uploadProcessedToCloudinary(processedBuffer)
+
+//         console.log('Upload Successfully : ', uploadResult)
+
+//         return uploadResult
+//     } catch (err) {
+//         console.error('Error uploading to Cloudinary:', err)
+//         return null
+//     } finally {
+//         fs.unlinkSync(localFilePath)
+//     }
+// }

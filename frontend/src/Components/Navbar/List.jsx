@@ -6,7 +6,7 @@ function List({goto, content}) {
             <NavLink
                 to={goto}
                 className={({isActive}) =>
-                    `${isActive ? 'text-secondary' : 'text-orange'}`
+                    `${isActive ? 'text-[blue]' : 'text-black'}`
                 }
             >
                 {content}

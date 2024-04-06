@@ -166,8 +166,11 @@ function ShowInfo() {
                                 key={feedbackItem._id}
                             >
                                 <p className="font-semibold text-lg mb-2">
-                                    {feedbackItem.userId.username}
+                                    {feedbackItem.userId
+                                        ? feedbackItem.userId.username
+                                        : 'User not found'}
                                 </p>
+
                                 <Rating
                                     value={feedbackItem.rating}
                                     count={5}

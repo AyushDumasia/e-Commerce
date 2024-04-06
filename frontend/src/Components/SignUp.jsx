@@ -1,14 +1,15 @@
 import React, {useState} from 'react'
 import axios from 'axios'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, Link} from 'react-router-dom'
 import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Input from './Input/Input'
 import Button from './Button/Button'
-import {Link} from 'react-router-dom'
 import Password from './Password/Password'
+import {FaSpinner} from 'react-icons/fa'
 
 function SignUp() {
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
         username: '',
@@ -17,6 +18,7 @@ function SignUp() {
         gender: '',
         password: '',
     })
+
     const handleData = (e) => {
         const {name, value} = e.target
         setFormData((prevData) => ({
@@ -27,6 +29,8 @@ function SignUp() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setLoading(true)
+
         try {
             const response = await axios.post(
                 'http://localhost:3000/api/auth/signup',
@@ -35,22 +39,28 @@ function SignUp() {
                     withCredentials: true,
                 },
             )
-            if (response.status === 201) {
-                toast.success('User logged in successfully')
-            }
+
             navigate('/')
+            toast.success('User signed up successfully')
         } catch (error) {
-            if (error.status === 409) {
+            if (error.response && error.response.status === 409) {
                 toast.error('Email is already registered')
             } else {
                 toast.error('An error occurred. Please try again later.')
             }
+        } finally {
+            setLoading(false)
         }
     }
 
     return (
         <div className="mt-[20px] flex justify-center items-center">
             <ToastContainer />
+            {loading && (
+                <div className="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
+                    <FaSpinner className="animate-spin text-blue-500 text-4xl" />
+                </div>
+            )}
             <div className="flex flex-col justify-center items-start w-[450px] bg-white p-8 rounded-lg">
                 <h1 className="font-bold text-3xl mb-3">Sign Up</h1>
                 <Link to="/login" className="text-sm text-gray-500 ml-auto">
@@ -70,7 +80,6 @@ function SignUp() {
                             Number
                         </label>
                         <input
-                            // max={10}
                             type="number"
                             placeholder="Mobile Number"
                             id="Number"
@@ -112,9 +121,6 @@ function SignUp() {
                             <option value="Female" className="text-black">
                                 Female
                             </option>
-                            {/* <option value="Other" className="text-black">
-                                Other
-                            </option> */}
                         </select>
                     </div>
                     <Password
@@ -124,7 +130,7 @@ function SignUp() {
                         value={formData.password}
                         handler={handleData}
                     />
-                    <Button text={'Submit'} />
+                    {!loading && <Button text={'Submit'} />}
                 </form>
             </div>
         </div>

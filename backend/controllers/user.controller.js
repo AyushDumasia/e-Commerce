@@ -1,22 +1,15 @@
 import bcrypt from 'bcryptjs'
 import mongoose from 'mongoose'
 import jwt from 'jsonwebtoken'
-import nodemailer from 'nodemailer'
 import User from '../models/user.schema.js'
 import {asyncHandler} from '../utils/asyncHandler.js'
 import {ApiError} from './../utils/apiError.js'
 import {ApiResponse} from './../utils/ApiResponse.js'
+import Address from './../models/address.schema.js'
+import Order from './../models/order.schema.js'
 const saltRounds = 10
-
-const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false,
-    auth: {
-        user: 'adumasia1@gmail.com',
-        pass: 'xkbs ydsp qess vkrr',
-    },
-})
+import {getMail} from '../utils/nodemailer.js'
+import DailyUser from '../models/dailyActive.schema.js'
 
 //Sign Up , post
 export const signUp = asyncHandler(async (req, res) => {
@@ -58,14 +51,18 @@ export const signUp = asyncHandler(async (req, res) => {
         httpOnly: true,
     })
     console.log('Cookie saved')
-
-    const info = await transporter.sendMail({
-        from: '<adumasia1@gmail.com>',
-        to: newUser.email,
-        subject: 'Welcome to Our Platform! ✔',
-        text: 'Welcome to Our Platform!',
-        html: '<b>Welcome to Our Platform!</b>',
+    const newDailyUser = new DailyUser({
+        userId: req.user.id || 1,
     })
+    console.log('User saved')
+    await newDailyUser.save()
+    const info = getMail(
+        newUser.email,
+        'Welcome to Our Platform!',
+        `Dear ${newUser.username},
+
+    Welcome to e-Commerce! We're thrilled to have you join our community.`,
+    )
 
     console.log('Message sent: %s', info.messageId)
 
@@ -101,6 +98,11 @@ export const logIn = asyncHandler(async (req, res) => {
     }
     // console.log("Req  :", req);
 
+    const newDailyUser = new DailyUser({
+        userId: req.user.id || 1,
+    })
+    console.log('User saved')
+    await newDailyUser.save()
     res.cookie('userCookie', accessToken, {
         httpOnly: true,
     })
@@ -109,17 +111,24 @@ export const logIn = asyncHandler(async (req, res) => {
     // console.log(req.user);
 })
 
+//Fetch User profile
 export const getUserInfo = asyncHandler(async (req, res) => {
-    const user = req.user
+    const user = req?.user
     if (!user) {
         return res.status(404).json({message: 'User not found in request'})
     }
     const findUser = await User.findById(user.id)
+    const order = await Order.find({userId: user.id}).populate('productId')
+    console.log('Order : ', order)
+    const address = await Address.find({userId: user.id})
+    console.log('Address : ', address)
     if (!findUser) {
         return res.status(404).json({message: 'User not found'})
     }
     res.status(200).json({
         user: findUser,
+        order: order,
+        address: address,
     })
 })
 

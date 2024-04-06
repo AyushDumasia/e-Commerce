@@ -1,119 +1,94 @@
-import React, {useState, useEffect} from 'react'
-import axios from 'axios'
-import {ToastContainer} from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-import Rating from 'react-rating-stars-component'
+import React from 'react'
+import {Link} from 'react-router-dom' // Import Link from react-router-dom
 
-import {useNavigate} from 'react-router-dom'
-
-function Home() {
-    const [products, setProducts] = useState([])
-    const navigate = useNavigate()
-    const [page, setPage] = useState(1)
-    const [pageCount, setPageCount] = useState(0)
-    const [pagination, setPagination] = useState()
-
-    const handlePrevious = () => {
-        setPage((p) => {
-            if (p === 1) return p
-            fetchProduct(p - 1)
-            return p - 1
-        })
-    }
-    const handleNext = () => {
-        setPage((p) => {
-            if (p === pageCount) return p
-            fetchProduct(p + 1)
-            return p + 1
-        })
-    }
-
-    const fetchProduct = async (page) => {
-        try {
-            const response = await axios.get(
-                `http://localhost:3000/api/product/fetchProduct?page=${page}`,
-            )
-            setProducts(response.data.products)
-            setPagination(response.data.pagination)
-            setPageCount(response.data.pagination.pageCount) // Update pageCount state
-        } catch (error) {
-            // console.error('Error fetching products:', error)
-            toast.error(error.message)
-        }
-    }
-
-    const showProduct = async (id) => {
-        await axios.get(`http://localhost:3000/api/product/showProduct/${id}`)
-        navigate(`/showProduct/${id}`)
-    }
-
-    useEffect(() => {
-        fetchProduct()
-    }, [])
-
+const Home = () => {
     return (
-        <div className="flex p-7">
-            <ToastContainer />
-            <div className="flex flex-col w-screen items-center">
-                {products.map((product) => (
-                    <div
-                        key={product._id}
-                        className="w-[80%] self-start bg-white flex h-[300px] p-4 mb-4 border border-gray-300 rounded-lg shadow-md cursor-pointer transition duration-300 hover:shadow-lg"
-                        onClick={() => showProduct(product._id)}
-                    >
-                        <img
-                            src={product.coverImage}
-                            alt={product.productName}
-                            className="w-[250px] h-[250px] object-cover rounded-lg mr-4"
-                        />
-                        <div className="flex flex-col justify-between">
-                            <div>
-                                <h1 className="text-2xl font-semibold mb-2">
-                                    {product.productName}
-                                </h1>
-                                {/* <p className="text-gray-600 mb-2">
-                                    {product.category}
-                                </p> */}
-                                <p className="text-gray-800 mb-2">
-                                    {product.description}
-                                </p>
-                                <p className="text-gray-800 font-semibold">
-                                    ₹{product.price}
-                                </p>
-                                <Rating
-                                    value={product.rating}
-                                    count={5}
-                                    size={20}
-                                    activeColor="orange"
-                                    edit={false}
-                                    isHalf={true}
-                                />
-                                {/* <p className="text-gray-700">
-                                    {product.rating} {product.reviews}reviews
-                                </p> */}
-                            </div>
-                            <div className="flex items-center  justify-between">
-                                <div className="flex items-center"></div>
-                            </div>
-                        </div>
+        <div className="bg-gray-100">
+            {/* Hero Section */}
+            <section className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-20">
+                <div className="container mx-auto text-center">
+                    <h1 className="text-4xl font-bold mb-4">
+                        Welcome to Our Store
+                    </h1>
+                    <p className="text-lg">
+                        Shop the latest trends in fashion!
+                    </p>
+                    {/* Add call-to-action buttons or other elements */}
+                    <button className="bg-white text-indigo-600 px-6 py-3 mt-8 font-semibold rounded hover:bg-indigo-600 hover:text-white transition duration-300 ease-in-out">
+                        Shop Now
+                    </button>
+                </div>
+            </section>
+            {/* Card Section */}
+            <div className="container mx-auto my-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {/* Card 1 */}
+                <div className="bg-white rounded-lg overflow-hidden shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
+                    <img
+                        loading="lazy"
+                        src="https://res.cloudinary.com/dxrzskzvj/image/upload/v1712328963/mknenzfsubkkz67rdryo.jpg"
+                        alt="Product"
+                        className="w-full h-64 object-cover"
+                    />
+                    <div className="p-4">
+                        <Link
+                            to="/toys"
+                            className="text-indigo-600 font-semibold hover:underline"
+                        >
+                            Clothes
+                        </Link>
                     </div>
-                ))}
-                <footer className="flex justify-between w-full mt-8">
-                    <button
-                        className="bg-gray-800 text-white px-4 py-2 rounded-sm disabled:opacity-50"
-                        disabled={page === 1}
-                        onClick={handlePrevious}
-                    >
-                        Previous
-                    </button>
-                    <button
-                        className="bg-gray-800 text-white px-4 py-2 rounded-sm disabled:opacity-50"
-                        disabled={page === pageCount}
-                        onClick={handleNext}
-                    >
-                        Next
-                    </button>
-                </footer>
+                </div>
+                {/* Card 2 */}
+                <div className="bg-white rounded-lg overflow-hidden shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
+                    <img
+                        loading="lazy"
+                        src="https://res.cloudinary.com/dxrzskzvj/image/upload/v1712329227/o2yohat13tbznizecbuk.jpg"
+                        alt="Product"
+                        className="w-full h-64 object-cover"
+                    />
+                    <div className="p-4">
+                        <Link
+                            to="/electronics"
+                            className="text-indigo-600 font-semibold hover:underline"
+                        >
+                            Books
+                        </Link>
+                    </div>
+                </div>
+                {/* Card 3 */}
+                <div className="bg-white rounded-lg overflow-hidden shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
+                    <img
+                        loading="lazy"
+                        src="https://res.cloudinary.com/dxrzskzvj/image/upload/v1712329328/khxkwyz8k5iy6vmgzizx.jpg"
+                        alt="Product"
+                        className="w-full h-64 object-cover"
+                    />
+                    <div className="p-4">
+                        <Link
+                            to="/clothing"
+                            className="text-indigo-600 font-semibold hover:underline"
+                        >
+                            Toys
+                        </Link>
+                    </div>
+                </div>
+                {/* Card 4 */}
+                <div className="bg-white rounded-lg overflow-hidden shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg">
+                    <img
+                        loading="lazy"
+                        src="https://res.cloudinary.com/dxrzskzvj/image/upload/v1712329380/blyej3whfbsmw4acwtpj.jpg"
+                        alt="Product"
+                        className="w-full h-64 object-cover"
+                    />
+                    <div className="p-4">
+                        <Link
+                            to="/accessories"
+                            className="text-indigo-600 font-semibold hover:underline"
+                        >
+                            Accessories
+                        </Link>
+                    </div>
+                </div>
             </div>
         </div>
     )

@@ -10,6 +10,7 @@ function AdminPage() {
         try {
             const response = await axios.post(
                 `http://localhost:3000/api/admin/validProduct/${id}`,
+                {withCredentials: true},
             )
             if (response.status === 200) {
                 toast.success('Product approved successfully')
@@ -23,6 +24,9 @@ function AdminPage() {
         try {
             const response = await axios.post(
                 `http://localhost:3000/api/admin/notApproved/${id}`,
+                {
+                    withCredentials: true,
+                },
             )
             if (response.status === 200) {
                 toast.success('Product not approved ')

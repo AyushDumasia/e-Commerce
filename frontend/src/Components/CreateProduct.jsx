@@ -4,7 +4,7 @@ import Button from './Button/Button'
 import axios from 'axios'
 import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import {FaSpinner} from 'react-icons/fa' // Import loading spinner icon
+import {FaSpinner} from 'react-icons/fa'
 
 function CreateProduct() {
     const [formData, setFormData] = useState({
@@ -12,9 +12,10 @@ function CreateProduct() {
         category: '',
         description: '',
         price: '',
+        stock: '',
     })
     const [selectedFile, setSelectedFile] = useState(null)
-    const [loading, setLoading] = useState(false) // State for loading animation
+    const [loading, setLoading] = useState(false)
 
     const handleChange = (e) => {
         const {name, value} = e.target
@@ -31,7 +32,7 @@ function CreateProduct() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        setLoading(true) // Set loading to true when submitting
+        setLoading(true)
 
         try {
             const formDataWithFiles = new FormData()
@@ -40,6 +41,7 @@ function CreateProduct() {
             formDataWithFiles.append('category', formData.category)
             formDataWithFiles.append('description', formData.description)
             formDataWithFiles.append('price', formData.price)
+            formDataWithFiles.append('stock', formData.stock)
 
             const response = await axios.post(
                 'http://localhost:3000/api/product/createProduct',
@@ -59,18 +61,24 @@ function CreateProduct() {
                 category: '',
                 description: '',
                 price: '',
+                stock: '',
             })
         } catch (error) {
             console.error('Error:', error)
             toast.error('An error occurred. Please try again later.')
         } finally {
-            setLoading(false) // Reset loading state when finished
+            setLoading(false)
         }
     }
 
     return (
         <div className="mt-[100px] flex justify-center items-center">
             <ToastContainer />
+            {loading ? (
+                <div className="flex justify-center items-center absolute inset-0 bg-gray-900 bg-opacity-50 z-50">
+                    <FaSpinner className="animate-spin text-blue-500 text-4xl" />
+                </div>
+            ) : null}
             <div className="flex flex-col justify-center items-start w-[450px] bg-white p-8 rounded-lg">
                 <form onSubmit={handleSubmit} encType="multipart/form-data">
                     <label htmlFor="productName">Product Name:</label>
@@ -90,6 +98,16 @@ function CreateProduct() {
                         name={'coverImage'}
                         accept={'image/*'}
                         handler={handleFileChange}
+                    />
+
+                    <label htmlFor="productName">Stock :</label>
+                    <Input
+                        type={'text'}
+                        name={'stock'}
+                        placeholder={'Stock'}
+                        value={formData.stock}
+                        handler={handleChange}
+                        required
                     />
 
                     <div className="mb-[5px] w-full">
@@ -176,12 +194,7 @@ function CreateProduct() {
                         handler={handleChange}
                         required
                     />
-
-                    {loading ? (
-                        <FaSpinner className="animate-spin text-blue-500" />
-                    ) : (
-                        <Button text="Submit" type="submit" />
-                    )}
+                    {loading ? null : <Button text="Submit" type="submit" />}
                 </form>
             </div>
         </div>
