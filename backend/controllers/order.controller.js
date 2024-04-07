@@ -19,7 +19,6 @@ export const createOrder = asyncHandler(async (req, res) => {
         const product = await Cart.findOne({
             productId: cartItem.productId,
         }).populate('productId')
-        // console.log('Product : ', product)
         let price = parseInt(product.productId.price) * cartItem.quantity
         const newOrder = new Order({
             productId: cartItem.productId._id,
@@ -27,7 +26,6 @@ export const createOrder = asyncHandler(async (req, res) => {
             price: price,
             address: user.address[0] || null,
         })
-        // console.log(cartItem)
         const validOrder = await Order.find({cartId: cartItem._id})
         if (validOrder) {
             await cartItem.deleteOne()
@@ -40,7 +38,7 @@ export const createOrder = asyncHandler(async (req, res) => {
     res.status(200).json(orders)
 })
 
-export const fetchOrder = asyncHandler(async (req, res) => {
+export const fetchSpecificOrder = asyncHandler(async (req, res) => {
     const userId = req.user.id
     const order = await Order.find({userId})
         .populate('productId')
@@ -56,7 +54,6 @@ export const addOrder = asyncHandler(async (req, res) => {
     const userId = req.user.id
     const orderId = req.params.id
     const products = await Cart.find({productId: orderId}).populate('productId')
-    // console.log(product)
     const order = await Order.findOne({productId: orderId})
     if (order) {
         await order.deleteOne()
@@ -74,4 +71,22 @@ export const addOrder = asyncHandler(async (req, res) => {
         }
         return res.status(201).json('Order Added')
     }
+})
+
+export const fetchOrder = asyncHandler(async (req, res) => {
+    const orders = await Order.find()
+        .sort({createdAt: -1})
+        .populate('productId')
+        .populate('userId')
+
+    if (!orders || orders.length === 0) {
+        return res
+            .status(201)
+            .json(new ApiResponse(201, null, 'No order found'))
+    }
+
+    // const product = orders.map((order) => order.productId)
+    // const user = orders.map((order) => order.userId)
+
+    return res.status(200).json(orders)
 })

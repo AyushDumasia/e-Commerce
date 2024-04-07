@@ -47,6 +47,16 @@ function SignInButton() {
         navigate('/becomeMerchant')
     }
 
+    const logout = async () => {
+        try {
+            await axios.get('http://localhost:3000/api/auth/logout', {
+                withCredentials: true,
+            })
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     const handleMouseEnter = () => {
         setShowMenu(true)
     }
@@ -83,7 +93,7 @@ function SignInButton() {
                     onMouseLeave={handleMouseLeave}
                 >
                     <ul className="list-none p-0 m-0">
-                        {!user && ( // Show sign-up option only if user is not authenticated
+                        {!user && (
                             <Link to="/signup">
                                 <li className="p-3 pl-3 cursor-pointer border-gray-300 border-b flex justify-between">
                                     New here?
@@ -91,7 +101,7 @@ function SignInButton() {
                                 </li>
                             </Link>
                         )}
-                        {user && ( // Show profile and cart options if user is authenticated
+                        {user && (
                             <>
                                 <Link to="/">
                                     <li className="p-2  cursor-pointer flex items-center border-b">
@@ -105,7 +115,15 @@ function SignInButton() {
                                 </Link>
                             </>
                         )}
-                        {merchant ? (
+                        {user && !merchant && (
+                            <button
+                                onClick={becomeMerchant}
+                                className="p-2 cursor-pointer flex items-center border-b"
+                            >
+                                <IoStorefront /> &nbsp; Become a Merchant
+                            </button>
+                        )}
+                        {merchant && user && (
                             <>
                                 <Link
                                     to="/createProduct"
@@ -118,12 +136,13 @@ function SignInButton() {
                                     MerchantId : {merchant}
                                 </p>
                             </>
-                        ) : (
+                        )}
+                        {user && (
                             <button
-                                onClick={becomeMerchant}
+                                onClick={logout}
                                 className="p-2 cursor-pointer flex items-center border-b"
                             >
-                                <IoStorefront /> &nbsp; Become a Merchant
+                                Logout
                             </button>
                         )}
                     </ul>

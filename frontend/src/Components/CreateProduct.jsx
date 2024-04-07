@@ -5,6 +5,7 @@ import axios from 'axios'
 import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import {FaSpinner} from 'react-icons/fa'
+import CustomToastContainer from './Toast/CustomToastContainer'
 
 function CreateProduct() {
     const [formData, setFormData] = useState({
@@ -73,7 +74,7 @@ function CreateProduct() {
 
     return (
         <div className="mt-[100px] flex justify-center items-center">
-            <ToastContainer />
+            <CustomToastContainer />
             {loading ? (
                 <div className="flex justify-center items-center absolute inset-0 bg-gray-900 bg-opacity-50 z-50">
                     <FaSpinner className="animate-spin text-blue-500 text-4xl" />

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import CustomToastContainer from './Toast/CustomToastContainer'
 
 function AdminPage() {
     const [products, setProducts] = useState([])
@@ -56,7 +57,7 @@ function AdminPage() {
     }, [])
     return (
         <div className="container mx-auto px-4 py-8">
-            <ToastContainer />
+            <CustomToastContainer />
             <h2 className="text-3xl font-semibold mb-4">Admin Page</h2>
             <div>
                 <h3 className="text-xl font-semibold mb-2">Products:</h3>

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import {FiPlus, FiMinus} from 'react-icons/fi'
 import {toast} from 'react-toastify'
-import ToastContainer from './Toast/CustomToastContainer'
+import CustomToastContainer from './Toast/CustomToastContainer'
 import {useNavigate} from 'react-router-dom'
 
 function Cart() {
@@ -120,7 +120,8 @@ function Cart() {
 
     return (
         <div className="container mx-auto">
-            <ToastContainer />
+            <CustomToastContainer />
+
             <div className="text-center py-8">
                 <h1 className="font-bold text-start text-2xl">My Cart</h1>
                 {!cart || cart.length === 0 ? <p>No cart found</p> : cards()}

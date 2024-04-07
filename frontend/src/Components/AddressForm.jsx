@@ -5,6 +5,7 @@ import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Input from './Input/Input'
 import Button from './Button/Button'
+import CustomToastContainer from './Toast/CustomToastContainer'
 
 function AddressForm() {
     const [formData, setFormData] = useState({
@@ -67,7 +68,7 @@ function AddressForm() {
 
     return (
         <div className="mt-20 flex justify-center items-center">
-            <ToastContainer />
+            <CustomToastContainer />
             <div className="flex flex-col justify-center items-start w-96 bg-white p-8 rounded-lg shadow-lg">
                 <h1 className="font-bold text-3xl mb-6">Add Address</h1>
                 <form onSubmit={handleSubmit} className="w-full">

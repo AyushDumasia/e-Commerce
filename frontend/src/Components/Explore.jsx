@@ -103,6 +103,7 @@ function Explore() {
                                   className="w-[250px] h-[250px] object-cover rounded-lg mr-4"
                                   loading="lazy"
                               />
+
                               <div className="flex flex-col justify-between">
                                   <div>
                                       <h1 className="text-2xl font-semibold mb-2">

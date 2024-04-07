@@ -135,6 +135,7 @@ function ShowInfo() {
                             onChange={ratingChanged}
                             size={35}
                             activeColor="#ffd700"
+                            isHalf={true}
                             required
                         />
                     </div>
@@ -170,18 +171,7 @@ function ShowInfo() {
                                         ? feedbackItem.userId.username
                                         : 'User not found'}
                                 </p>
-
-                                <Rating
-                                    value={feedbackItem.rating}
-                                    count={5}
-                                    size={24}
-                                    activeColor="#ffd700"
-                                    edit={false}
-                                />
-                                <p className="text-gray-700 text-base">
-                                    {feedbackItem.comment}
-                                </p>
-                                <div className="flex items-center mt-2">
+                                <div className="flex items-center">
                                     <p className="text-blue-500 text-base">
                                         Reviewed on:{' '}
                                         {new Date(
@@ -193,6 +183,18 @@ function ShowInfo() {
                                         })}
                                     </p>
                                 </div>
+
+                                <Rating
+                                    value={feedbackItem.rating}
+                                    count={5}
+                                    size={30}
+                                    activeColor="orange"
+                                    edit={false}
+                                    isHalf={true}
+                                />
+                                <p className="text-gray-700  text-xl-base ">
+                                    {feedbackItem.comment}
+                                </p>
                             </div>
                         ))
                     ) : (

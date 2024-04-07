@@ -111,6 +111,11 @@ export const logIn = asyncHandler(async (req, res) => {
     // console.log(req.user);
 })
 
+//logout
+export const logOut = asyncHandler(async (req, res) => {
+    res.clearCookie('userCookie').send('Cookie deleted')
+})
+
 //Fetch User profile
 export const getUserInfo = asyncHandler(async (req, res) => {
     const user = req?.user

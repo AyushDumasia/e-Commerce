@@ -9,7 +9,7 @@ function Navbar() {
             <div className="container mx-auto flex justify-between items-center">
                 <div className="flex justify-center items-center">
                     <Link to="/" className="text-2xl font-bold">
-                        Logo
+                        eCommerce
                     </Link>
                 </div>
 
