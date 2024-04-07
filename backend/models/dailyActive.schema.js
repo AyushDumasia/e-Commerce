@@ -1,11 +1,14 @@
 import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
-const dailyUser = new Schema(
+const dailyUserSchema = new mongoose.Schema(
     {
-        userId: {
-            type: Schema.Types.ObjectId,
-            ref: 'User',
+        count: {
+            type: Number,
+        },
+        date: {
+            type: Date,
+            default: new Date().toISOString().split('T')[0],
         },
     },
     {
@@ -13,6 +16,6 @@ const dailyUser = new Schema(
     },
 )
 
-const DailyUser = mongoose.model('DailyUser', dailyUser)
+const DailyUser = mongoose.model('DailyUser', dailyUserSchema)
 
 export default DailyUser

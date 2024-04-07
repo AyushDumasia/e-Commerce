@@ -4,6 +4,7 @@ import {ApiResponse} from './../utils/ApiResponse.js'
 import User from '../models/user.schema.js'
 import {ApiError} from '../utils/ApiError.js'
 
+// * Create a new Address
 export const mergeAddress = asyncHandler(async (req, res) => {
     const userId = req?.user.id
     const user = await User.findById(userId)
@@ -32,6 +33,7 @@ export const mergeAddress = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, newAddress, 'Address updated successfully'))
 })
 
+// * Fetch an Address for a specific User
 export const fetchAddress = asyncHandler(async (req, res) => {
     const userId = req?.user.id
     const address = await User.findById(userId).populate('address')

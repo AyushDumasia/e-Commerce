@@ -11,7 +11,7 @@ const saltRounds = 10
 import {getMail} from '../utils/nodemailer.js'
 import DailyUser from '../models/dailyActive.schema.js'
 
-//Sign Up , post
+// * Sign Up
 export const signUp = asyncHandler(async (req, res) => {
     const {username, email, phone, sex, password} = req?.body
     const validEmail = await User.findOne({email: email})
@@ -71,9 +71,26 @@ export const signUp = asyncHandler(async (req, res) => {
     )
 })
 
-//Log in , post
+// * Log in , post
 export const logIn = asyncHandler(async (req, res) => {
-    const {email, password} = req?.body
+    const date = new Date().toISOString().split('T')[0]
+
+    let dailyUser = await DailyUser.findOne({date: date})
+    console.log('Daily User : ', dailyUser)
+    if (!dailyUser) {
+        const newDailyUser = new DailyUser({
+            count: 1,
+            date: date,
+        })
+        console.log('NEW Daily User : ', newDailyUser)
+        await newDailyUser.save()
+    } else {
+        dailyUser.count++
+        await dailyUser.save()
+        console.log('Daily User after update : ', dailyUser)
+    }
+
+    const {email, password} = req.body
     const user = await User.findOne({email: email})
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
@@ -91,32 +108,26 @@ export const logIn = asyncHandler(async (req, res) => {
         '123',
         {expiresIn: '90m'},
     )
+
     req.user = {
         username: user.username,
         email: user.email,
         id: user.id,
     }
-    // console.log("Req  :", req);
 
-    const newDailyUser = new DailyUser({
-        userId: req.user.id || 1,
-    })
-    console.log('User saved')
-    await newDailyUser.save()
     res.cookie('userCookie', accessToken, {
         httpOnly: true,
     })
         .status(200)
         .json({user, accessToken})
-    // console.log(req.user);
 })
 
-//logout
+// * LogOut
 export const logOut = asyncHandler(async (req, res) => {
     res.clearCookie('userCookie').send('Cookie deleted')
 })
 
-//Fetch User profile
+// * Fetch User profile
 export const getUserInfo = asyncHandler(async (req, res) => {
     const user = req?.user
     if (!user) {
@@ -137,6 +148,7 @@ export const getUserInfo = asyncHandler(async (req, res) => {
     })
 })
 
+// ! Update Profile
 export const updateUser = asyncHandler(async (req, res) => {
     const user = req.user
     const email = req.body.email
@@ -156,8 +168,11 @@ export const updateUser = asyncHandler(async (req, res) => {
     })
 })
 
+// * Fetch a logged in user data
 export const currentUser = asyncHandler(async (req, res) => {
     const user = req?.user
+    if (!user) {
+        return res.status(404).json('User not logged in')
+    }
     res.status(200).json(user)
-    // console.log(user)
 })

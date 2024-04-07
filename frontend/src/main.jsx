@@ -23,24 +23,26 @@ import Explore from './Components/Explore.jsx'
 import ShowAddress from './Components/ShowAddress.jsx'
 import Dashboard from './Components/Dashboard.jsx'
 import SearchPage from './Components/SearchPage.jsx'
+import DailyUserGraph from './Components/DailyUserGraph.jsx'
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<App />}>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<LogIn />} />
-            <Route path="/explore" element={<Explore />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/createProduct" element={<CreateProduct />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/address" element={<ShowAddress />} />
+            <Route path="/explore" element={<Explore />} />
             <Route path="/cart" element={<Cart />} />
-            <Route path="/admin" element={<AdminPage />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/createProduct" element={<CreateProduct />} />
+            <Route path="/address" element={<ShowAddress />} />
             <Route path="/order" element={<Order />} />
             <Route path="/showProduct/:id" element={<ShowInfo />} />
             <Route path="/becomeMerchant" element={<MerchantForm />} />
             <Route path="/createAddress" element={<AddressForm />} />
+            <Route path="/chart" element={<DailyUserGraph />} />
             <Route path="/search/:searchTerm" element={<SearchPage />} />
+            <Route path="/admin" element={<AdminPage />} />
         </Route>,
     ),
 )

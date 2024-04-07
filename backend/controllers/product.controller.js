@@ -9,7 +9,7 @@ import {ApiResponse} from './../utils/ApiResponse.js'
 import {getMail} from '../utils/nodemailer.js'
 import Order from '../models/order.schema.js'
 
-//Fetch Products for Explore
+// * Fetch Products for Explore page
 export const fetchProduct = asyncHandler(async (req, res) => {
     const page = parseInt(req.query.page) || 1
     const limit = parseInt(req.query.limit) || 5
@@ -34,7 +34,7 @@ export const fetchProduct = asyncHandler(async (req, res) => {
     })
 })
 
-//Show Latest Products
+// * Show Latest Products
 export const showLatestProducts = asyncHandler(async (req, res) => {
     const products = await Product.find().sort({createdAt: -1})
 
@@ -43,7 +43,7 @@ export const showLatestProducts = asyncHandler(async (req, res) => {
     )
 })
 
-//Show a specific Product
+// * Show a specific Product
 export const showProduct = asyncHandler(async (req, res) => {
     const id = req.params.id
     const product = await Product.findById(id).populate('userId')
@@ -53,7 +53,7 @@ export const showProduct = asyncHandler(async (req, res) => {
     })
 })
 
-//Create product
+// * Create product
 export const createProduct = asyncHandler(async (req, res) => {
     const {productName, category, description, price, stock} = req.body
     const userId = req.user.id
@@ -90,7 +90,7 @@ export const createProduct = asyncHandler(async (req, res) => {
     res.status(200).json(new ApiResponse(200, newProduct))
 })
 
-//Add cart
+// * Add to cart
 export const addCart = asyncHandler(async (req, res) => {
     const user = req?.user
     const productId = req.params?.id
@@ -129,7 +129,7 @@ export const addCart = asyncHandler(async (req, res) => {
     )
 })
 
-//Remove Cart
+// * Remove from Cart
 export const RemoveCart = asyncHandler(async (req, res) => {
     const user = req?.user
     const productId = req.params.id
@@ -170,7 +170,7 @@ export const RemoveCart = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, 'Product removed successfully'))
 })
 
-//Fetch the data of cart
+// * Fetch the data of cart for a specific User
 export const getCart = asyncHandler(async (req, res) => {
     const user = req.user
     const findUser = await User.findOne({_id: user.id})
@@ -199,7 +199,7 @@ export const getCart = asyncHandler(async (req, res) => {
     })
 })
 
-//for Temp products
+// * For Temp products
 export const fetchTempProducts = asyncHandler(async (req, res) => {
     const products = await TempProduct.find()
     res.status(200).json(
@@ -207,6 +207,7 @@ export const fetchTempProducts = asyncHandler(async (req, res) => {
     )
 })
 
+// ! Not working ,
 export const checkBox = asyncHandler(async (req, res) => {
     const {checkedProducts} = req.body // Array of checked product IDs
 
@@ -222,7 +223,7 @@ export const checkBox = asyncHandler(async (req, res) => {
     res.status(200).json({total: totalPrice})
 })
 
-//Sort by category for suggestions
+// * Sort by category for suggestions
 export const suggestions = asyncHandler(async (req, res) => {
     const category = req.body.category
     const productId = req.params.id
@@ -249,7 +250,7 @@ export const suggestions = asyncHandler(async (req, res) => {
     res.status(200).json(new ApiResponse(200, filteredProducts))
 })
 
-//Sort by category
+// * Sort by category
 export const sortByCategory = asyncHandler(async (req, res) => {
     const category = req.body.category
     const products = await Product.find({
@@ -269,7 +270,7 @@ export const sortByCategory = asyncHandler(async (req, res) => {
     res.status(200).json(new ApiResponse(200, filteredProducts))
 })
 
-//Search
+// * Search
 export const search = asyncHandler(async (req, res) => {
     const {searchTerm} = req.params
     const results = await Product.find({

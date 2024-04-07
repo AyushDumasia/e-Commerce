@@ -6,6 +6,7 @@ import Cart from '../models/cart.schema.js'
 import Order from '../models/order.schema.js'
 import Product from './../models/product.schema.js'
 
+// * Create a new Product for a Merchant
 export const createOrder = asyncHandler(async (req, res) => {
     const userId = req.user.id
 
@@ -38,6 +39,7 @@ export const createOrder = asyncHandler(async (req, res) => {
     res.status(200).json(orders)
 })
 
+// * Fetch an Order for a specific User
 export const fetchSpecificOrder = asyncHandler(async (req, res) => {
     const userId = req.user.id
     const order = await Order.find({userId})
@@ -50,6 +52,7 @@ export const fetchSpecificOrder = asyncHandler(async (req, res) => {
     })
 })
 
+// ! Add an Order
 export const addOrder = asyncHandler(async (req, res) => {
     const userId = req.user.id
     const orderId = req.params.id
@@ -73,6 +76,7 @@ export const addOrder = asyncHandler(async (req, res) => {
     }
 })
 
+// * Fetch an Order for an Admin
 export const fetchOrder = asyncHandler(async (req, res) => {
     const orders = await Order.find()
         .sort({createdAt: -1})

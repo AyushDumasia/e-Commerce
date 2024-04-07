@@ -3,12 +3,15 @@ import Product from './../models/product.schema.js'
 import {asyncHandler} from './../utils/asyncHandler.js'
 import User from './../models/user.schema.js'
 import {getMail} from '../utils/nodemailer.js'
+import DailyUser from '../models/dailyActive.schema.js'
 
+// * Show a pending products for a Approval
 export const showPendingProduct = asyncHandler(async (req, res) => {
     const product = await TempProduct.findOne()
     res.status(200).json(product)
 })
 
+// * Approve a pending product
 export const validProduct = asyncHandler(async (req, res) => {
     const userId = req.user?.id
     const productId = req.params.id
@@ -33,10 +36,32 @@ export const validProduct = asyncHandler(async (req, res) => {
     res.status(200).json(approvedProduct)
 })
 
-export const notApprovedProduct = asyncHandler(async (req, rse) => {
+// * Not Approve a pending product
+export const notApprovedProduct = asyncHandler(async (req, res) => {
     const productId = req.params.id
     const tempProduct = await TempProduct.findByIdAndDelete(productId)
     res.status(200).json(tempProduct)
 })
 
-export const fetchProduct = asyncHandler(async (req, rse) => {})
+// export const fetchProduct = asyncHandler(async (req, rse) => {})
+
+// ! Fetch a Daily Active User
+export const dailyUser = asyncHandler(async (req, res) => {
+    const counts = await DailyUser.find()
+
+    let countArr = {
+        countVal: [],
+        label: [],
+    }
+
+    for (const count of counts) {
+        countArr.countVal.push(count.count)
+        countArr.label.push(count.date)
+    }
+
+    console.log(countArr)
+
+    res.status(200).json(countArr)
+})
+
+//TODO : Create a pie Chart for a category

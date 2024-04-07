@@ -4,13 +4,13 @@ import {ApiError} from './../utils/ApiError.js'
 import {ApiResponse} from './../utils/ApiResponse.js'
 import Product from '../models/product.schema.js'
 
+// * Create a New Feedback
 export const createFeedback = asyncHandler(async (req, res) => {
     const user = req?.user
     if (!user) {
         return res.status(401).json('User is not logged in')
     }
 
-    // console.log(product)
     const newFeedback = new Feedback({
         productId: req.body.productId,
         userId: user.id,
@@ -23,11 +23,10 @@ export const createFeedback = asyncHandler(async (req, res) => {
     )
 })
 
+// * Fetch a feedback for a specific product on a product page
 export const fetchFeedback = asyncHandler(async (req, res) => {
     const productId = req.params
-    // console.log(productId)
     const product = await Product.findById(productId.id)
-    // console.log(product)
     const feedbacks = await Feedback.find({productId: productId.id}).populate(
         'userId',
     )
@@ -40,7 +39,6 @@ export const fetchFeedback = asyncHandler(async (req, res) => {
             totalRating += feedback.rating
         })
         averageRating = totalRating / feedbacks.length
-        // console.log('Average Rating: ', averageRating)
     } else {
         console.log('No feedback available for this product.')
     }
