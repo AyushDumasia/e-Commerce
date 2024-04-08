@@ -9,32 +9,35 @@ import {setApiError, setFeedbackCard} from '../../redux/feedback/feedbackSlice'
 function FeedbackCard() {
     const dispatch = useDispatch()
     const {feedbackCard} = useSelector((state) => state.feedback)
-
+    const {id} = useParams()
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        fetchFeedback()
-    }, [])
+        fetchFeedback(id)
+    }, [id])
 
-    const fetchFeedback = async () => {
-        axios
-            .get(`http://localhost:3000/api/feedback/fetchFeedback/${id}`, {
-                withCredentials: true,
-            })
-            .then((response) => {
-                dispatch(setFeedbackCard(response.data.data))
-                setLoading(false)
-            })
-            .catch((error) => {
-                dispatch(setApiError(error.message))
-            })
+    const fetchFeedback = async (id) => {
+        try {
+            const response = await axios.get(
+                `http://localhost:3000/api/feedback/fetchFeedback/${id}`,
+                {
+                    withCredentials: true,
+                },
+            )
+            dispatch(setFeedbackCard(response.data.data))
+            setLoading(false)
+        } catch (error) {
+            dispatch(setApiError(error.message))
+        }
     }
 
     return (
         <div className="mt-8">
             <h1 className="text-2xl font-semibold">Feedback</h1>
             <div className="mt-4">
-                {feedbackCard > 0 ? (
+                {loading ? (
+                    <p>Loading...</p>
+                ) : feedbackCard.length > 0 ? (
                     feedbackCard.map((feedbackItem) => (
                         <div
                             className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
