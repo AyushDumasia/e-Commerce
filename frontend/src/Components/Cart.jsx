@@ -16,7 +16,7 @@ const Cart = () => {
     return (
         <div className="container mx-auto">
             <CustomToastContainer />
-            <div className="text-center py-8">
+            <div className="text-center pt-5 pb-1">
                 <h1 className="font-bold text-start text-2xl">My Cart</h1>
             </div>
             <CartCard />
