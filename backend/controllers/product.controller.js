@@ -92,9 +92,9 @@ export const createProduct = asyncHandler(async (req, res) => {
 
 // * Add to cart
 export const addCart = asyncHandler(async (req, res) => {
-    const user = req?.user
-    const productId = req.params?.id
-    const quantity = req.body?.quantity || 1
+    const user = req.user
+    const productId = req.params.id
+    const quantity = req.body.quantity || 1
 
     const currUser = await User.findOne({email: user.email})
     if (!currUser) {
@@ -102,27 +102,40 @@ export const addCart = asyncHandler(async (req, res) => {
     }
 
     const product = await Product.findOne({_id: productId})
-    console.log(product)
-    let cartItem
-
-    const existingCartItem = await Cart.findOne({productId, userId: user.id})
-    if (existingCartItem) {
-        existingCartItem.quantity += quantity
-        product.stock -= quantity
-        await product.save()
-        await existingCartItem.save()
-        cartItem = existingCartItem
-    } else {
-        cartItem = await Cart.create({
-            productId,
-            userId: user.id,
-            quantity,
-        })
-        currUser.cart.push(cartItem)
-        await currUser.save()
-        product.stock--
-        await product.save()
+    if (!product) {
+        return res.status(404).json({message: 'Product not found'})
     }
+
+    let cartItem = await Cart.findOne({productId, userId: user.id})
+
+    if (cartItem) {
+        // const availableQuantity = -cartItem.quantity
+        if (quantity <= product.stock) {
+            cartItem.quantity += quantity
+        } else {
+            return res
+                .status(400)
+                .json({message: 'Requested quantity exceeds available stock'})
+        }
+    } else {
+        if (quantity <= product.stock) {
+            cartItem = await Cart.create({
+                productId,
+                userId: user.id,
+                quantity,
+            })
+            currUser.cart.push(cartItem)
+            await currUser.save()
+        } else {
+            return res
+                .status(400)
+                .json({message: 'Requested quantity exceeds available stock'})
+        }
+    }
+
+    product.stock -= quantity
+    await product.save()
+    await cartItem.save()
 
     res.status(200).json(
         new ApiResponse(200, cartItem, 'Cart updated successfully'),
@@ -150,10 +163,6 @@ export const RemoveCart = asyncHandler(async (req, res) => {
     originalProduct.stock++
     await originalProduct.save()
     if (product.quantity === 0) {
-        // const order = await Order.findOne({productId: productId})
-        // await order.deleteOne()
-        // console.log('PRODUCT : ', product)
-        console.log(product.quantity)
         await product.deleteOne()
         return res
             .status(200)

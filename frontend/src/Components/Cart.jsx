@@ -21,8 +21,13 @@ const Cart = () => {
             </div>
             <CartCard />
             <p className="font-bold mt-4 text-start">
-                Total Price: ₹{cart?.totalPrice}
+                {cart?.totalPrice === 0 ? (
+                    <p>Nothing in cart</p>
+                ) : (
+                    <p>Total Price: ₹{cart?.totalPrice}</p>
+                )}
             </p>
+
             <button
                 onClick={orderBtn}
                 className="bg-blue-500 text-white px-6 py-3 my-2 md:mr-4 rounded hover:bg-blue-600"
