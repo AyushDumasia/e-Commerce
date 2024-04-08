@@ -10,7 +10,7 @@ import {IoStorefront} from 'react-icons/io5'
 function SignInButton() {
     const navigate = useNavigate()
     const [showMenu, setShowMenu] = useState(false)
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState('')
     const [merchant, setMerchant] = useState(null)
 
     useEffect(() => {

@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import axios from 'axios'
 import {ToastContainer, toast} from 'react-toastify'
+import ReactLoading from 'react-loading'
 import 'react-toastify/dist/ReactToastify.css'
 import {FaSpinner} from 'react-icons/fa'
 import CustomToastContainer from './Toast/CustomToastContainer'
@@ -42,8 +43,13 @@ function MerchantForm() {
             <CustomToastContainer />
 
             {loading && (
-                <div className="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
-                    <FaSpinner className="animate-spin text-blue-500 text-4xl" />
+                <div className="flex mt-24 justify-center items-center">
+                    <ReactLoading
+                        type={'cylon'}
+                        color={'#123456'}
+                        height={50}
+                        width={50}
+                    />
                 </div>
             )}
 

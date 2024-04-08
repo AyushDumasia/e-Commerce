@@ -7,6 +7,7 @@ import {
     dailyUser,
     notApprovedProduct,
     showPendingProduct,
+    totalCategory,
     validProduct,
 } from '../controllers/admin.controller.js'
 import DailyUser from '../models/dailyActive.schema.js'
@@ -21,5 +22,7 @@ router.post('/validProduct/:id', validProduct)
 router.post('/notApproved/:id', notApprovedProduct)
 
 router.get('/dailyUser', dailyUser)
+
+router.get('/countCategory', totalCategory)
 
 export default router

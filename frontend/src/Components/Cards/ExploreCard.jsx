@@ -54,25 +54,49 @@ function ExploreCard() {
                               <Skeleton
                                   width={250}
                                   height={250}
+                                  duration={2}
+                                  highlightColor="#F0F0F0"
                                   className="rounded-lg mr-4 skeleton-image"
                               />
                               <div className="flex flex-col justify-between w-full">
                                   <Skeleton
                                       height={20}
                                       width={150}
+                                      duration={2}
+                                      highlightColor="#F0F0F0"
                                       className="mb-2 skeleton-title"
                                   />
                                   <Skeleton
                                       height={20}
                                       width={200}
+                                      duration={2}
+                                      highlightColor="#F0F0F0"
                                       className="mb-2 skeleton-description"
                                       count={2}
                                   />
                                   <Skeleton
                                       height={20}
                                       width={100}
+                                      duration={2}
+                                      highlightColor="#F0F0F0"
                                       className="mb-2 skeleton-price"
                                   />
+                                  <div className="flex justify-between items-center">
+                                      <Skeleton
+                                          height={20}
+                                          width={80}
+                                          duration={2}
+                                          highlightColor="#F0F0F0"
+                                          className="mb-2 skeleton-rating"
+                                      />
+                                      <Skeleton
+                                          height={20}
+                                          width={80}
+                                          duration={2}
+                                          highlightColor="#F0F0F0"
+                                          className="mb-2 skeleton-rating"
+                                      />
+                                  </div>
                               </div>
                           </div>
                       ))

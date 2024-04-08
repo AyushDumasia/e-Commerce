@@ -1,0 +1,14 @@
+.container {
+    padding: 20px;
+}
+
+.chart-container {
+    display: flex;
+    justify-content: center;
+}
+
+.doughnut-chart {
+    width: 150px;
+    height: 150px;
+    margin: 10px;
+}

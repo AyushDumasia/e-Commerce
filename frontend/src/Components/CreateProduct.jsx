@@ -6,6 +6,7 @@ import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import {FaSpinner} from 'react-icons/fa'
 import CustomToastContainer from './Toast/CustomToastContainer'
+import ReactLoading from 'react-loading' // Import ReactLoading
 
 function CreateProduct() {
     const [formData, setFormData] = useState({
@@ -54,9 +55,11 @@ function CreateProduct() {
                     },
                 },
             )
+
             if (response.status === 200) {
                 toast.success('Product created successfully')
             }
+
             setFormData({
                 productName: '',
                 category: '',
@@ -75,11 +78,16 @@ function CreateProduct() {
     return (
         <div className="mt-[100px] flex justify-center items-center">
             <CustomToastContainer />
-            {loading ? (
-                <div className="flex justify-center items-center absolute inset-0 bg-gray-900 bg-opacity-50 z-50">
-                    <FaSpinner className="animate-spin text-blue-500 text-4xl" />
+            {loading && (
+                <div className="flex mt-24 justify-center items-center">
+                    <ReactLoading
+                        type={'cylon'}
+                        color={'#123456'}
+                        height={50}
+                        width={50}
+                    />
                 </div>
-            ) : null}
+            )}
             <div className="flex flex-col justify-center items-start w-[450px] bg-white p-8 rounded-lg">
                 <form onSubmit={handleSubmit} encType="multipart/form-data">
                     <label htmlFor="productName">Product Name:</label>
@@ -91,7 +99,6 @@ function CreateProduct() {
                         handler={handleChange}
                         required
                     />
-
                     <label htmlFor="images">Cover Image:</label>
                     <Input
                         type={'file'}
@@ -100,7 +107,6 @@ function CreateProduct() {
                         accept={'image/*'}
                         handler={handleFileChange}
                     />
-
                     <label htmlFor="productName">Stock :</label>
                     <Input
                         type={'text'}
@@ -110,7 +116,6 @@ function CreateProduct() {
                         handler={handleChange}
                         required
                     />
-
                     <div className="mb-[5px] w-full">
                         <label htmlFor="Gender" className="text-lg">
                             Category
@@ -175,7 +180,6 @@ function CreateProduct() {
                             </option>
                         </select>
                     </div>
-
                     <label htmlFor="description">Description:</label>
                     <Input
                         type={'text'}
@@ -185,7 +189,6 @@ function CreateProduct() {
                         handler={handleChange}
                         required
                     />
-
                     <label htmlFor="price">Price:</label>
                     <Input
                         type={'number'}
@@ -195,7 +198,7 @@ function CreateProduct() {
                         handler={handleChange}
                         required
                     />
-                    {loading ? null : <Button text="Submit" type="submit" />}
+                    {!loading && <Button text="Submit" type="submit" />}
                 </form>
             </div>
         </div>

@@ -1,12 +1,17 @@
 import React, {useEffect, useState} from 'react'
 import Chart from 'chart.js/auto'
+import {Doughnut} from 'react-chartjs-2'
+import axios from 'axios'
+import './DailyUserGraph.css' // Import your CSS file
 
 const DailyUserGraph = () => {
+    const [categoryCounts, setCategoryCounts] = useState([])
     const [data, setData] = useState(null)
     const [chart, setChart] = useState(null)
 
     useEffect(() => {
         fetchDailyUserData()
+        fetchCategoryCounts()
     }, [])
 
     const fetchDailyUserData = async () => {
@@ -21,6 +26,46 @@ const DailyUserGraph = () => {
         }
     }
 
+    const fetchCategoryCounts = async () => {
+        try {
+            const response = await axios.get(
+                'http://localhost:3000/api/admin/countCategory',
+            )
+            setCategoryCounts(response.data)
+        } catch (error) {
+            console.error('Error fetching category product counts:', error)
+        }
+    }
+
+    const renderPieChart = () => {
+        if (!categoryCounts || categoryCounts.length === 0) {
+            return null
+        }
+        const labels = categoryCounts.map((categoryCount) => categoryCount._id)
+        const counts = categoryCounts.map(
+            (categoryCount) => categoryCount.count,
+        )
+
+        const data = {
+            labels: labels,
+            datasets: [
+                {
+                    data: counts,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 159, 64, 0.6)',
+                    ],
+                    hoverOffset: 40,
+                },
+            ],
+        }
+        return <Doughnut data={data} className="pie-chart" />
+    }
+
     useEffect(() => {
         if (data && data.countVal && data.label) {
             const ctx = document.getElementById('dailyUserChart')
@@ -33,9 +78,9 @@ const DailyUserGraph = () => {
                             {
                                 label: 'Active Daily Users',
                                 data: data.countVal,
-                                fill: false,
-                                borderColor: 'rgb(75, 192, 192)',
-                                tension: 0.1,
+                                fill: true,
+                                borderColor: 'rgb(13, 13, 29)',
+                                tension: 100,
                             },
                         ],
                     },
@@ -53,8 +98,9 @@ const DailyUserGraph = () => {
     }, [data])
 
     return (
-        <div>
-            <h2>Active Daily Users</h2>
+        <div className="container">
+            {renderPieChart()}
+            <h2 className="title">Active Daily Users</h2>
             <canvas id="dailyUserChart" width="400" height="200"></canvas>
         </div>
     )

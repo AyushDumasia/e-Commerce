@@ -64,4 +64,17 @@ export const dailyUser = asyncHandler(async (req, res) => {
     res.status(200).json(countArr)
 })
 
+export const totalCategory = asyncHandler(async (req, res) => {
+    try {
+        const categoryCounts = await Product.aggregate([
+            {$group: {_id: '$category', count: {$sum: 1}}},
+        ])
+
+        res.json(categoryCounts)
+    } catch (error) {
+        console.error('Error retrieving category product counts:', error)
+        res.status(500).json({error: 'Internal Server Error'})
+    }
+})
+
 //TODO : Create a pie Chart for a category

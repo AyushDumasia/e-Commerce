@@ -1,19 +1,23 @@
 import axios from 'axios'
 import {FiPlus, FiMinus} from 'react-icons/fi'
-import {useEffect} from 'react'
+import {useEffect, useState} from 'react'
+import ReactLoading from 'react-loading'
 
 import {toast} from 'react-toastify'
 import {useDispatch, useSelector} from 'react-redux'
 import {setCart, setApiError} from '../../redux/cart/cartSlice'
 
 function CartCard({}) {
+    const [loading, setLoading] = useState(false)
     const dispatch = useDispatch()
     const {cart, apiError} = useSelector((state) => state.cart)
+
     useEffect(() => {
         fetchCartData()
     }, [])
 
     const fetchCartData = async () => {
+        setLoading(true)
         try {
             const response = await axios.get(
                 'http://localhost:3000/api/product/cart',
@@ -23,14 +27,9 @@ function CartCard({}) {
             )
             dispatch(setCart(response.data))
         } catch (error) {
-            handleApiError(error)
-        }
-    }
-    const handleApiError = (error) => {
-        if (error.response) {
-            dispatch(setApiError(error.response.data))
-        } else {
-            dispatch(setApiError(error.response))
+            dispatch(setApiError(error))
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -50,7 +49,16 @@ function CartCard({}) {
 
     return (
         <div>
-            {!cart || cart.length === 0 ? (
+            {loading ? (
+                <div className="flex mt-24 justify-center items-center">
+                    <ReactLoading
+                        type={'cylon'}
+                        color={'#123456'}
+                        height={50}
+                        width={50}
+                    />
+                </div>
+            ) : !cart || cart.length === 0 ? (
                 <p>No cart found</p>
             ) : (
                 cart.cartItems.map((item) => (
