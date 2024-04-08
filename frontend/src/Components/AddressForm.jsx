@@ -66,9 +66,8 @@ function AddressForm() {
         }
     }
 
-    return (
-        <div className="mt-20 flex justify-center items-center">
-            <CustomToastContainer />
+    const Form = () => {
+        return (
             <div className="flex flex-col justify-center items-start w-96 bg-white p-8 rounded-lg shadow-lg">
                 <h1 className="font-bold text-3xl mb-6">Add Address</h1>
                 <form onSubmit={handleSubmit} className="w-full">
@@ -131,9 +130,20 @@ function AddressForm() {
                         error={errors.country}
                         className="mb-4"
                     />
-                    <Button text={'Submit'} className="w-full" />
+                    <Button
+                        text={'Submit'}
+                        onClick={validateForm}
+                        className="w-full"
+                    />
                 </form>
             </div>
+        )
+    }
+
+    return (
+        <div className="mt-20 flex justify-center items-center">
+            <CustomToastContainer />
+            {Form()}
         </div>
     )
 }

@@ -4,11 +4,15 @@ import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Rating from 'react-rating-stars-component'
 import {useNavigate} from 'react-router-dom'
-import Skeleton from 'react-loading-skeleton' // Import Skeleton component
+import Skeleton from 'react-loading-skeleton'
+import {useDispatch, useSelector} from 'react-redux'
+import {setExploreCard} from '../redux/explore/exploreSlice.jsx'
 import './Skeleton.css'
+
 function Explore() {
-    const [products, setProducts] = useState([])
-    const [loading, setLoading] = useState(true) // Add loading state
+    const dispatch = useDispatch()
+    const {exploreCard, apiError} = useSelector((state) => state.explore)
+    const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
     const [page, setPage] = useState(1)
     const [pageCount, setPageCount] = useState(0)
@@ -35,18 +39,19 @@ function Explore() {
             const response = await axios.get(
                 `http://localhost:3000/api/product/fetchProduct?page=${page}`,
             )
-            setProducts(response.data.products)
+            dispatch(setExploreCard(response.data.products))
             setPagination(response.data.pagination)
             setPageCount(response.data.pagination.pageCount)
+            console.log(response.data)
         } catch (error) {
             toast.error(error.message)
         } finally {
-            setLoading(false) // Set loading to false after fetching data
+            setLoading(false)
         }
     }
 
     const showProduct = async (id) => {
-        await axios.get(`http://localhost:3000/api/product/showProduct/${id}`)
+        await axios.get(`/product/showProduct/${id}`)
         navigate(`/showProduct/${id}`)
     }
 
@@ -91,7 +96,7 @@ function Explore() {
                               </div>
                           </div>
                       ))
-                    : products.map((product) => (
+                    : exploreCard.map((product) => (
                           <div
                               key={product._id}
                               className="w-[80%] self-start bg-white flex h-[300px] p-4 mb-4 border border-gray-300 rounded-lg shadow-md cursor-pointer transition duration-300 hover:shadow-lg"

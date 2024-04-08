@@ -7,6 +7,8 @@ import {
     createBrowserRouter,
     createRoutesFromElements,
 } from 'react-router-dom'
+import {Provider} from 'react-redux'
+
 import App from './App.jsx'
 import Home from './Components/Home.jsx'
 import LogIn from './Components/LogIn'
@@ -24,6 +26,9 @@ import ShowAddress from './Components/ShowAddress.jsx'
 import Dashboard from './Components/Dashboard.jsx'
 import SearchPage from './Components/SearchPage.jsx'
 import DailyUserGraph from './Components/DailyUserGraph.jsx'
+import {store} from './redux/store.js'
+import {persistor} from './redux/store.js'
+import {PersistGate} from 'redux-persist/integration/react'
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -47,7 +52,9 @@ const router = createBrowserRouter(
     ),
 )
 ReactDOM.createRoot(document.getElementById('root')).render(
-    // <React.StrictMode>
-    <RouterProvider router={router} />,
-    // </React.StrictMode>,
+    <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+            <RouterProvider router={router} />
+        </PersistGate>
+    </Provider>,
 )

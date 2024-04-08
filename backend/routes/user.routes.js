@@ -11,16 +11,22 @@ import {
 
 const router = express.Router()
 
+// * Sign Up
 router.post('/signup', signUp)
 
+// * Log in
 router.post('/login', logIn)
 
+// * LogOut
 router.get('/logout', logOut)
 
+// ! Fetch a logged in user data
 router.get('/currentUser', validateToken, currentUser)
 
+// * Fetch a logged in user data
 router.get('/passInfo', validateToken, getUserInfo)
 
+// ! Update Profile
 router.post('/updatePass', updateUser)
 
 export default router

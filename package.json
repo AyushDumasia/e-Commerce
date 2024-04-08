@@ -6,7 +6,6 @@
     "dependencies": {
         "prettier": "^3.2.5"
     },
-    "devDependencies": {},
     "scripts": {
         "start": "backend/index.js",
         "dev": "frontend/npm run dev"

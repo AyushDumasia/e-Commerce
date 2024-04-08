@@ -14,7 +14,7 @@ function ShowAddress() {
                     },
                 )
                 console.log(response.data)
-                setAddressData(response.data) // Assuming the address data is in response.data
+                setAddressData(response.data.data)
             } catch (err) {
                 console.log(err)
             }

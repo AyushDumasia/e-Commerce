@@ -4,12 +4,21 @@ import {useParams} from 'react-router-dom'
 import Rating from 'react-rating-stars-component'
 import CustomToastContainer from './Toast/CustomToastContainer'
 import {toast} from 'react-toastify'
-
+import {useDispatch, useSelector} from 'react-redux'
+import {setProductCard} from '../redux/showProducts/showProductSlice'
+import {setFeedbackCard} from '../redux/feedback/feedbackSlice'
 function ShowInfo() {
+    const dispatch = useDispatch()
     const {id} = useParams()
-    const [product, setProduct] = useState(null)
+    const {showProductCard, apiError} = useSelector(
+        (state) => state.productCard,
+    )
+
+    const {feedbackCard} = useSelector((state) => state.feedback)
+
+    // const [product, setProduct] = useState(null)
     const [loading, setLoading] = useState(true)
-    const [feedback, setFeedback] = useState([])
+    // const [feedback, setFeedback] = useState([])
     const [comment, setComment] = useState('')
     const [rating, setRating] = useState(0)
 
@@ -26,8 +35,9 @@ function ShowInfo() {
                         {withCredentials: true},
                     ),
                 ])
-                setProduct(productResponse.data.product)
-                setFeedback(feedbackResponse.data.data)
+                dispatch(setProductCard(productResponse.data.product))
+                console.log(feedbackResponse.data.data)
+                dispatch(setFeedbackCard(feedbackResponse.data.data))
                 setLoading(false)
             } catch (error) {
                 // console.error('Error fetching data:', error)
@@ -89,28 +99,32 @@ function ShowInfo() {
             <CustomToastContainer />
             {loading ? (
                 <p>Loading...</p>
-            ) : product ? (
+            ) : showProductCard ? (
                 <div className="flex flex-col md:flex-row items-center">
                     <div className="md:mr-12 md:mb-0 w-full md:w-1/2">
                         <img
-                            src={product.coverImage}
-                            alt={product.productName}
+                            src={showProductCard.coverImage}
+                            alt={showProductCard.productName}
                             className="w-full h-auto mb-4 rounded-lg"
                         />
                     </div>
                     <div className="flex-1 self-start md:pl-12">
                         <h2 className="text-3xl font-bold mb-4">
-                            {product.productName}
+                            {showProductCard.productName}
                         </h2>
-                        <p className="text-xl mb-4">{product.category}</p>
-                        <p className="text-lg mb-4">{product.description}</p>
+                        <p className="text-xl mb-4">
+                            {showProductCard.category}
+                        </p>
+                        <p className="text-lg mb-4">
+                            {showProductCard.description}
+                        </p>
                         <p className="text-xl font-bold mb-4">
-                            ₹{product.price}
+                            ₹{showProductCard.price}
                         </p>
                         <div className="flex flex-col md:flex-row">
                             <button
                                 onClick={() => {
-                                    addCart(product._id)
+                                    addCart(showProductCard._id)
                                 }}
                                 className="bg-blue-500 text-white px-6 py-3 my-2 md:mr-4 rounded hover:bg-blue-600"
                             >
@@ -160,8 +174,8 @@ function ShowInfo() {
             <div className="mt-8">
                 <h1 className="text-2xl font-semibold">Feedback</h1>
                 <div className="mt-4">
-                    {feedback.length > 0 ? (
-                        feedback.map((feedbackItem) => (
+                    {feedbackCard > 0 ? (
+                        feedbackCard.map((feedbackItem) => (
                             <div
                                 className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
                                 key={feedbackItem._id}

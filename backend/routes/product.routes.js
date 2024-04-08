@@ -17,7 +17,7 @@ import {validateMerchant} from '../middlewares/authMerchant.js'
 import {upload} from './../middlewares/multer.js'
 const router = express.Router()
 
-//Create Product
+// * Create Product
 router.post(
     '/createProduct',
     validateToken,
@@ -26,23 +26,31 @@ router.post(
     createProduct,
 )
 
-//Add to Cart
+// * Add to Cart
 router.get('/addToCart/:id', validateToken, addCart)
-//Remove from Cart
+
+// * Remove from Cart
 router.get('/removeCart/:id', validateToken, RemoveCart)
-//Get Cart
+
+// * Get Cart
 router.get('/cart', validateToken, getCart)
-//Home Page
+
+// * Home Page
 router.get('/fetchProduct', fetchProduct)
-//Show Product
+
+// * Show Product
 router.get('/showProduct/:id', showProduct)
-//Fetch Temp products
+
+// * Fetch Temp products
 router.get('/showTempProduct', fetchTempProducts)
-//Suggestions
+
+// * Suggestions
 router.get('/category/:id', suggestions)
-//Sort by category
+
+// * Sort by category
 router.get('/category', sortByCategory)
-//Search
+
+// * Search
 router.get('/search/:searchTerm', search)
 
 export default router

@@ -71,7 +71,7 @@ export const signUp = asyncHandler(async (req, res) => {
     )
 })
 
-// * Log in , post
+// * Log in
 export const logIn = asyncHandler(async (req, res) => {
     const date = new Date().toISOString().split('T')[0]
 

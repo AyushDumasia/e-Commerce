@@ -8,6 +8,7 @@ import {
 import validateToken from './../middlewares/validateUser.js'
 import {upload} from '../middlewares/multer.js'
 
+// *  Become  a merchant
 router.post(
     '/becomeMerchant',
     validateToken,
@@ -15,6 +16,7 @@ router.post(
     becomeMerchant,
 )
 
+// * Fetch a data for a merchant
 router.get('/currentMerchant', validateToken, currentMerchant)
 
 export default router
