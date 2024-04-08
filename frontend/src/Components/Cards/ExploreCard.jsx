@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import React, {useState, useEffect} from 'react'
 import {setExploreCard} from '../../redux/explore/exploreSlice'
 import {ToastContainer, toast} from 'react-toastify'
+import PaginationFooter from '../Footer/PaginationFooter'
 
 function ExploreCard() {
     const dispatch = useDispatch()
@@ -15,22 +16,6 @@ function ExploreCard() {
     const [loading, setLoading] = useState(true)
     const [pagination, setPagination] = useState()
     const [pageCount, setPageCount] = useState(0)
-
-    const handlePrevious = () => {
-        setPage((p) => {
-            if (p === 1) return p
-            fetchProduct(p - 1)
-            return p - 1
-        })
-    }
-
-    const handleNext = () => {
-        setPage((p) => {
-            if (p === pageCount) return p
-            fetchProduct(p + 1)
-            return p + 1
-        })
-    }
 
     const fetchProduct = async (page) => {
         try {
@@ -58,7 +43,7 @@ function ExploreCard() {
     }, [])
 
     return (
-        <div className="">
+        <div className="overflow-hidden">
             <div className="flex flex-col w-screen items-center">
                 {loading
                     ? Array.from({length: 5}).map((_, index) => (
@@ -127,22 +112,6 @@ function ExploreCard() {
                               </div>
                           </div>
                       ))}
-                <footer className="flex justify-between w-full mt-8">
-                    <button
-                        className="bg-gray-800 text-white px-4 py-2 rounded-sm disabled:opacity-50"
-                        disabled={page === 1}
-                        onClick={handlePrevious}
-                    >
-                        Previous
-                    </button>
-                    <button
-                        className="bg-gray-800 text-white px-4 py-2 rounded-sm disabled:opacity-50"
-                        disabled={page === pageCount}
-                        onClick={handleNext}
-                    >
-                        Next
-                    </button>
-                </footer>
             </div>
         </div>
     )
