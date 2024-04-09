@@ -5,7 +5,7 @@ import SignInButton from './SignInButton.jsx'
 
 function Navbar() {
     return (
-        <nav className="bg-[#ffffff] text-black p-4 fixed w-full top-0 z-50 border-black border-b">
+        <nav className="bg-[#ffffff] text-black p-2 fixed w-full top-0 z-50 border-black border-b">
             <div className="container mx-auto flex justify-between items-center">
                 <div className="flex justify-center items-center">
                     <Link to="/" className="text-2xl font-bold">

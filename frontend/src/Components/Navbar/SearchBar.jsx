@@ -25,18 +25,18 @@ function SearchBar() {
     return (
         <>
             <button
-                className="flex items-center justify-center text-gray-600  focus:outline-none rounded-l-3xl h-[40px] p-[7px] bg-white border border-black border-r-0"
-                onClick={handleSubmit} // Call handleSubmit function on button click
+                className="flex items-center justify-center text-gray-600  focus:outline-none rounded-l-sm h-[40px] p-[7px] bg-white border border-gray-600 border-r-0"
+                onClick={handleSubmit}
             >
                 <FiSearch />{' '}
             </button>
             <input
                 value={search}
                 onChange={filter}
-                onKeyPress={handleSubmit} // Call handleSubmit function on key press
+                onKeyPress={handleSubmit}
                 type="text"
                 placeholder="Search..."
-                className="border border-black rounded-r-3xl focus:outline-none h-[40px] p-[7px] border-l-0 pl-0 w-full"
+                className="border border-gray-600 rounded-r-sm focus:outline-none h-[40px] p-[7px] border-l-0 pl-0 w-full"
             />
         </>
     )

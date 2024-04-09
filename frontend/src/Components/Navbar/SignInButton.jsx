@@ -6,6 +6,7 @@ import {MdCreateNewFolder} from 'react-icons/md'
 import 'react-toastify/dist/ReactToastify.css'
 import {FaRegUserCircle, FaAngleUp, FaShoppingCart} from 'react-icons/fa'
 import {IoStorefront} from 'react-icons/io5'
+import Avatar from 'react-avatar'
 
 function SignInButton() {
     const navigate = useNavigate()
@@ -71,7 +72,7 @@ function SignInButton() {
     }
 
     return (
-        <div className="relative ">
+        <div className="relative">
             <div
                 className={`${
                     showMenu
@@ -81,13 +82,30 @@ function SignInButton() {
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
             >
-                <FaRegUserCircle /> &nbsp;{' '}
-                {user ? user.username : <Link to="/login">Sign In</Link>} &nbsp;
+                {user ? '' : <Link to="/login">Sign In</Link>} &nbsp;
+                {!user ? (
+                    <Avatar
+                        name="U"
+                        unstyled={false}
+                        size="40"
+                        githubHandle="{user?.username}"
+                        round={true}
+                    />
+                ) : (
+                    <Avatar
+                        name={user?.username}
+                        unstyled={false}
+                        googleId={user?.username}
+                        size="40"
+                        round={true}
+                        color="blue"
+                    />
+                )}
                 <FaAngleUp
-                    className={`transform ${
+                    className={`transform hidden ${
                         showMenu
-                            ? 'rotate-[0deg] transition-transform duration-[450ms]'
-                            : 'rotate-[-180deg] transition-transform duration-[450ms]'
+                            ? 'rotate-[0deg] transition-transform duration-[300ms]'
+                            : 'rotate-[-180deg] transition-transform duration-[300ms]'
                     }`}
                 />
             </div>

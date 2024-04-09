@@ -34,9 +34,9 @@ export default function FilterPage() {
     }, [searchTerm, option])
 
     return (
-        <div className="overflow-hidden p-3 flex">
+        <div className="overflow-hidden p-7 pl-3 flex">
             <VerticalBar />
-            <div className="container mx-auto py-8">
+            <div className="container p-3 mx-auto ">
                 <h1 className="text-xl font-semibold mb-8">
                     Search Results for "{searchTerm}"
                 </h1>

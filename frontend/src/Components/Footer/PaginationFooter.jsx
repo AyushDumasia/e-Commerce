@@ -43,24 +43,22 @@ function PaginationFooter() {
         })
     }
     return (
-        <div>
-            <footer className="flex justify-between w-full mt-8">
-                <button
-                    className="bg-gray-800 text-white px-4 py-2 rounded-sm disabled:opacity-50"
-                    disabled={page === 1}
-                    onClick={handlePrevious}
-                >
-                    Previous
-                </button>
-                <button
-                    className="bg-gray-800 text-white px-4 py-2 rounded-sm disabled:opacity-50"
-                    disabled={page === pageCount}
-                    onClick={handleNext}
-                >
-                    Next
-                </button>
-            </footer>
-        </div>
+        <footer className="flex justify-between w-full mt-8">
+            <button
+                className="bg-gray-800 text-white px-4 py-2 rounded-sm disabled:opacity-50"
+                disabled={page === 1}
+                onClick={handlePrevious}
+            >
+                Previous
+            </button>
+            <button
+                className="bg-gray-800 text-white px-4 py-2 rounded-sm disabled:opacity-50"
+                disabled={page === pageCount}
+                onClick={handleNext}
+            >
+                Next
+            </button>
+        </footer>
     )
 }
 
