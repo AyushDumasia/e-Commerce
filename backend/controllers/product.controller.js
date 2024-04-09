@@ -310,3 +310,36 @@ export const search = asyncHandler(async (req, res) => {
     }
     return res.status(201).json(new ApiResponse(201, results, 'Products find'))
 })
+
+// * Filter products by Price
+
+export const sortProducts = asyncHandler(async (req, res) => {
+    const option = req.params.option
+    console.log(req.params)
+    const productId = req.params.searchTerm
+    const product = await Product.find({productName: productId})
+    if (!product) {
+        return res
+            .status(404)
+            .json(new ApiResponse(404, [], 'Product not found'))
+    }
+    if (option === 'asc') {
+        const results = await Product.find({
+            $or: [
+                {productName: {$regex: productId, $options: 'i'}},
+                {description: {$regex: productId, $options: 'i'}},
+                {category: {$regex: productId, $options: 'i'}},
+            ],
+        }).sort({price: -1})
+        return res.status(200).json(new ApiResponse(200, results, 'OK'))
+    } else if (option === 'dsc') {
+        const results = await Product.find({
+            $or: [
+                {productName: {$regex: productId, $options: 'i'}},
+                {description: {$regex: productId, $options: 'i'}},
+                {category: {$regex: productId, $options: 'i'}},
+            ],
+        }).sort({price: 1})
+        return res.status(200).json(new ApiResponse(200, results, 'OK'))
+    }
+})

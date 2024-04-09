@@ -33,10 +33,10 @@ function VerticalBar() {
                         <NavLink
                             to={`/explore/search/${category}`}
                             className={({isActive}) =>
-                                `${(isActive ? 'text-[blue]' : 'text-black', 'text-sm')}`
+                                `${isActive ? 'text-[blue] text-sm ' : 'text-black text-sm'}`
                             }
                         >
-                            {category}
+                            <div>{category}</div>
                         </NavLink>
                     </div>
                 ))}

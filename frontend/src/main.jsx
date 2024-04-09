@@ -29,6 +29,7 @@ import DailyUserGraph from './Components/DailyUserGraph.jsx'
 import {store} from './redux/store.js'
 import {persistor} from './redux/store.js'
 import {PersistGate} from 'redux-persist/integration/react'
+import FilterPage from './Components/FilterPage.jsx'
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -49,6 +50,10 @@ const router = createBrowserRouter(
             <Route
                 path="/explore/search/:searchTerm"
                 element={<SearchPage />}
+            />
+            <Route
+                path="/explore/search/:searchTerm/:option"
+                element={<FilterPage />}
             />
             <Route path="/admin" element={<AdminPage />} />
         </Route>,

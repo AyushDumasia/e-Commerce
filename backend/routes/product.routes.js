@@ -12,6 +12,7 @@ import {
     sortByCategory,
     suggestions,
     search,
+    sortProducts,
 } from '../controllers/product.controller.js'
 import {validateMerchant} from '../middlewares/authMerchant.js'
 import {upload} from './../middlewares/multer.js'
@@ -53,4 +54,9 @@ router.get('/category', sortByCategory)
 // * Search
 router.get('/search/:searchTerm', search)
 
+// * Sort by Ascending
+router.get('/search/:searchTerm/:option', sortProducts)
+
+// * Sort by Descending
+// router.get('/search/:searchTerm/dcs', getDescendingProducts)
 export default router

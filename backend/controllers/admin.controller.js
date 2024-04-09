@@ -46,7 +46,7 @@ export const notApprovedProduct = asyncHandler(async (req, res) => {
 
 // export const fetchProduct = asyncHandler(async (req, rse) => {})
 
-// ! Fetch a Daily Active User
+// * Fetch a Daily Active User
 export const dailyUser = asyncHandler(async (req, res) => {
     const counts = await DailyUser.find()
 
