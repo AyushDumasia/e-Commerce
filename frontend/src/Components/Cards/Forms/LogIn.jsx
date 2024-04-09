@@ -4,9 +4,9 @@ import {ToastContainer, toast} from 'react-toastify'
 import {Link} from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css'
 
-import Button from './Button/Button.jsx'
-import Password from './Password/Password.jsx'
-import Input from './Input/Input'
+import Button from '../../Button/Button.jsx'
+import Password from '../../Password/Password.jsx'
+import Input from '../../Input/Input.jsx'
 
 import axios from 'axios'
 

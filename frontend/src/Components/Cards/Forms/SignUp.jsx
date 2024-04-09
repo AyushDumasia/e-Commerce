@@ -3,9 +3,9 @@ import axios from 'axios'
 import {useNavigate, Link} from 'react-router-dom'
 import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import Input from './Input/Input'
-import Button from './Button/Button'
-import Password from './Password/Password'
+import Input from '../../Input/Input'
+import Button from '../../Button/Button'
+import Password from '../../Password/Password'
 import {FaSpinner} from 'react-icons/fa'
 
 function SignUp() {

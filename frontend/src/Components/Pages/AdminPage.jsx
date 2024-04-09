@@ -1,6 +1,6 @@
 import 'react-toastify/dist/ReactToastify.css'
-import CustomToastContainer from './Toast/CustomToastContainer'
-import AdminCard from './Cards/AdminCard.jsx'
+import CustomToastContainer from './../Toast/CustomToastContainer'
+import AdminCard from './../Cards/AdminCard'
 
 function AdminPage() {
     return (

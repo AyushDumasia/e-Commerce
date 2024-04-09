@@ -1,7 +1,7 @@
-import CustomToastContainer from './Toast/CustomToastContainer'
-import ProductCard from './Cards/ProductCard'
-import FeedbackCard from './Cards/FeedbackCard'
-import FeedbackForm from './Cards/Forms/FeedbackForm'
+import CustomToastContainer from './../Toast/CustomToastContainer'
+import ProductCard from './../Cards/ProductCard'
+import FeedbackCard from './../Cards/FeedbackCard'
+import FeedbackForm from './../Cards/Forms/FeedbackForm'
 
 function ShowInfo() {
     return (

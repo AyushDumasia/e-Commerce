@@ -19,7 +19,7 @@ function FilterCard() {
     }
 
     return (
-        <div className="p-4 bg-white rounded-lg shadow-md">
+        <div className="p-3 bg-white rounded-lg shadow-md">
             <label
                 htmlFor="filterDropdown"
                 className="block text-sm font-medium text-gray-700 mb-2"

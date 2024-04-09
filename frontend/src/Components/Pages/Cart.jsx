@@ -1,7 +1,7 @@
-import CustomToastContainer from './Toast/CustomToastContainer'
 import {useNavigate} from 'react-router-dom'
-import CartCard from './Cards/CartCard.jsx'
 import {useSelector} from 'react-redux'
+import CustomToastContainer from './../Toast/CustomToastContainer'
+import CartCard from './../Cards/CartCard'
 
 const Cart = () => {
     const {cart} = useSelector((state) => state.cart)

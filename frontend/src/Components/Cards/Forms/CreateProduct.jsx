@@ -1,11 +1,11 @@
 import React, {useState} from 'react'
-import Input from './Input/Input'
-import Button from './Button/Button'
+import Input from '../../Input/Input'
+import Button from '../../Button/Button'
 import axios from 'axios'
 import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import {FaSpinner} from 'react-icons/fa'
-import CustomToastContainer from './Toast/CustomToastContainer'
+import CustomToastContainer from '../../Toast/CustomToastContainer'
 import ReactLoading from 'react-loading' // Import ReactLoading
 
 function CreateProduct() {

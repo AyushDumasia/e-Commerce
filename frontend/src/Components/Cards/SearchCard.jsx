@@ -35,7 +35,7 @@ function SearchCard() {
     }, [searchTerm])
 
     return (
-        <div className="container mx-auto  py-8">
+        <div className="container mx-auto p-3">
             <h1 className="text-xl font-semibold mb-8">
                 Search Results for "{searchTerm.searchTerm}"
             </h1>

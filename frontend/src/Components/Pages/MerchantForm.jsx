@@ -1,10 +1,9 @@
-import React, {useState} from 'react'
+import {useState} from 'react'
 import axios from 'axios'
-import {ToastContainer, toast} from 'react-toastify'
+import {toast} from 'react-toastify'
 import ReactLoading from 'react-loading'
 import 'react-toastify/dist/ReactToastify.css'
-import {FaSpinner} from 'react-icons/fa'
-import CustomToastContainer from './Toast/CustomToastContainer'
+import CustomToastContainer from './../Toast/CustomToastContainer'
 
 function MerchantForm() {
     const [selectedFile, setSelectedFile] = useState(null)
@@ -16,7 +15,7 @@ function MerchantForm() {
         try {
             const formDataWithFiles = new FormData()
             formDataWithFiles.append('document', selectedFile)
-            const response = await axios.post(
+            await axios.post(
                 'http://localhost:3000/api/merchant/becomeMerchant',
                 formDataWithFiles,
                 {
