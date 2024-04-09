@@ -9,10 +9,9 @@ import PaginationFooter from './Footer/PaginationFooter.jsx'
 
 function Explore() {
     return (
-        <div className="flex p-7">
+        <div className="flex p-7 pl-3">
             <ToastContainer />
             <ExploreCard />
-            <PaginationFooter />
         </div>
     )
 }

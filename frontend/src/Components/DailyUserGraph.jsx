@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react'
 import Chart from 'chart.js/auto'
 import {Doughnut} from 'react-chartjs-2'
 import axios from 'axios'
-import './DailyUserGraph.css' // Import your CSS file
 
 const DailyUserGraph = () => {
     const [categoryCounts, setCategoryCounts] = useState([])
@@ -80,7 +79,7 @@ const DailyUserGraph = () => {
                                 data: data.countVal,
                                 fill: true,
                                 borderColor: 'rgb(13, 13, 29)',
-                                tension: 100,
+                                tension: 0.5,
                             },
                         ],
                     },

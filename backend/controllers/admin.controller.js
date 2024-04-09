@@ -21,6 +21,7 @@ export const validProduct = asyncHandler(async (req, res) => {
         category: tempProduct.category,
         description: tempProduct.description,
         coverImage: tempProduct.coverImage,
+        imageUrls: tempProduct.imageUrls,
         stock: tempProduct.stock || 10,
         price: tempProduct.price,
         userId: tempProduct.userId,

@@ -10,7 +10,7 @@ function SearchBar() {
         if (e.key === 'Enter') {
             e.preventDefault() // Prevent default form submission behavior
             try {
-                navigate(`/search/${search}`)
+                navigate(`/explore/search/${search}`)
             } catch (err) {
                 console.log(err)
             }

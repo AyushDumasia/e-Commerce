@@ -1,12 +1,13 @@
 import axios from 'axios'
 import Rating from 'react-rating-stars-component'
-import {useNavigate} from 'react-router-dom'
+import {NavLink, useNavigate} from 'react-router-dom'
 import Skeleton from 'react-loading-skeleton'
 import {useDispatch, useSelector} from 'react-redux'
 import React, {useState, useEffect} from 'react'
 import {setExploreCard} from '../../redux/explore/exploreSlice'
 import {ToastContainer, toast} from 'react-toastify'
 import PaginationFooter from '../Footer/PaginationFooter'
+import VerticalBar from './VerticalBar'
 
 function ExploreCard() {
     const dispatch = useDispatch()
@@ -43,7 +44,8 @@ function ExploreCard() {
     }, [])
 
     return (
-        <div className="overflow-hidden">
+        <div className="overflow-hidden flex">
+            <VerticalBar />
             <div className="flex flex-col w-screen items-center">
                 {loading
                     ? Array.from({length: 5}).map((_, index) => (
@@ -136,6 +138,7 @@ function ExploreCard() {
                               </div>
                           </div>
                       ))}
+                <PaginationFooter />
             </div>
         </div>
     )

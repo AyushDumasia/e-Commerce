@@ -58,33 +58,47 @@ export const createProduct = asyncHandler(async (req, res) => {
     const {productName, category, description, price, stock} = req.body
     const userId = req.user.id
     const user = await User.findOne({_id: userId})
-    const coverImageLocalPath = await req.file.path
-    // const imageLocalPath = req.files?.imageUrls[0]?.path
-    // console.log(coverImageLocalPath)
-    if (!coverImageLocalPath) {
-        throw new ApiError(406, 'images required') //Not Acceptable
-    }
-    const coverImage = await uploadOnCloudinary(coverImageLocalPath)
-    // const imageUrls = await uploadOnCloudinary(imageLocalPath)
 
-    if (!coverImage) {
-        throw new ApiError(406, ' images required')
+    let coverImageLocalPath, imageUrls
+    if (req.file) {
+        coverImageLocalPath = req.file.path
+        const coverImage = await uploadOnCloudinary(coverImageLocalPath)
+        if (!coverImage) {
+            throw new ApiError(406, 'Cover image upload failed')
+        }
+    } else if (req.files && req.files.length > 0) {
+        // Handle multiple images
+        const imageLocalPaths = req.files.map((file) => file.path)
+        imageUrls = await Promise.all(
+            imageLocalPaths.map(async (path) => {
+                const image = await uploadOnCloudinary(path)
+                if (!image) {
+                    throw new ApiError(406, 'Image upload failed')
+                }
+                return image.url
+            }),
+        )
+    } else {
+        throw new ApiError(406, 'At least one image required')
     }
+
     const newProduct = new TempProduct({
         productName,
         category,
         description,
         price,
-        coverImage: coverImage.url,
-        stock: stock,
-        // imageUrls: imageUrls?.url || '',
+        coverImage: req.file ? coverImage.url : null,
+        imageUrls: imageUrls || [],
+        stock,
         userId,
     })
+
     await newProduct.save()
+
     const info = await getMail(
         user.email,
         `Confirmation about product ${newProduct.productName}`,
-        `We will verify your product and product will display in website`,
+        `We will verify your product and it will be displayed on the website.`,
     )
 
     res.status(200).json(new ApiResponse(200, newProduct))

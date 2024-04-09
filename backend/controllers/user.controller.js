@@ -76,7 +76,6 @@ export const logIn = asyncHandler(async (req, res) => {
     const date = new Date().toISOString().split('T')[0]
 
     let dailyUser = await DailyUser.findOne({date: date})
-    console.log('Daily User : ', dailyUser)
     if (!dailyUser) {
         const newDailyUser = new DailyUser({
             count: 1,

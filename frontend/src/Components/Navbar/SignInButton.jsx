@@ -10,12 +10,16 @@ import {IoStorefront} from 'react-icons/io5'
 function SignInButton() {
     const navigate = useNavigate()
     const [showMenu, setShowMenu] = useState(false)
-    const [user, setUser] = useState('')
+    const [user, setUser] = useState(null)
     const [merchant, setMerchant] = useState(null)
 
     useEffect(() => {
         checkAuthentication()
-        fetchMerchantData()
+        try {
+            fetchMerchantData()
+        } catch (err) {
+            return
+        }
     }, [])
 
     const checkAuthentication = async () => {
@@ -39,7 +43,7 @@ function SignInButton() {
             )
             setMerchant(response.data.licenseId)
         } catch (err) {
-            // toast.error('Error fetching')
+            setMerchant(null)
         }
     }
 
@@ -52,6 +56,7 @@ function SignInButton() {
             await axios.get('http://localhost:3000/api/auth/logout', {
                 withCredentials: true,
             })
+            checkAuthentication()
         } catch (err) {
             console.log(err)
         }

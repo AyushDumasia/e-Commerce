@@ -1,6 +1,7 @@
 import {v2 as cloudinary} from 'cloudinary'
 import fs from 'fs'
 import sharp from 'sharp'
+import {asyncHandler} from './asyncHandler.js'
 
 cloudinary.config({
     cloud_name: process.env.CLOUD_NAME,
@@ -8,20 +9,24 @@ cloudinary.config({
     api_secret: process.env.CLOUD_API_SECRET,
 })
 
-export const uploadOnCloudinary = async (localFilePath) => {
-    try {
-        if (!localFilePath) return null
-        let res = await cloudinary.uploader.upload(localFilePath, {
-            resource_type: 'image',
-        })
-        console.log('Upload Successfully : ', res)
-        return res
-    } catch (err) {
-        return null
-    } finally {
-        fs.unlinkSync(localFilePath)
-    }
-}
+// const transFormImage = asyncHandler(async (localFilePath) => {
+//     const newImage = await sharp(localFilePath).toFormat('jpeg' , {quality : })
+// })
+
+// export const uploadOnCloudinary = async (localFilePath) => {
+//     try {
+//         if (!localFilePath) return null
+//         let res = await cloudinary.uploader.upload(localFilePath, {
+//             resource_type: 'image',
+//         })
+//         console.log('Upload Successfully : ', res)
+//         return res
+//     } catch (err) {
+//         return null
+//     } finally {
+//         fs.unlinkSync(localFilePath)
+//     }
+// }
 // const uploadProcessedToCloudinary = async (processedBuffer) => {
 //     try {
 //         const uploadResult = await cloudinary.uploader.upload(processedBuffer, {
@@ -56,3 +61,26 @@ export const uploadOnCloudinary = async (localFilePath) => {
 //         fs.unlinkSync(localFilePath)
 //     }
 // }
+
+export const uploadOnCloudinary = async (localFilePath) => {
+    try {
+        if (!localFilePath) return null
+
+        const transformation = {
+            quality: 'auto:low',
+        }
+
+        let res = await cloudinary.uploader.upload(localFilePath, {
+            resource_type: 'image',
+            transformation: transformation,
+        })
+
+        console.log('Upload Successfully : ', res)
+        return res
+    } catch (err) {
+        console.error('Error uploading image: ', err)
+        return null
+    } finally {
+        fs.unlinkSync(localFilePath)
+    }
+}

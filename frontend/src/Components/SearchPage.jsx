@@ -5,10 +5,12 @@ import Rating from 'react-rating-stars-component'
 import {useParams} from 'react-router-dom'
 import axios from 'axios'
 import SearchCard from './Cards/SearchCard'
+import VerticalBar from './Cards/VerticalBar'
 
 function SearchPage() {
     return (
-        <div>
+        <div className="overflow-hidden p-7 pl-3 flex">
+            <VerticalBar />
             <SearchCard />
         </div>
     )

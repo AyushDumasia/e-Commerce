@@ -27,9 +27,13 @@ function CreateProduct() {
         }))
     }
 
-    const handleFileChange = (e) => {
+    const handleFileChange = (e, fieldName) => {
         const files = e.target.files
-        setSelectedFile(files[0]) // Assuming you only want to upload one file
+        if (fieldName === 'coverImage') {
+            setSelectedFile(files[0]) // Assuming you only want to upload one file for cover image
+        } else if (fieldName === 'imageUrls') {
+            setSelectedFile(files) // Store selected files for additional images
+        }
     }
 
     const handleSubmit = async (e) => {
@@ -38,8 +42,15 @@ function CreateProduct() {
 
         try {
             const formDataWithFiles = new FormData()
-            formDataWithFiles.append('coverImage', selectedFile) // Append the selected file
-            formDataWithFiles.append('productName', formData.productName) // Append other form data
+            if (selectedFile) {
+                formDataWithFiles.append('coverImage', selectedFile) // Append the selected file
+            }
+            if (selectedFile.length > 0) {
+                selectedFile.forEach((file) => {
+                    formDataWithFiles.append('imageUrls', file)
+                })
+            }
+            formDataWithFiles.append('productName', formData.productName)
             formDataWithFiles.append('category', formData.category)
             formDataWithFiles.append('description', formData.description)
             formDataWithFiles.append('price', formData.price)
@@ -106,6 +117,15 @@ function CreateProduct() {
                         name={'coverImage'}
                         accept={'image/*'}
                         handler={handleFileChange}
+                    />
+                    <label htmlFor="imageUrls">Images:</label>
+                    <Input
+                        type={'file'}
+                        id={'imageUrls'}
+                        name={'imageUrls'}
+                        accept={'image/*'}
+                        multiple
+                        onChange={handleFileChange}
                     />
                     <label htmlFor="productName">Stock :</label>
                     <Input

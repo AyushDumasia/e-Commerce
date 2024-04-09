@@ -46,7 +46,10 @@ const router = createBrowserRouter(
             <Route path="/becomeMerchant" element={<MerchantForm />} />
             <Route path="/createAddress" element={<AddressForm />} />
             <Route path="/chart" element={<DailyUserGraph />} />
-            <Route path="/search/:searchTerm" element={<SearchPage />} />
+            <Route
+                path="/explore/search/:searchTerm"
+                element={<SearchPage />}
+            />
             <Route path="/admin" element={<AdminPage />} />
         </Route>,
     ),
