@@ -74,3 +74,18 @@ export const fetchOrder = asyncHandler(async (req, res) => {
     console.log(orders)
     return res.status(200).json(orders)
 })
+
+export const changeStatus = asyncHandler(async (req, res) => {
+    const orderId = req.params.id // Assuming you're passing the order ID in the URL params
+
+    const order = await Order.findById(orderId)
+
+    order.status = req.body.status // Assuming you're passing the new status in the request body
+
+    await order.save()
+
+    res.status(200).json({
+        success: true,
+        message: 'Order status updated successfully',
+    })
+})

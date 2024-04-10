@@ -1,6 +1,7 @@
 import express from 'express'
 import validateToken from './../middlewares/validateUser.js'
 import {
+    changeStatus,
     // addOrder,
     createOrder,
     fetchOrder,
@@ -20,4 +21,5 @@ router.get('/fetchOrder', validateToken, fetchSpecificOrder)
 // * Fetch Order Details for an Admin
 router.get('/getOrder', fetchOrder)
 
+router.put('/changeStatus/:id', validateToken, changeStatus)
 export default router

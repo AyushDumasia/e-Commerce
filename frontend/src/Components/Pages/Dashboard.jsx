@@ -5,19 +5,29 @@ function ProductList() {
     const [products, setProducts] = useState([])
 
     useEffect(() => {
-        async function fetchData() {
-            try {
-                const response = await axios.get(
-                    'http://localhost:3000/api/order/getOrder',
-                )
-                console.log(response.data)
-                setProducts(response.data)
-            } catch (error) {
-                console.error('Error fetching data:', error)
-            }
-        }
         fetchData()
     }, [])
+
+    const fetchData = async () => {
+        try {
+            const response = await axios.get(
+                'http://localhost:3000/api/order/getOrder',
+            )
+            setProducts(response.data)
+        } catch (error) {
+            console.error('Error fetching data:', error)
+        }
+    }
+
+    const handleStatusChange = async (id, newStatus) => {
+        axios
+            .get(`http://localhost:3000/api/order/changeStatus/${id}`, {
+                withCredentials: true,
+            })
+            .then((response) => {
+                console.log(response, newStatus)
+            })
+    }
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 p-5 lg:grid-cols-3 gap-4">
@@ -68,9 +78,15 @@ function ProductList() {
 
                     {/* Button */}
                     <div className="p-4 flex justify-end">
-                        <select name="" id="">
-                            <option value=""></option>
-                            <option value=""></option>
+                        <select
+                            value={product.status}
+                            onChange={(e) =>
+                                handleStatusChange(product._id, e.target.value)
+                            }
+                        >
+                            <option value="confirm">Order Confirmed</option>
+                            <option value="shipping">Ready for shipping</option>
+                            <option value="delivered">Delivered</option>
                         </select>
                     </div>
                 </div>
