@@ -7,6 +7,7 @@ import exploreReducer from './explore/exploreSlice'
 import productCardReducer from './showProducts/showProductSlice'
 import feedbackReducer from './feedback/feedbackSlice'
 import searchReducer from './search/searchSlice'
+import suggestedReducer from './suggestedProducts/suggestedProductSlice.jsx'
 
 const rootReducer = combineReducers({
     cart: cartReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
     productCard: productCardReducer,
     feedback: feedbackReducer,
     search: searchReducer,
+    suggestedProduct: suggestedReducer,
 })
 
 const persistConfig = {

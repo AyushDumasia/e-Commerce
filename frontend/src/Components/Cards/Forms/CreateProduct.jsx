@@ -1,12 +1,12 @@
 import React, {useState} from 'react'
-import Input from '../../Input/Input'
-import Button from '../../Button/Button'
 import axios from 'axios'
-import {ToastContainer, toast} from 'react-toastify'
+import {toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import {FaSpinner} from 'react-icons/fa'
-import CustomToastContainer from '../../Toast/CustomToastContainer'
 import ReactLoading from 'react-loading' // Import ReactLoading
+import Input from './../../Input/Input'
+import Button from './../../Button/Button'
+import CustomToastContainer from './../../Toast/CustomToastContainer'
 
 function CreateProduct() {
     const [formData, setFormData] = useState({
@@ -27,13 +27,9 @@ function CreateProduct() {
         }))
     }
 
-    const handleFileChange = (e, fieldName) => {
+    const handleFileChange = (e) => {
         const files = e.target.files
-        if (fieldName === 'coverImage') {
-            setSelectedFile(files[0]) // Assuming you only want to upload one file for cover image
-        } else if (fieldName === 'imageUrls') {
-            setSelectedFile(files) // Store selected files for additional images
-        }
+        setSelectedFile(files[0]) // Assuming you only want to upload one file
     }
 
     const handleSubmit = async (e) => {
@@ -42,15 +38,8 @@ function CreateProduct() {
 
         try {
             const formDataWithFiles = new FormData()
-            if (selectedFile) {
-                formDataWithFiles.append('coverImage', selectedFile) // Append the selected file
-            }
-            if (selectedFile.length > 0) {
-                selectedFile.forEach((file) => {
-                    formDataWithFiles.append('imageUrls', file)
-                })
-            }
-            formDataWithFiles.append('productName', formData.productName)
+            formDataWithFiles.append('coverImage', selectedFile) // Append the selected file
+            formDataWithFiles.append('productName', formData.productName) // Append other form data
             formDataWithFiles.append('category', formData.category)
             formDataWithFiles.append('description', formData.description)
             formDataWithFiles.append('price', formData.price)
@@ -117,15 +106,6 @@ function CreateProduct() {
                         name={'coverImage'}
                         accept={'image/*'}
                         handler={handleFileChange}
-                    />
-                    <label htmlFor="imageUrls">Images:</label>
-                    <Input
-                        type={'file'}
-                        id={'imageUrls'}
-                        name={'imageUrls'}
-                        accept={'image/*'}
-                        multiple
-                        onChange={handleFileChange}
                     />
                     <label htmlFor="productName">Stock :</label>
                     <Input

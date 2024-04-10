@@ -1,7 +1,22 @@
-import React, {useState, useEffect} from 'react'
+import {useState, useEffect} from 'react'
 import {useNavigate, useParams} from 'react-router-dom'
-import axios from 'axios'
-import {FaSortAmountDown} from 'react-icons/fa'
+
+function Filter(props) {
+    return (
+        <select
+            id="filterDropdown"
+            value={props.selectedFilter}
+            onChange={(event) => props.handleFilterChange(event.target.value)}
+            className="block w-24 text-base border-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+        >
+            <option value="" disabled>
+                Select Filter
+            </option>
+            <option value="asc">Low to High</option>
+            <option value="dsc">High to Low</option>
+        </select>
+    )
+}
 
 function FilterCard() {
     const {searchTerm} = useParams()
@@ -26,18 +41,10 @@ function FilterCard() {
             >
                 Filter:
             </label>
-            <select
-                id="filterDropdown"
-                value={selectedFilter}
-                onChange={(event) => handleFilterChange(event.target.value)}
-                className="block w-24 text-base border-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-            >
-                <option value="" disabled>
-                    Select Filter
-                </option>
-                <option value="asc">Low to High</option>
-                <option value="dsc">High to Low</option>
-            </select>
+            <Filter
+                selectedFilter={selectedFilter}
+                handleFilterChange={handleFilterChange}
+            ></Filter>
         </div>
     )
 }

@@ -58,52 +58,37 @@ export const createProduct = asyncHandler(async (req, res) => {
     const {productName, category, description, price, stock} = req.body
     const userId = req.user.id
     const user = await User.findOne({_id: userId})
-
-    let coverImageLocalPath, imageUrls
-    if (req.file) {
-        coverImageLocalPath = req.file.path
-        const coverImage = await uploadOnCloudinary(coverImageLocalPath)
-        if (!coverImage) {
-            throw new ApiError(406, 'Cover image upload failed')
-        }
-    } else if (req.files && req.files.length > 0) {
-        // Handle multiple images
-        const imageLocalPaths = req.files.map((file) => file.path)
-        imageUrls = await Promise.all(
-            imageLocalPaths.map(async (path) => {
-                const image = await uploadOnCloudinary(path)
-                if (!image) {
-                    throw new ApiError(406, 'Image upload failed')
-                }
-                return image.url
-            }),
-        )
-    } else {
-        throw new ApiError(406, 'At least one image required')
+    const coverImageLocalPath = await req.file.path
+    // const imageLocalPath = req.files?.imageUrls[0]?.path
+    // console.log(coverImageLocalPath)
+    if (!coverImageLocalPath) {
+        throw new ApiError(406, 'images required') //Not Acceptable
     }
+    const coverImage = await uploadOnCloudinary(coverImageLocalPath)
+    // const imageUrls = await uploadOnCloudinary(imageLocalPath)
 
+    if (!coverImage) {
+        throw new ApiError(406, ' images required')
+    }
     const newProduct = new TempProduct({
         productName,
         category,
         description,
         price,
-        coverImage: req.file ? coverImage.url : null,
-        imageUrls: imageUrls || [],
-        stock,
+        coverImage: coverImage.url,
+        stock: stock,
+        // imageUrls: imageUrls?.url || '',
         userId,
     })
-
     await newProduct.save()
-
     const info = await getMail(
         user.email,
         `Confirmation about product ${newProduct.productName}`,
-        `We will verify your product and it will be displayed on the website.`,
+        `We will verify your product and product will display in website`,
     )
 
     res.status(200).json(new ApiResponse(200, newProduct))
 })
-
 // * Add to cart
 export const addCart = asyncHandler(async (req, res) => {
     const user = req.user
@@ -246,31 +231,40 @@ export const checkBox = asyncHandler(async (req, res) => {
     res.status(200).json({total: totalPrice})
 })
 
-// * Sort by category for suggestions
+// * Sort category for suggestions
 export const suggestions = asyncHandler(async (req, res) => {
-    const category = req.body.category
-    const productId = req.params.id
-    const product = await Product.findOne({_id: productId})
-    const products = await Product.find({
-        category: {$regex: category, $options: 'i'},
-    })
+    const id = req.params.id
 
-    const filteredProducts = products.filter(
-        (p) => p._id.toString() !== productId,
+    const product = await Product.findOne({_id: id})
+
+    if (!product) {
+        return res
+            .status(404)
+            .json(new ApiResponse(404, [], 'Product not found'))
+    }
+
+    const suggestedProducts = await Product.find({
+        category: product.category,
+    })
+    const filteredProducts = suggestedProducts.filter(
+        (p) => p._id.toString() !== product._id.toString(),
     )
 
     if (!filteredProducts || filteredProducts.length === 0) {
         return res
-            .status(201)
-            .json(
-                new ApiResponse(
-                    201,
-                    filteredProducts,
-                    'No product available for this category',
-                ),
-            )
+            .status(200)
+            .json(new ApiResponse(200, [], 'Products not found'))
     }
-    res.status(200).json(new ApiResponse(200, filteredProducts))
+
+    return res
+        .status(200)
+        .json(
+            new ApiResponse(
+                200,
+                filteredProducts,
+                'Products available for this category',
+            ),
+        )
 })
 
 // * Sort by category
