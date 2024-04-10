@@ -1,16 +1,27 @@
 import {useNavigate} from 'react-router-dom'
 import {useSelector} from 'react-redux'
 import CustomToastContainer from './../Toast/CustomToastContainer'
+import axios from 'axios'
 import CartCard from './../Cards/CartCard'
 
 const Cart = () => {
     const {cart} = useSelector((state) => state.cart)
     const navigate = useNavigate()
 
-    const orderBtn = () => {
-        navigate('/order').catch((err) => {
+    const orderBtn = async () => {
+        try {
+            const res = await axios.post(
+                'http://localhost:3000/api/order/createOrder',
+                null,
+                {
+                    withCredentials: true,
+                },
+            )
+            navigate('/order')
+            console.log(res)
+        } catch (err) {
             console.log(err)
-        })
+        }
     }
 
     return (

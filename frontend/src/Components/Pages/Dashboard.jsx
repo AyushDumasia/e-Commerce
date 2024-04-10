@@ -33,14 +33,11 @@ function ProductList() {
                             alt={product.productId.productName}
                             className="w-[100%] h-[300px] object-cover rounded-t-lg"
                         />
-
-                        <div className="absolute top-0 right-0 bg-gray-800 text-white px-2 py-1 rounded-bl-lg">
-                            New
-                        </div>
                     </div>
 
                     {/* Product Details */}
                     <div className="p-4">
+                        <p>Order Id : {product?.orderId}</p>
                         <h2 className="text-xl font-bold mb-2">
                             {product.productId.productName}
                         </h2>
@@ -62,15 +59,19 @@ function ProductList() {
                                 <p className="text-gray-600 mb-1">
                                     Email: {product.userId.email}
                                 </p>
+                                <p className="text-gray-600 mb-1">
+                                    {product.userId.address}
+                                </p>
                             </div>
                         </div>
                     )}
 
                     {/* Button */}
                     <div className="p-4 flex justify-end">
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-                            Confirm
-                        </button>
+                        <select name="" id="">
+                            <option value=""></option>
+                            <option value=""></option>
+                        </select>
                     </div>
                 </div>
             ))}

@@ -1,7 +1,7 @@
 import express from 'express'
 import validateToken from './../middlewares/validateUser.js'
 import {
-    addOrder,
+    // addOrder,
     createOrder,
     fetchOrder,
     fetchSpecificOrder,
@@ -12,7 +12,7 @@ const router = express.Router()
 router.post('/createOrder', validateToken, createOrder)
 
 // * Add a  order
-router.get('/addOrder/:id', validateToken, addOrder)
+// router.get('/addOrder/:id', validateToken, addOrder)
 
 // * Fetch Order Details for a specific User
 router.get('/fetchOrder', validateToken, fetchSpecificOrder)

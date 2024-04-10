@@ -5,14 +5,17 @@ import {ApiError} from '../utils/ApiError.js'
 import Cart from '../models/cart.schema.js'
 import Order from '../models/order.schema.js'
 import Product from './../models/product.schema.js'
+import {v4 as uuidv4} from 'uuid'
 
-// * Create a new Product for a Merchant
+// * Create a new Product
 export const createOrder = asyncHandler(async (req, res) => {
     const userId = req.user.id
 
     const user = await User.findOne({_id: userId})
 
     const cartItems = await Cart.find({userId: userId})
+
+    const orderId = uuidv4().substring(0, 6)
 
     const orders = []
 
@@ -22,10 +25,12 @@ export const createOrder = asyncHandler(async (req, res) => {
         }).populate('productId')
         let price = parseInt(product.productId.price) * cartItem.quantity
         const newOrder = new Order({
+            orderId: orderId,
             productId: cartItem.productId._id,
             userId: userId,
             price: price,
             address: user.address[0] || null,
+            status: 'Order Confirmed',
         })
         const validOrder = await Order.find({cartId: cartItem._id})
         if (validOrder) {
@@ -45,35 +50,10 @@ export const fetchSpecificOrder = asyncHandler(async (req, res) => {
     const order = await Order.find({userId})
         .populate('productId')
         .populate('address')
-    console.log(order)
     res.status(200).json({
         order: order,
         address: order?.address,
     })
-})
-
-// ! Add an Order
-export const addOrder = asyncHandler(async (req, res) => {
-    const userId = req.user.id
-    const orderId = req.params.id
-    const products = await Cart.find({productId: orderId}).populate('productId')
-    const order = await Order.findOne({productId: orderId})
-    if (order) {
-        await order.deleteOne()
-        return res.status(201).json('Delete Order')
-    } else {
-        for (const product of products) {
-            let price = parseInt(product.productId.price) * product.quantity
-            const newOrder = new Order({
-                userId: userId,
-                productId: orderId,
-                price: price,
-                address: null,
-            })
-            await newOrder.save()
-        }
-        return res.status(201).json('Order Added')
-    }
 })
 
 // * Fetch an Order for an Admin
@@ -89,8 +69,8 @@ export const fetchOrder = asyncHandler(async (req, res) => {
             .json(new ApiResponse(201, null, 'No order found'))
     }
 
-    // const product = orders.map((order) => order.productId)
-    // const user = orders.map((order) => order.userId)
-
+    // ! const product = orders.map((order) => order.productId)
+    // ! const user = orders.map((order) => order.userId)
+    console.log(orders)
     return res.status(200).json(orders)
 })

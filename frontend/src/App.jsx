@@ -1,13 +1,24 @@
-// import Navbar from './Navbar/Navbar.jsx'
-import {Outlet} from 'react-router-dom'
+import {useEffect} from 'react'
+import {Outlet, useLocation} from 'react-router-dom'
 import Navbar from './Components/Navbar/Navbar'
+
+function ScrollToTop() {
+    const {pathname} = useLocation()
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [pathname])
+
+    return null
+}
 
 function App() {
     return (
         <>
             <Navbar />
             <div className="m-16"></div>
-            <Outlet className="mt-6" />
+            <ScrollToTop />
+            <Outlet />
         </>
     )
 }

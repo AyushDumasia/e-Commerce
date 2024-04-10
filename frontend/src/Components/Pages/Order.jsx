@@ -40,7 +40,8 @@ function Order() {
                     <p className="text-gray-700 text-base">
                         Price: ₹{order.price}
                     </p>
-                    {order.address && ( // Check if address is not null
+                    <p className="text-gray-700 text-base">{order?.status}</p>
+                    {order.address && (
                         <p className="text-gray-700 text-base">
                             {order.address.state} {order.address.pinCode}
                         </p>

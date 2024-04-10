@@ -5,25 +5,12 @@ import axios from 'axios'
 
 const DailyUserGraph = () => {
     const [categoryCounts, setCategoryCounts] = useState([])
-    const [data, setData] = useState(null)
-    const [chart, setChart] = useState(null)
+    const [userData, setUserData] = useState(null)
 
     useEffect(() => {
-        fetchDailyUserData()
         fetchCategoryCounts()
+        fetchDailyUserData()
     }, [])
-
-    const fetchDailyUserData = async () => {
-        try {
-            const response = await fetch(
-                'http://localhost:3000/api/admin/dailyUser',
-            )
-            const data = await response.json()
-            setData(data)
-        } catch (error) {
-            console.error('Error fetching data:', error)
-        }
-    }
 
     const fetchCategoryCounts = async () => {
         try {
@@ -36,10 +23,23 @@ const DailyUserGraph = () => {
         }
     }
 
-    const renderPieChart = () => {
+    const fetchDailyUserData = async () => {
+        try {
+            const response = await fetch(
+                'http://localhost:3000/api/admin/dailyUser',
+            )
+            const data = await response.json()
+            setUserData(data)
+        } catch (error) {
+            console.error('Error fetching daily user data:', error)
+        }
+    }
+
+    const renderCategoryChart = () => {
         if (!categoryCounts || categoryCounts.length === 0) {
             return null
         }
+
         const labels = categoryCounts.map((categoryCount) => categoryCount._id)
         const counts = categoryCounts.map(
             (categoryCount) => categoryCount.count,
@@ -62,21 +62,43 @@ const DailyUserGraph = () => {
                 },
             ],
         }
-        return <Doughnut data={data} className="pie-chart" />
+
+        return <Doughnut data={data} className="chart" />
+    }
+
+    const renderUserChart = () => {
+        if (!userData || !userData.countVal || !userData.label) {
+            return null
+        }
+
+        const data = {
+            labels: userData.label,
+            datasets: [
+                {
+                    label: 'Active Daily Users',
+                    data: userData.countVal,
+                    fill: true,
+                    borderColor: 'rgb(13, 13, 29)',
+                    tension: 0.5,
+                },
+            ],
+        }
+
+        return <canvas id="dailyUserChart" width="400" height="200"></canvas>
     }
 
     useEffect(() => {
-        if (data && data.countVal && data.label) {
+        if (userData && userData.countVal && userData.label) {
             const ctx = document.getElementById('dailyUserChart')
             if (ctx) {
-                const newChart = new Chart(ctx, {
+                new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: data.label,
+                        labels: userData.label,
                         datasets: [
                             {
                                 label: 'Active Daily Users',
-                                data: data.countVal,
+                                data: userData.countVal,
                                 fill: true,
                                 borderColor: 'rgb(13, 13, 29)',
                                 tension: 0.5,
@@ -91,16 +113,26 @@ const DailyUserGraph = () => {
                         },
                     },
                 })
-                setChart(newChart)
             }
         }
-    }, [data])
+    }, [userData])
 
     return (
-        <div className="container">
-            {renderPieChart()}
-            <h2 className="title">Active Daily Users</h2>
-            <canvas id="dailyUserChart" width="400" height="200"></canvas>
+        <div className="container mx-auto max-w-screen-lg px-4 py-8">
+            <div className="grid grid-cols-2 gap-8">
+                <div className="chart-container bg-white shadow-md rounded-md p-4">
+                    <h2 className="text-lg font-semibold mb-4">
+                        Product Categories
+                    </h2>
+                    {renderCategoryChart()}
+                </div>
+                <div className="chart-container bg-white shadow-md rounded-md p-4">
+                    <h2 className="text-lg font-semibold mb-4">
+                        Active Daily Users
+                    </h2>
+                    {renderUserChart()}
+                </div>
+            </div>
         </div>
     )
 }

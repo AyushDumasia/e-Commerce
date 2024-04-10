@@ -3,6 +3,9 @@ const Schema = mongoose.Schema
 
 const orderSchema = new Schema(
     {
+        orderId: {
+            type: String,
+        },
         productId: {
             type: Schema.Types.ObjectId,
             ref: 'Product',
@@ -21,6 +24,9 @@ const orderSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'Address',
             // required: true,
+        },
+        status: {
+            type: String,
         },
     },
     {
