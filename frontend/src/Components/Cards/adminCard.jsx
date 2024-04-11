@@ -37,8 +37,8 @@ const AdminCard = () => {
             await axios.post(`${API_URL}/admin/validProduct/${id}`, {
                 withCredentials: true,
             })
-            toast.success('Product approved successfully')
             fetchProduct()
+            toast.success('Product approved successfully')
         } catch (error) {
             handleApiError(error)
         }

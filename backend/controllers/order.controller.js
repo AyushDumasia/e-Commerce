@@ -71,16 +71,22 @@ export const fetchOrder = asyncHandler(async (req, res) => {
 
     // ! const product = orders.map((order) => order.productId)
     // ! const user = orders.map((order) => order.userId)
-    console.log(orders)
     return res.status(200).json(orders)
 })
 
 export const changeStatus = asyncHandler(async (req, res) => {
-    const orderId = req.params.id // Assuming you're passing the order ID in the URL params
+    const orderId = req.params.id
+    const newStatus = req.body.status
 
     const order = await Order.findById(orderId)
 
-    order.status = req.body.status // Assuming you're passing the new status in the request body
+    if (!order) {
+        return res
+            .status(404)
+            .json({success: false, message: 'Order not found'})
+    }
+
+    order.status = newStatus
 
     await order.save()
 

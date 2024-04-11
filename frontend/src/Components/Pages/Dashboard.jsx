@@ -13,6 +13,7 @@ function ProductList() {
             const response = await axios.get(
                 'http://localhost:3000/api/order/getOrder',
             )
+            console.log(response.data)
             setProducts(response.data)
         } catch (error) {
             console.error('Error fetching data:', error)
@@ -21,11 +22,16 @@ function ProductList() {
 
     const handleStatusChange = async (id, newStatus) => {
         axios
-            .get(`http://localhost:3000/api/order/changeStatus/${id}`, {
-                withCredentials: true,
-            })
+            .put(
+                `http://localhost:3000/api/order/changeStatus/${id}`,
+                {status: newStatus},
+                {
+                    withCredentials: true,
+                },
+            )
             .then((response) => {
                 console.log(response, newStatus)
+                fetchData()
             })
     }
 
