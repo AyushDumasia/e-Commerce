@@ -91,8 +91,10 @@ function ProductList() {
                             }
                         >
                             <option value="confirm">Order Confirmed</option>
-                            <option value="shipping">Ready for shipping</option>
-                            <option value="delivered">Delivered</option>
+                            <option value="Shipped">Ready for shipping</option>
+                            <option value="Delivered">Delivered</option>
+                            <option value="Processing">Processing</option>
+                            <option value="Cancelled">Cancelled</option>
                         </select>
                     </div>
                 </div>

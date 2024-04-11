@@ -28,7 +28,7 @@ const Cart = () => {
         <div className="container mx-auto">
             <CustomToastContainer />
             <div className="text-center pt-5 pb-1">
-                <h1 className="font-bold text-start text-2xl">My Cart</h1>
+                <h2 className="text-2xl font-bold mb-8 text-start">My Cart</h2>
             </div>
             <CartCard />
             <p className="font-bold mt-4 text-start">

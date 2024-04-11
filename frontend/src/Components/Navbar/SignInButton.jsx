@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import {FaRegUserCircle, FaAngleUp, FaShoppingCart} from 'react-icons/fa'
 import {IoStorefront} from 'react-icons/io5'
 import Avatar from 'react-avatar'
+import {GoHeartFill} from 'react-icons/go'
 
 function SignInButton() {
     const navigate = useNavigate()
@@ -134,6 +135,11 @@ function SignInButton() {
                                 <Link to="/cart">
                                     <li className="p-2 cursor-pointer flex items-center border-b">
                                         <FaShoppingCart /> &nbsp; My Cart
+                                    </li>
+                                </Link>
+                                <Link to="/order">
+                                    <li className="p-2 cursor-pointer flex items-center border-b">
+                                        <GoHeartFill /> &nbsp; My Order
                                     </li>
                                 </Link>
                             </>
