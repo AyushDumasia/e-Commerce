@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 import axios from 'axios'
 import {useParams} from 'react-router-dom'
 import Rating from 'react-rating-stars-component'
-import {toast} from 'react-toastify'
 import {useDispatch, useSelector} from 'react-redux'
 import {setApiError, setFeedbackCard} from '../../redux/feedback/feedbackSlice'
+import Avatar from 'react-avatar'
 
 function FeedbackCard() {
     const dispatch = useDispatch()
@@ -40,36 +40,43 @@ function FeedbackCard() {
                 ) : feedbackCard.length > 0 ? (
                     feedbackCard.map((feedbackItem) => (
                         <div
-                            className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+                            className="bg-white shadow-md rounded-lg p-6 mb-6"
                             key={feedbackItem._id}
                         >
-                            <p className="font-semibold text-lg mb-2">
-                                {feedbackItem.userId
-                                    ? feedbackItem.userId.username
-                                    : 'User not found'}
-                            </p>
-                            <div className="flex items-center">
-                                <p className="text-blue-500 text-base">
-                                    Reviewed on:{' '}
-                                    {new Date(
-                                        feedbackItem.createdAt,
-                                    ).toLocaleDateString('en-US', {
-                                        day: 'numeric',
-                                        month: 'long',
-                                        year: 'numeric',
-                                    })}
-                                </p>
+                            <div className="flex items-center mb-4">
+                                <Avatar
+                                    name={feedbackItem.userId.username}
+                                    size="40"
+                                    round={true}
+                                    className="mr-3"
+                                />
+                                <div>
+                                    <p className="font-semibold text-lg">
+                                        {feedbackItem.userId
+                                            ? feedbackItem.userId.username
+                                            : 'User not found'}
+                                    </p>
+                                    <p className="text-sm text-gray-500">
+                                        Reviewed on{' '}
+                                        {new Date(
+                                            feedbackItem.createdAt,
+                                        ).toLocaleDateString('en-US', {
+                                            day: 'numeric',
+                                            month: 'long',
+                                            year: 'numeric',
+                                        })}
+                                    </p>
+                                </div>
                             </div>
 
                             <Rating
                                 value={feedbackItem.rating}
                                 count={5}
-                                size={30}
-                                activeColor="orange"
+                                size={24}
+                                activeColor="#FFA500"
                                 edit={false}
-                                isHalf={true}
                             />
-                            <p className="text-gray-700  text-xl-base ">
+                            <p className="text-gray-700 text-base mt-2">
                                 {feedbackItem.comment}
                             </p>
                         </div>

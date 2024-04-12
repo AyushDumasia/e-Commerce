@@ -32,10 +32,15 @@ export const createOrder = asyncHandler(async (req, res) => {
             address: user.address[0] || null,
             status: 'Order Confirmed',
         })
+        // const products = await Product.findOne({
+        //     productName: cartItem.productId,
+        // })
+        // console.log('PRO : ', products)
+        // products.stock -=
         const validOrder = await Order.find({cartId: cartItem._id})
-        if (validOrder) {
-            await cartItem.deleteOne()
-        }
+        // if (validOrder) {
+        //     await cartItem.deleteOne()
+        // }
 
         await newOrder.save()
         orders.push(newOrder)
@@ -74,6 +79,7 @@ export const fetchOrder = asyncHandler(async (req, res) => {
     return res.status(200).json(orders)
 })
 
+// * Change Status for an Admin
 export const changeStatus = asyncHandler(async (req, res) => {
     const orderId = req.params.id
     const newStatus = req.body.status

@@ -51,12 +51,12 @@ const DailyUserGraph = () => {
                 {
                     data: counts,
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.6)',
-                        'rgba(54, 162, 235, 0.6)',
-                        'rgba(255, 206, 86, 0.6)',
-                        'rgba(75, 192, 192, 0.6)',
-                        'rgba(153, 102, 255, 0.6)',
-                        'rgba(255, 159, 64, 0.6)',
+                        'rgba(255, 99, 132)',
+                        'rgba(54, 162, 235)',
+                        'rgba(255, 206, 86)',
+                        'rgba(75, 192, 192)',
+                        'rgba(153, 102, 255)',
+                        'rgba(255, 159, 64)',
                     ],
                     hoverOffset: 40,
                 },
@@ -118,7 +118,7 @@ const DailyUserGraph = () => {
     }, [userData])
 
     return (
-        <div className="container mx-auto max-w-screen-lg px-4 py-8">
+        <div className="container mx-auto max-w-screen-lg ">
             <div className="grid grid-cols-2 gap-8">
                 <div className="chart-container bg-white shadow-md rounded-md p-4">
                     <h2 className="text-lg font-semibold mb-4">

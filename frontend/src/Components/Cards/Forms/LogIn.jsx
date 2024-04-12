@@ -9,8 +9,12 @@ import Password from '../../Password/Password.jsx'
 import Input from '../../Input/Input.jsx'
 
 import axios from 'axios'
+import {useDispatch, useSelector} from 'react-redux'
+import {setApiError, setUser} from '../../../redux/user/userSlice.js'
 
 function LogIn() {
+    const dispatch = useDispatch()
+    const {user, apiError} = useSelector((state) => state.user)
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
         email: '',
@@ -23,6 +27,18 @@ function LogIn() {
             ...prevData,
             [name]: value,
         }))
+    }
+
+    const checkAuthentication = async () => {
+        try {
+            const response = await axios.get(
+                'http://localhost:3000/api/auth/currentUser',
+                {withCredentials: true},
+            )
+            dispatch(setUser(response.data))
+        } catch (error) {
+            setApiError(null)
+        }
     }
 
     const handleSubmit = async (e) => {
@@ -38,13 +54,13 @@ function LogIn() {
                 navigate('/')
             }
         } catch (err) {
-            // console.log(err)
             if (err.response && err.response.status === 401) {
                 toast.error('Email or Password incorrect')
             } else {
                 toast.error('An error occurred. Please try again later.')
             }
         }
+        checkAuthentication()
         setFormData({email: '', password: ''})
     }
 

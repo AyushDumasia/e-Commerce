@@ -9,11 +9,9 @@ function Filter(props) {
             onChange={(event) => props.handleFilterChange(event.target.value)}
             className="block w-24 text-base border-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
         >
-            <option value="" disabled>
-                Select Filter
-            </option>
-            <option value="asc">Low to High</option>
-            <option value="dsc">High to Low</option>
+            <option value="">Select Filter</option>
+            <option value="asc">High to Low</option>
+            <option value="dsc">Low to High</option>
         </select>
     )
 }
@@ -23,13 +21,10 @@ function FilterCard() {
     const [selectedFilter, setSelectedFilter] = useState('')
     const navigate = useNavigate()
 
-    useEffect(() => {
-        console.log(searchTerm)
-    }, [searchTerm])
+    useEffect(() => {}, [searchTerm])
 
     const handleFilterChange = (option) => {
         setSelectedFilter(option)
-        console.log(`/explore/search/${searchTerm}/${option}`)
         navigate(`/explore/search/${searchTerm}/${option}`)
     }
 
@@ -44,7 +39,7 @@ function FilterCard() {
             <Filter
                 selectedFilter={selectedFilter}
                 handleFilterChange={handleFilterChange}
-            ></Filter>
+            />
         </div>
     )
 }

@@ -216,20 +216,20 @@ export const fetchTempProducts = asyncHandler(async (req, res) => {
 })
 
 // ! Not working ,
-export const checkBox = asyncHandler(async (req, res) => {
-    const {checkedProducts} = req.body // Array of checked product IDs
+// export const checkBox = asyncHandler(async (req, res) => {
+//     const {checkedProducts} = req.body // Array of checked product IDs
 
-    const checkedCartItems = await Cart.find({
-        productId: {$in: checkedProducts},
-    }).populate('productId')
+//     const checkedCartItems = await Cart.find({
+//         productId: {$in: checkedProducts},
+//     }).populate('productId')
 
-    let totalPrice = 0
-    for (const cartItem of checkedCartItems) {
-        totalPrice += parseFloat(cartItem.productId.price) * cartItem.quantity
-    }
+//     let totalPrice = 0
+//     for (const cartItem of checkedCartItems) {
+//         totalPrice += parseFloat(cartItem.productId.price) * cartItem.quantity
+//     }
 
-    res.status(200).json({total: totalPrice})
-})
+//     res.status(200).json({total: totalPrice})
+// })
 
 // * Sort category for suggestions
 export const suggestions = asyncHandler(async (req, res) => {

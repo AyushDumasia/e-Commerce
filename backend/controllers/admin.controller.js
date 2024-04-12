@@ -4,6 +4,7 @@ import {asyncHandler} from './../utils/asyncHandler.js'
 import User from './../models/user.schema.js'
 import {getMail} from '../utils/nodemailer.js'
 import DailyUser from '../models/dailyActive.schema.js'
+import Order from './../models/order.schema.js'
 
 // * Show a pending products for a Approval
 export const showPendingProduct = asyncHandler(async (req, res) => {
@@ -65,17 +66,25 @@ export const dailyUser = asyncHandler(async (req, res) => {
     res.status(200).json(countArr)
 })
 
+// * Fetch a category for a Chart
 export const totalCategory = asyncHandler(async (req, res) => {
-    try {
-        const categoryCounts = await Product.aggregate([
-            {$group: {_id: '$category', count: {$sum: 1}}},
-        ])
+    const categoryCounts = await Product.aggregate([
+        {$group: {_id: '$category', count: {$sum: 1}}},
+    ])
 
-        res.json(categoryCounts)
-    } catch (error) {
-        console.error('Error retrieving category product counts:', error)
-        res.status(500).json({error: 'Internal Server Error'})
-    }
+    res.json(categoryCounts)
 })
 
-//TODO : Create a pie Chart for a category
+// * Fetch a Order for a chart
+export const chartOrder = asyncHandler(async (req, res) => {
+    const order = await Order.aggregate([
+        {
+            $group: {
+                _id: {$dateToString: {format: '%Y-%m-%d', date: '$createdAt'}},
+                count: {$sum: 1},
+            },
+        },
+    ])
+    console.log(order)
+    res.json(order)
+})

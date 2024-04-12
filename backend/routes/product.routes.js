@@ -8,7 +8,7 @@ import {
     showProduct,
     RemoveCart,
     fetchTempProducts,
-    checkBox,
+    // checkBox,
     sortByCategory,
     suggestions,
     search,
@@ -57,6 +57,4 @@ router.get('/search/:searchTerm', search)
 // * Sort by Ascending
 router.get('/search/:searchTerm/:option', sortProducts)
 
-// * Sort by Descending
-// router.get('/search/:searchTerm/dcs', getDescendingProducts)
 export default router

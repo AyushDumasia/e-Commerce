@@ -8,8 +8,10 @@ import productCardReducer from './showProducts/showProductSlice'
 import feedbackReducer from './feedback/feedbackSlice'
 import searchReducer from './search/searchSlice'
 import suggestedReducer from './suggestedProducts/suggestedProductSlice.jsx'
+import userReducer from './user/userSlice.js'
 
 const rootReducer = combineReducers({
+    user: userReducer,
     cart: cartReducer,
     admin: adminReducer,
     explore: exploreReducer,
