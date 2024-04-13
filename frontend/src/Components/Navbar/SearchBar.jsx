@@ -8,13 +8,24 @@ function SearchBar() {
 
     const handleSubmit = async (e) => {
         if (e.key === 'Enter') {
-            e.preventDefault() // Prevent default form submission behavior
+            e.preventDefault()
             try {
+                if (!search) {
+                    return
+                }
                 navigate(`/explore/search/${search}`)
             } catch (err) {
                 console.log(err)
             }
         }
+    }
+
+    function urlToSlug(url) {
+        let slug = url.toLowerCase()
+        slug = slug.replace(/[^\w\s-]/g, '')
+        slug = slug.replace(/\s+/g, '-')
+        slug = slug.replace(/^-+|-+$/g, '')
+        return slug
     }
 
     const filter = async (e) => {

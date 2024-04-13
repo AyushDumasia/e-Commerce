@@ -2,12 +2,11 @@ import axios from 'axios'
 import {FiPlus, FiMinus} from 'react-icons/fi'
 import {useEffect, useState} from 'react'
 import ReactLoading from 'react-loading'
-
 import {toast} from 'react-toastify'
 import {useDispatch, useSelector} from 'react-redux'
 import {setCart, setApiError} from '../../redux/cart/cartSlice'
 
-function CartCard({}) {
+function CartCard() {
     const [loading, setLoading] = useState(false)
     const dispatch = useDispatch()
     const {cart, apiError} = useSelector((state) => state.cart)
@@ -42,13 +41,15 @@ function CartCard({}) {
                 },
             )
             fetchCartData()
+            // Show toast notification for quantity update
+            toast.success('Quantity updated successfully')
         } catch (error) {
             toast.error(error.message)
         }
     }
 
     return (
-        <div>
+        <div className="overflow-auto">
             {loading ? (
                 <div className="flex mt-24 justify-center items-center">
                     <ReactLoading
@@ -59,29 +60,34 @@ function CartCard({}) {
                     />
                 </div>
             ) : !cart || cart.length === 0 ? (
-                <p>No cart found</p>
+                <p>No items in cart</p>
             ) : (
                 cart.cartItems.map((item) => (
                     <div
                         key={item._id}
-                        className="border border-gray-200 rounded-lg p-4 flex items-center justify-between bg-white my-4"
+                        className="border border-gray-400 rounded-lg p-4 flex items-center justify-between bg-white mb-4 shadow-md w-[70%]" // Adjusted width here
                     >
-                        <img
-                            src={item.productId.coverImage}
-                            alt=""
-                            className="w-32 h-32 object-contain rounded mr-4"
-                        />
-                        <div className="flex-grow">
-                            <h3 className="text-lg font-semibold mb-2">
-                                {item.productId.productName}
-                            </h3>
-                            <p className="text-sm mb-2">
-                                Price: ₹{item.productId.price}
-                            </p>
+                        <div className="flex items-center ">
+                            <img
+                                src={item.productId.coverImage}
+                                alt={item.productId.productName}
+                                className="w-40 h-24 object-cover rounded mr-4"
+                            />
+                            <div>
+                                <h3 className="text-lg font-semibold mb-2">
+                                    {item.productId.productName}
+                                </h3>
+                                <p className="text-sm mb-2">
+                                    {item.productId.description}
+                                </p>
+                                <p className="text-sm mb-2">
+                                    ₹{item.productId.price}
+                                </p>
+                            </div>
                         </div>
-                        <div className="flex items-center">
+                        <div className="flex items-center space-x-2">
                             <button
-                                className="text-black px-2 py-1 rounded"
+                                className="text-gray-700 px-2 py-1 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none"
                                 onClick={() =>
                                     updateQuantity(
                                         item.productId._id,
@@ -91,9 +97,11 @@ function CartCard({}) {
                             >
                                 <FiMinus />
                             </button>
-                            <p className="mx-2">{item.quantity}</p>
+                            <span className="text-gray-700">
+                                {item.quantity}
+                            </span>
                             <button
-                                className="text-black px-2 py-1 rounded"
+                                className="text-gray-700 px-2 py-1 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none"
                                 onClick={() =>
                                     updateQuantity(
                                         item.productId._id,

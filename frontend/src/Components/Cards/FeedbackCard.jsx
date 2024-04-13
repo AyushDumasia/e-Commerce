@@ -33,7 +33,7 @@ function FeedbackCard() {
 
     return (
         <div className="mt-8">
-            <h1 className="text-2xl font-semibold">Feedback</h1>
+            <h2 className="text-3xl mt-[50px]">Feedback</h2>
             <div className="mt-4">
                 {loading ? (
                     <p>Loading...</p>

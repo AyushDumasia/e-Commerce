@@ -4,10 +4,14 @@ import {toast} from 'react-toastify'
 import ReactLoading from 'react-loading'
 import 'react-toastify/dist/ReactToastify.css'
 import CustomToastContainer from './../Toast/CustomToastContainer'
+import {useDispatch, useSelector} from 'react-redux'
+import {setErrMerchant, setMerchant} from '../../redux/merchant/merchantSlice'
 
 function MerchantForm() {
+    const dispatch = useDispatch()
     const [selectedFile, setSelectedFile] = useState(null)
     const [loading, setLoading] = useState(false)
+    const {merchant, errMerchant} = useSelector((state) => state.merchant)
 
     const becomeMerchant = async (e) => {
         e.preventDefault()
@@ -25,10 +29,23 @@ function MerchantForm() {
                     },
                 },
             )
+            fetchMerchantData()
+            // dispatch(setMerchant())
         } catch (error) {
             toast.error('An error occurred. Please try again later.')
         } finally {
             setLoading(false)
+        }
+    }
+    const fetchMerchantData = async () => {
+        try {
+            const response = await axios.get(
+                'http://localhost:3000/api/merchant/currentMerchant',
+                {withCredentials: true},
+            )
+            dispatch(setMerchant(response?.data?.licenseId))
+        } catch (err) {
+            dispatch(setErrMerchant(err.message))
         }
     }
 

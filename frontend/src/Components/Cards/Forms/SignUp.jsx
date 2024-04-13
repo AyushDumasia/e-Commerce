@@ -7,9 +7,16 @@ import Input from '../../Input/Input'
 import Button from '../../Button/Button'
 import Password from '../../Password/Password'
 import {FaSpinner} from 'react-icons/fa'
+import {useDispatch, useSelector} from 'react-redux'
+import {setUser} from '../../../redux/user/userSlice'
+import {setApiError} from '../../../redux/admin/adminSlice'
 
 function SignUp() {
+    const dispatch = useDispatch()
     const [loading, setLoading] = useState(false)
+    const {user, apiError} = useSelector((state) => state.user)
+    const {merchant, errMerchant} = useSelector((state) => state.merchant)
+
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
         username: '',
@@ -27,6 +34,19 @@ function SignUp() {
         }))
     }
 
+    const checkAuthentication = async () => {
+        try {
+            const response = await axios.get(
+                'http://localhost:3000/api/auth/currentUser',
+                {withCredentials: true},
+            )
+            dispatch(setUser(response.data))
+            // fetchMerchantData()
+        } catch (error) {
+            setApiError(null)
+        }
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
@@ -39,9 +59,10 @@ function SignUp() {
                     withCredentials: true,
                 },
             )
-
-            navigate('/')
             toast.success('User signed up successfully')
+            setInterval(2000)
+            navigate('/')
+            checkAuthentication()
         } catch (error) {
             if (error.response && error.response.status === 409) {
                 toast.error('Email is already registered')

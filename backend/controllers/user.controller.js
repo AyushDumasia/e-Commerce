@@ -1,5 +1,4 @@
 import bcrypt from 'bcryptjs'
-import mongoose from 'mongoose'
 import jwt from 'jsonwebtoken'
 import User from '../models/user.schema.js'
 import {asyncHandler} from '../utils/asyncHandler.js'
@@ -10,6 +9,26 @@ import Order from './../models/order.schema.js'
 const saltRounds = 10
 import {getMail} from '../utils/nodemailer.js'
 import DailyUser from '../models/dailyActive.schema.js'
+
+const countUser = async () => {
+    const date = new Date().toISOString().split('T')[0]
+
+    let dailyUser = await DailyUser.findOne({date: date})
+    if (!dailyUser) {
+        const newDailyUser = new DailyUser({
+            count: 1,
+            date: date,
+        })
+        console.log('NEW Daily User : ', newDailyUser)
+        await newDailyUser.save()
+    } else {
+        dailyUser.count++
+        await dailyUser.save()
+        console.log('Daily User after update : ', dailyUser)
+    }
+}
+
+// const saveCookie = async () => {}
 
 // * Sign Up
 export const signUp = asyncHandler(async (req, res) => {
@@ -27,7 +46,6 @@ export const signUp = asyncHandler(async (req, res) => {
         password: hashedPassword,
     })
     await newUser.save()
-    console.log('User saved')
     const accessToken = jwt.sign(
         {
             user: {
@@ -45,16 +63,13 @@ export const signUp = asyncHandler(async (req, res) => {
         email: newUser.email,
         id: newUser.id,
     }
-    console.log('Req  :', req)
 
     res.cookie('userCookie', accessToken, {
         httpOnly: true,
     })
-    console.log('Cookie saved')
     const newDailyUser = new DailyUser({
         userId: req.user.id || 1,
     })
-    console.log('User saved')
     await newDailyUser.save()
     const info = getMail(
         newUser.email,
@@ -64,7 +79,7 @@ export const signUp = asyncHandler(async (req, res) => {
     Welcome to e-Commerce! We're thrilled to have you join our community.`,
     )
 
-    console.log('Message sent: %s', info.messageId)
+    countUser()
 
     res.status(201).json(
         new ApiResponse(201, newUser, 'User logged in successfully'),
@@ -73,22 +88,6 @@ export const signUp = asyncHandler(async (req, res) => {
 
 // * Log in
 export const logIn = asyncHandler(async (req, res) => {
-    const date = new Date().toISOString().split('T')[0]
-
-    let dailyUser = await DailyUser.findOne({date: date})
-    if (!dailyUser) {
-        const newDailyUser = new DailyUser({
-            count: 1,
-            date: date,
-        })
-        console.log('NEW Daily User : ', newDailyUser)
-        await newDailyUser.save()
-    } else {
-        dailyUser.count++
-        await dailyUser.save()
-        console.log('Daily User after update : ', dailyUser)
-    }
-
     const {email, password} = req.body
     const user = await User.findOne({email: email})
 
@@ -113,6 +112,7 @@ export const logIn = asyncHandler(async (req, res) => {
         email: user.email,
         id: user.id,
     }
+    countUser()
 
     res.cookie('userCookie', accessToken, {
         httpOnly: true,

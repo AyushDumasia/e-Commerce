@@ -37,7 +37,7 @@ function SuggestionCard() {
     }
 
     return (
-        <div className="grid mt-10 border border-gray-400 p-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid mt-10 border border-gray-400 p-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {suggestedCard ? (
                 suggestedCard?.map((item) => (
                     <ChildCard

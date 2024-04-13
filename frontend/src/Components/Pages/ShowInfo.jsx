@@ -11,6 +11,7 @@ function ShowInfo() {
             <ProductCard />
             <FeedbackCard />
             <FeedbackForm />
+            <h2 className="text-3xl mt-[50px]">Similar Products</h2>
             <SuggestionCard />
         </div>
     )

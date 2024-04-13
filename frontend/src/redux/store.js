@@ -9,9 +9,11 @@ import feedbackReducer from './feedback/feedbackSlice'
 import searchReducer from './search/searchSlice'
 import suggestedReducer from './suggestedProducts/suggestedProductSlice.jsx'
 import userReducer from './user/userSlice.js'
+import merchantReducer from './merchant/merchantSlice.js'
 
 const rootReducer = combineReducers({
     user: userReducer,
+    merchant: merchantReducer,
     cart: cartReducer,
     admin: adminReducer,
     explore: exploreReducer,
@@ -25,7 +27,7 @@ const persistConfig = {
     key: 'root',
     version: 1,
     storage: storageSession,
-    whitelist: ['user'],
+    whitelist: ['user', 'merchant'],
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

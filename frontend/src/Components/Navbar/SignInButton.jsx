@@ -5,21 +5,21 @@ import {MdCreateNewFolder} from 'react-icons/md'
 import {FaRegUserCircle, FaAngleUp, FaShoppingCart} from 'react-icons/fa'
 import {IoStorefront} from 'react-icons/io5'
 import Avatar from 'react-avatar'
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {GoHeartFill} from 'react-icons/go'
+import {setUser} from '../../redux/user/userSlice'
 
 function SignInButton() {
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const {user, apiError} = useSelector((state) => state.user)
 
     const [showMenu, setShowMenu] = useState(false)
-    // const [user, setUser] = useState(null)
-    const [merchant, setMerchant] = useState(null)
+    const {merchant} = useSelector((state) => state.merchant)
 
     useEffect(() => {
-        // checkAuthentication()
         try {
-            fetchMerchantData()
+            // fetchMerchantData()
         } catch (err) {
             return
         }
@@ -37,18 +37,6 @@ function SignInButton() {
     //     }
     // }
 
-    const fetchMerchantData = async () => {
-        try {
-            const response = await axios.get(
-                'http://localhost:3000/api/merchant/currentMerchant',
-                {withCredentials: true},
-            )
-            setMerchant(response.data.licenseId)
-        } catch (err) {
-            setMerchant(null)
-        }
-    }
-
     const becomeMerchant = () => {
         navigate('/becomeMerchant')
     }
@@ -58,6 +46,7 @@ function SignInButton() {
             await axios.get('http://localhost:3000/api/auth/logout', {
                 withCredentials: true,
             })
+            dispatch(setUser(null))
             // checkAuthentication()
         } catch (err) {
             console.log(err)
@@ -73,17 +62,17 @@ function SignInButton() {
             >
                 {user ? '' : <Link to="/login">Sign In</Link>} &nbsp;
                 {!user ? (
-                    <Avatar name="U" unstyled={false} size="33" round={true} />
+                    ''
                 ) : (
                     <Avatar
                         name={user?.username || 'U'}
-                        size="33"
+                        size="35"
                         round={true}
-                        color="blue" // Set the background color of the avatar
+                        style={{fontSize: '160px'}}
                     />
                 )}
                 <FaAngleUp
-                    className={`transform ${
+                    className={`transform hidden ${
                         showMenu
                             ? 'rotate-[0deg] transition-transform duration-[300ms]'
                             : 'rotate-[-180deg] transition-transform duration-[300ms]'

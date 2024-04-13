@@ -6,6 +6,7 @@ import axios from 'axios'
 import {useDispatch, useSelector} from 'react-redux'
 import {setSearchCard} from '../../redux/search/searchSlice'
 import ChildCard from './ChildCards/ChildSearchCard'
+import CustomToastContainer from '../Toast/CustomToastContainer'
 
 function SearchCard() {
     const dispatch = useDispatch()
@@ -36,6 +37,7 @@ function SearchCard() {
 
     return (
         <div className="container mx-auto p-3">
+            <CustomToastContainer />
             <h1 className="text-xl font-semibold mb-8">
                 Search Results for "{searchTerm.searchTerm}"
             </h1>

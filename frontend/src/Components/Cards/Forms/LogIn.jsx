@@ -11,10 +11,15 @@ import Input from '../../Input/Input.jsx'
 import axios from 'axios'
 import {useDispatch, useSelector} from 'react-redux'
 import {setApiError, setUser} from '../../../redux/user/userSlice.js'
+import {
+    setErrMerchant,
+    setMerchant,
+} from '../../../redux/merchant/merchantSlice.js'
 
 function LogIn() {
     const dispatch = useDispatch()
     const {user, apiError} = useSelector((state) => state.user)
+    const {merchant, errMerchant} = useSelector((state) => state.merchant)
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
         email: '',
@@ -29,6 +34,18 @@ function LogIn() {
         }))
     }
 
+    const fetchMerchantData = async () => {
+        try {
+            const response = await axios.get(
+                'http://localhost:3000/api/merchant/currentMerchant',
+                {withCredentials: true},
+            )
+            dispatch(setMerchant(response?.data?.licenseId))
+        } catch (err) {
+            dispatch(setErrMerchant(err.message))
+        }
+    }
+
     const checkAuthentication = async () => {
         try {
             const response = await axios.get(
@@ -36,6 +53,7 @@ function LogIn() {
                 {withCredentials: true},
             )
             dispatch(setUser(response.data))
+            fetchMerchantData()
         } catch (error) {
             setApiError(null)
         }
@@ -52,6 +70,7 @@ function LogIn() {
             if (response.status === 200) {
                 localStorage.setItem('userCookie', response.data.accessToken)
                 navigate('/')
+                checkAuthentication()
             }
         } catch (err) {
             if (err.response && err.response.status === 401) {
@@ -60,7 +79,6 @@ function LogIn() {
                 toast.error('An error occurred. Please try again later.')
             }
         }
-        checkAuthentication()
         setFormData({email: '', password: ''})
     }
 

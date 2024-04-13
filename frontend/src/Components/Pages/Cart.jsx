@@ -28,23 +28,27 @@ const Cart = () => {
         <div className="container mx-auto">
             <CustomToastContainer />
             <div className="text-center pt-5 pb-1">
-                <h2 className="text-2xl font-bold mb-8 text-start">My Cart</h2>
+                <h2 className="text-2xl font-bold mb-5 text-start">My Cart</h2>
             </div>
-            <CartCard />
-            <p className="font-bold mt-4 text-start">
-                {cart?.totalPrice === 0 ? (
-                    <p>Nothing in cart</p>
-                ) : (
-                    <p>Total Price: ₹{cart?.totalPrice}</p>
-                )}
-            </p>
+            <div className="overflow-y-auto max-h-[400px]">
+                <CartCard />
+            </div>
+            <div className="flex justify-between item-center mt-[50px] bg-[#d7d7da]">
+                <p className="font-bold  text-start">
+                    {cart?.totalPrice === 0 ? (
+                        <p>Nothing in cart</p>
+                    ) : (
+                        <p>Total Price: ₹{cart?.totalPrice}</p>
+                    )}
+                </p>
 
-            <button
-                onClick={orderBtn}
-                className="bg-blue-500 text-white px-6 py-3 my-2 md:mr-4 rounded hover:bg-blue-600"
-            >
-                Order Now
-            </button>
+                <button
+                    onClick={orderBtn}
+                    className="bg-blue-500 text-white px-6 py-3  md:mr-4 rounded hover:bg-blue-600"
+                >
+                    Order Now
+                </button>
+            </div>
         </div>
     )
 }

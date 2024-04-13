@@ -6,6 +6,7 @@ import {setAdminCard, setApiError} from '../../redux/admin/adminSlice'
 import {useDispatch, useSelector} from 'react-redux'
 
 const API_URL = 'http://localhost:3000/api'
+
 const AdminCard = () => {
     const dispatch = useDispatch()
     const {adminCard, apiError} = useSelector((state) => state.admin)
@@ -33,22 +34,32 @@ const AdminCard = () => {
     }
 
     const approveProduct = async (id) => {
-        try {
-            await axios.post(`${API_URL}/admin/validProduct/${id}`, {
-                withCredentials: true,
+        await axios
+            .post(
+                `${API_URL}/admin/validProduct/${id}`,
+                {},
+                {
+                    withCredentials: true,
+                },
+            )
+            .then((response) => {
+                toast.success('Product approved successfully')
+                fetchProduct()
             })
-            fetchProduct()
-            toast.success('Product approved successfully')
-        } catch (error) {
-            handleApiError(error)
-        }
+            .catch((error) => {
+                setApiError(error)
+            })
     }
 
     const rejectProduct = async (id) => {
         try {
-            await axios.post(`${API_URL}/admin/notApproved/${id}`, {
-                withCredentials: true,
-            })
+            await axios.post(
+                `${API_URL}/admin/notApproved/${id}`,
+                {},
+                {
+                    withCredentials: true,
+                },
+            )
             toast.success('Product not approved')
             fetchProduct()
         } catch (error) {

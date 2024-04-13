@@ -79,9 +79,9 @@ function CreateProduct() {
         <div className="mt-[100px] flex justify-center items-center">
             <CustomToastContainer />
             {loading && (
-                <div className="flex mt-24 justify-center items-center">
+                <div className="flex justify-center items-center absolute inset-0 bg-gray-900 bg-opacity-50 z-50">
                     <ReactLoading
-                        type={'cylon'}
+                        type={'spin'}
                         color={'#123456'}
                         height={50}
                         width={50}

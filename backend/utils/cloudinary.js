@@ -62,36 +62,19 @@ cloudinary.config({
 //     }
 // }
 
-// export const uploadOnCloudinary = async (localFilePath) => {
-//     try {
-//         if (!localFilePath) return null
-
-//         const transformation = {
-//             quality: 'auto:low',
-//         }
-
-//         let res = await cloudinary.uploader.upload(localFilePath, {
-//             resource_type: 'image',
-//             transformation: transformation,
-//         })
-
-//         console.log('Upload Successfully : ', res)
-//         return res
-//     } catch (err) {
-//         console.error('Error uploading image: ', err)
-//         return null
-//     } finally {
-//         fs.unlinkSync(localFilePath)
-//     }
-// }
-
 export const uploadOnCloudinary = async (localFilePath) => {
     try {
         if (!localFilePath) return null
+
+        const transformation = {
+            quality: 'auto:low',
+        }
+
         let res = await cloudinary.uploader.upload(localFilePath, {
             resource_type: 'image',
+            transformation: transformation,
         })
-        console.log('Upload Successfully : ', res)
+
         return res
     } catch (err) {
         return null
@@ -99,3 +82,18 @@ export const uploadOnCloudinary = async (localFilePath) => {
         fs.unlinkSync(localFilePath)
     }
 }
+
+// export const uploadOnCloudinary = async (localFilePath) => {
+//     try {
+//         if (!localFilePath) return null
+//         let res = await cloudinary.uploader.upload(localFilePath, {
+//             resource_type: 'image',
+//         })
+//         console.log('Upload Successfully : ', res)
+//         return res
+//     } catch (err) {
+//         return null
+//     } finally {
+//         fs.unlinkSync(localFilePath)
+//     }
+// }

@@ -56,7 +56,6 @@ function FeedbackForm() {
                             size={35}
                             activeColor="#ffd700"
                             isHalf={true}
-                            style={{pointerEvents: 'none'}}
                             required
                         />
                     </div>
