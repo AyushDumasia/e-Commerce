@@ -64,16 +64,16 @@ function ProductCard() {
                         />
                     </div>
                     <div className="flex-1 self-start md:pl-12">
-                        <h2 className="text-3xl font-bold mb-4">
+                        <h2 className="text-2xl font-bold mb-4">
                             {showProductCard.productName}
                         </h2>
                         <p className="text-xl mb-4">
                             {showProductCard.category}
                         </p>
-                        <p className="text-lg mb-4">
+                        <p className="text-sm mb-4">
                             {showProductCard.description}
                         </p>
-                        <p className="text-xl font-bold mb-4">
+                        <p className="text-[18px] font-bold mb-4">
                             ₹{showProductCard.price}
                         </p>
                         <div className="flex flex-col md:flex-row">

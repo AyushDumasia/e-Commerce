@@ -24,6 +24,7 @@ function CartCard() {
                     withCredentials: true,
                 },
             )
+            console.log(response)
             dispatch(setCart(response.data))
         } catch (error) {
             dispatch(setApiError(error))
@@ -53,7 +54,7 @@ function CartCard() {
             {loading ? (
                 <div className="flex mt-24 justify-center items-center">
                     <ReactLoading
-                        type={'cylon'}
+                        type={'spin'}
                         color={'#123456'}
                         height={50}
                         width={50}
@@ -65,7 +66,7 @@ function CartCard() {
                 cart.cartItems.map((item) => (
                     <div
                         key={item._id}
-                        className="border border-gray-400 rounded-lg p-4 flex items-center justify-between bg-white mb-4 shadow-md w-[70%]" // Adjusted width here
+                        className=" rounded-lg p-4 flex items-center justify-between bg-white mb-4 shadow-md w-[70%]"
                     >
                         <div className="flex items-center ">
                             <img
@@ -87,7 +88,7 @@ function CartCard() {
                         </div>
                         <div className="flex items-center space-x-2">
                             <button
-                                className="text-gray-700 px-2 py-1 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none"
+                                className="text-gray-700 px-2 py-1 rounded-full  hover:bg-gray-300 focus:outline-none"
                                 onClick={() =>
                                     updateQuantity(
                                         item.productId._id,
@@ -101,7 +102,7 @@ function CartCard() {
                                 {item.quantity}
                             </span>
                             <button
-                                className="text-gray-700 px-2 py-1 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none"
+                                className="text-gray-700 px-2 py-1 rounded-full  hover:bg-gray-300 focus:outline-none"
                                 onClick={() =>
                                     updateQuantity(
                                         item.productId._id,

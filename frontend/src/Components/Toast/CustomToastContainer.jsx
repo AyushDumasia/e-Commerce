@@ -8,9 +8,9 @@ function CustomToastContainer() {
     return (
         <div>
             <ToastContainer
-                autoClose={1000}
+                autoClose={500}
                 hideProgressBar={true}
-                newestOnTop={true}
+                newestOnTop={false}
                 closeOnClick
                 draggable
             />

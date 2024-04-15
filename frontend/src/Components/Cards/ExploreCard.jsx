@@ -34,6 +34,23 @@ function ExploreCard() {
         }
     }
 
+    const addCart = async (productId, e) => {
+        e.stopPropagation()
+        try {
+            const response = await axios.get(
+                `http://localhost:3000/api/product/addToCart/${productId}`,
+                {withCredentials: true},
+            )
+            if (response.status === 200) {
+                toast.success(response.data.message)
+            }
+        } catch (err) {
+            if (err.response && err.response.status === 401) {
+                toast.error('Please Login')
+            }
+        }
+    }
+
     const showProduct = async (id) => {
         await axios.get(`/product/showProduct/${id}`)
         navigate(`/showProduct/${id}`)
@@ -105,7 +122,7 @@ function ExploreCard() {
                     : exploreCard.map((product) => (
                           <div
                               key={product._id}
-                              className="w-[80%] self-start bg-white flex h-[300px] p-4 mb-4 border border-gray-300 rounded-lg shadow-md cursor-pointer transition duration-300 hover:shadow-lg"
+                              className="w-[100%] self-start bg-[#fafafa] flex  max-h-[350px] h-[300px] p-4 mb-4 rounded-lg shadow-md cursor-pointer transition duration-300 hover:shadow-lg"
                               onClick={() => showProduct(product._id)}
                           >
                               <img
@@ -117,12 +134,12 @@ function ExploreCard() {
 
                               <div className="flex flex-col justify-between">
                                   <div>
-                                      <h1 className="text-2xl font-semibold mb-2">
+                                      <h1 className="text-[20px] font-medium mb-2">
                                           {product.productName}
                                       </h1>
-                                      <p className="text-gray-800 mb-2">
-                                          {product.description}
-                                      </p>
+                                      {/* <p className="text-gray-800 mb-2"> */}
+                                      {/* {product.description} */}
+                                      {/* </p> */}
                                       <p className="text-gray-800 font-semibold">
                                           ₹{product.price}
                                       </p>
@@ -134,6 +151,14 @@ function ExploreCard() {
                                           edit={false}
                                           isHalf={true}
                                       />
+                                      <button
+                                          onClick={(e) => {
+                                              addCart(product._id, e)
+                                          }}
+                                          className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-[15px]  rounded-md shadow-md transition-colors mt-[10px] duration-300"
+                                      >
+                                          Add to Cart
+                                      </button>
                                   </div>
                               </div>
                           </div>

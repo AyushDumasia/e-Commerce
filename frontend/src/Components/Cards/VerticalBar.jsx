@@ -6,7 +6,7 @@ function VerticalBar() {
     const navigate = useNavigate()
 
     const categories = [
-        'Mouse',
+        'Groceries',
         'Beauty & Personal Care',
         'Electronics',
         'Home & Kitchen',
@@ -18,7 +18,7 @@ function VerticalBar() {
     }
 
     return (
-        <div className="static  border border-gray-300 rounded-lg top-0 h-full p-3 mr-2 w-56 flex flex-col">
+        <div className="static rounded-lg top-0 h-full p-3 mr-2 w-56 flex flex-col">
             <h2 className="text-lg font-semibold mt-4 mb-2 flex items-center">
                 <BiSolidCategory />
                 &nbsp; Categories
@@ -27,7 +27,7 @@ function VerticalBar() {
                 {categories.map((category, index) => (
                     <div
                         key={index}
-                        className="w-full px-2 py-2 text-gray-700 hover:bg-gray-300 border-b border-gray-300 rounded-rm cursor-pointer "
+                        className="w-full px-2 py-4 text-gray-700  border-b border-pink-600 hover:bg-gray-300 hover:rounded-md cursor-pointer "
                         onClick={() => handleCategoryClick(category)}
                     >
                         <NavLink

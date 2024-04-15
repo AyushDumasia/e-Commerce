@@ -5,7 +5,7 @@ import SignInButton from './SignInButton.jsx'
 
 function Navbar() {
     return (
-        <nav className="bg-[#ffffff] text-black p-2 fixed w-full top-0 z-50  border-b">
+        <nav className="bg-[#fafafa] text-black p-2 fixed w-full top-0 z-50  border-b">
             <div className="container mx-auto flex justify-between items-center">
                 <div className="flex justify-center items-center">
                     <Link to="/" className="text-2xl font-bold">
@@ -17,17 +17,12 @@ function Navbar() {
                     <SearchBar />
                 </div>
 
-                <div className="flex justify-between items-center ">
-                    <ul className="flex space-x-4 ">
-                        <List goto="/" content="Home" className="text-[red]" />
+                <div className="flex w-[250px] justify-between items-center font-bold">
+                    <ul className="flex space-x-4 mr-3">
+                        <List goto="/" content="Home" />
                     </ul>
-                    &nbsp; &nbsp;
                     <ul className="flex space-x-4 ">
-                        <List
-                            goto="/explore"
-                            content="Explore"
-                            className="text-[red]"
-                        />
+                        <List goto="/explore" content="Explore" />
                     </ul>
                     <SignInButton />
                 </div>

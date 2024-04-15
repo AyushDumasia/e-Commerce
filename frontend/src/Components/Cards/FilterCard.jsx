@@ -18,7 +18,7 @@ function FilterCard() {
     }
 
     return (
-        <div className="p-4 bg-white rounded-lg shadow-md">
+        <div className=" rounded-lg">
             <label
                 htmlFor="filterDropdown"
                 className="block text-sm font-medium text-gray-700 mb-2"
@@ -29,7 +29,7 @@ function FilterCard() {
                 id="filterDropdown"
                 value={selectedFilter}
                 onChange={(event) => handleFilterChange(event.target.value)}
-                className="block w-28 text-base border-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                className="block w-24 text-base border-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
             >
                 <option value="" disabled>
                     Select Filter

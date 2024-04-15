@@ -33,7 +33,7 @@ const Cart = () => {
             <div className="overflow-y-auto max-h-[400px]">
                 <CartCard />
             </div>
-            <div className="flex justify-between item-center mt-[50px] bg-[#d7d7da]">
+            <div className="flex justify-between item-center mt-[50px] ">
                 <p className="font-bold  text-start">
                     {cart?.totalPrice === 0 ? (
                         <p>Nothing in cart</p>

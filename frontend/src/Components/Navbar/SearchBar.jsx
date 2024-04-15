@@ -36,7 +36,7 @@ function SearchBar() {
     return (
         <>
             <button
-                className="flex items-center justify-center text-gray-600  focus:outline-none rounded-l-[8px]  p-[7px] bg-white border border-gray-600 border-r-0 h-[2.2rem]"
+                className="flex items-center justify-center text-gray-600 focus:outline-none rounded-l-[5px] p-[7px] bg-white border border-gray-600 border-r-0 h-[2.5rem]"
                 onClick={handleSubmit}
             >
                 <FiSearch />{' '}
@@ -47,7 +47,7 @@ function SearchBar() {
                 onKeyPress={handleSubmit}
                 type="text"
                 placeholder="Search..."
-                className="border border-gray-600 h-[2.2rem] rounded-r-[8px] focus:outline-none p-[7px] border-l-0 pl-0 w-full"
+                className="border border-gray-600 h-[2.5rem] rounded-r-[5px] focus:outline-none p-[7px] border-l-0 pl-0  min-w-[35rem]"
             />
         </>
     )

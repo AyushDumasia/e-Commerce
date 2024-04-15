@@ -8,22 +8,23 @@ import Avatar from 'react-avatar'
 import {useDispatch, useSelector} from 'react-redux'
 import {GoHeartFill} from 'react-icons/go'
 import {setUser} from '../../redux/user/userSlice'
+import {FaUserCircle} from 'react-icons/fa'
+// import {useLocation} from 'react-router-dom'
 
 function SignInButton() {
+    // const {pathname} = useLocation()
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
     const {user, apiError} = useSelector((state) => state.user)
 
     const [showMenu, setShowMenu] = useState(false)
     const {merchant} = useSelector((state) => state.merchant)
 
     useEffect(() => {
-        try {
-            // fetchMerchantData()
-        } catch (err) {
-            return
-        }
-    }, [])
+        setShowMenu(false)
+    }, [location.pathname])
 
     // const checkAuthentication = async () => {
     //     try {
@@ -52,39 +53,66 @@ function SignInButton() {
             console.log(err)
         }
     }
+    const toggleMenu = () => {
+        setShowMenu((prev) => !prev)
+    }
 
     return (
         <div className="relative">
-            <div
-                className="flex p-2 ml-2 rounded justify-evenly items-center"
-                onMouseEnter={() => setShowMenu(true)}
-                onMouseLeave={() => setShowMenu(false)}
-            >
-                {user ? '' : <Link to="/login">Sign In</Link>} &nbsp;
-                {!user ? (
+            <div className="flex p-2  rounded justify-evenly items-center">
+                {user ? (
                     ''
                 ) : (
-                    <Avatar
-                        name={user?.username || 'U'}
-                        size="35"
-                        round={true}
-                        style={{fontSize: '160px'}}
-                    />
+                    <Link
+                        to="/login"
+                        className="py-2 px-[15px] hover:shadow-[grey] hover:shadow-lg cursor-pointer bg-[blue] text-white rounded-full transition-all duration-300"
+                    >
+                        Sign In
+                    </Link>
+                )}
+                {!user ? (
+                    <>
+                        <Link hidden to="/cart">
+                            <li className="p-2 cursor-pointer flex items-center">
+                                <FaShoppingCart /> &nbsp; Cart
+                            </li>
+                        </Link>
+                        &nbsp; &nbsp;
+                        <Avatar
+                            name={user?.username || 'U'}
+                            size="35"
+                            round={true}
+                            onClick={toggleMenu}
+                            style={{cursor: 'pointer', display: 'none'}}
+                        />
+                    </>
+                ) : (
+                    <>
+                        <Link to="/cart">
+                            <li className="p-2 cursor-pointer flex items-center">
+                                <FaShoppingCart /> &nbsp; Cart
+                            </li>
+                        </Link>
+                        &nbsp; &nbsp;
+                        <Avatar
+                            name={user?.username || 'U'}
+                            size="35"
+                            round={true}
+                            onClick={toggleMenu}
+                            style={{cursor: 'pointer'}}
+                        />
+                    </>
                 )}
                 <FaAngleUp
                     className={`transform hidden ${
-                        showMenu
-                            ? 'rotate-[0deg] transition-transform duration-[300ms]'
-                            : 'rotate-[-180deg] transition-transform duration-[300ms]'
-                    }`}
+                        showMenu ? '' : 'hidden'
+                    } rotate-[0deg] transition-transform duration-[300ms]`}
                 />
             </div>
             <div
-                className={`absolute p-[15px]  border border-black top-[40px] left-[-150px] bg-[#ffffff] shadow rounded-lg w-[250px] h-auto transition-opacity duration-300 ${
+                className={`absolute p-[15px] border border-black top-[50px] left-[-100px] bg-[#ffffff] shadow rounded-lg w-[250px] h-auto transition-opacity duration-300 ${
                     showMenu ? 'opacity-100' : 'opacity-0 pointer-events-none'
                 }`}
-                onMouseEnter={() => setShowMenu(true)}
-                onMouseLeave={() => setShowMenu(false)}
             >
                 <ul className="list-none p-0 m-0">
                     {!user && (
@@ -98,13 +126,8 @@ function SignInButton() {
                     {user && (
                         <>
                             <Link to="/">
-                                <li className="p-2  cursor-pointer flex items-center border-b border-black">
-                                    <FaRegUserCircle /> &nbsp; My Profile
-                                </li>
-                            </Link>
-                            <Link to="/cart">
-                                <li className="p-2 cursor-pointer flex items-center border-b">
-                                    <FaShoppingCart /> &nbsp; My Cart
+                                <li className="p-2 cursor-pointer flex items-center">
+                                    <FaUserCircle /> &nbsp; My Profile
                                 </li>
                             </Link>
                             <Link to="/order">
@@ -128,7 +151,7 @@ function SignInButton() {
                                 to="/createProduct"
                                 className="p-2 cursor-pointer flex items-center border-b"
                             >
-                                <MdCreateNewFolder /> &nbsp;Create Product
+                                <MdCreateNewFolder /> &nbsp; Create Product
                             </Link>
                             <p className="text-sm p-[5px] border-b">
                                 {' '}
@@ -138,8 +161,11 @@ function SignInButton() {
                     )}
                     {user && (
                         <button
-                            onClick={logout}
-                            className="p-2 cursor-pointer flex items-center border-b bg-[#bb2d3b] text-white rounded-md"
+                            onClick={() => {
+                                toggleMenu()
+                                logout()
+                            }}
+                            className="p-[6px] text-[15px] cursor-pointer flex items-center border-b bg-[#bb2d3b] text-white rounded-sm"
                         >
                             Logout
                         </button>

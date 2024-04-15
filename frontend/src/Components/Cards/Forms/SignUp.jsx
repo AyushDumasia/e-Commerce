@@ -111,7 +111,7 @@ function SignUp() {
                                     : ''
                             }
                             onChange={handleData}
-                            className="border p-2 rounded mt-[3px] w-full text-base focus:outline-none no-arrow"
+                            className="border border-[grey] p-2 rounded mt-[3px] w-full text-base focus:outline-none no-arrow"
                         />
                     </div>
                     <Input
@@ -131,7 +131,7 @@ function SignUp() {
                             value={formData.gender}
                             name={'gender'}
                             onChange={handleData}
-                            className="border p-2 cursor-pointer rounded mt-[3px] w-full text-base focus:outline-none no-arrow text-placeholder"
+                            className="border border-[grey] p-2 cursor-pointer rounded mt-[3px] w-full text-base focus:outline-none no-arrow text-placeholder"
                         >
                             <option value="" disabled hidden>
                                 Select Gender

@@ -17,7 +17,7 @@ function Password({label, placeholder, name, value, handler}) {
                     name={name}
                     value={value}
                     onChange={handler}
-                    className="relative border p-2 pr-8 rounded mt-[3px] w-full text-base focus:outline-none"
+                    className="relative border border-[grey] p-2 pr-8 rounded mt-[3px] w-full text-base focus:outline-none"
                 />
                 <div
                     className="absolute right-2 top-0 transform translate-y-[100%] cursor-pointer"
