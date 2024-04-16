@@ -13,8 +13,8 @@ function FilterCard() {
     }, [searchTerm])
 
     const handleFilterChange = (option) => {
-        setSelectedFilter(option)
         navigate(`/explore/search/${searchTerm}/${option}`)
+        setSelectedFilter(option)
     }
 
     return (

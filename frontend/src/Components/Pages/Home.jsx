@@ -1,35 +1,54 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
+import Slider from './Slider'
 
-function Home() {
+function Carousel({images}) {
+    const [currentIndex, setCurrentIndex] = useState(0)
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
+        }, 5000)
+
+        return () => clearInterval(intervalId)
+    }, [images])
+
     return (
-        <div className="relative">
-            {/* Background Image */}
-            <img
-                // src="https://res.cloudinary.com/dxrzskzvj/image/upload/v1712998161/sg2dixlciritt6llc0zv.jpg"
-                src="https://res.cloudinary.com/dxrzskzvj/image/upload/v1713001482/lv5eg44embc6dxpsm9ju.jpg"
-                // src="https://res.cloudinary.com/dxrzskzvj/image/upload/v1712998194/pirbwo9eiazxe7t3itz1.jpg"
-                alt="Background"
-                className="w-full h-screen object-cover opacity-50"
-            />
-            <div className="absolute inset-0 bg-black opacity-60"></div>
-
-            {/* Text Overlay */}
-            <div className="absolute top-[40%] left-[20px] transform -translate-y-1/2 text-white p-8">
-                <div className="w-[80%]">
-                    <h1 className="text-[4.5rem]  font-extrabold mb-4 text-[#ffffff]">
-                        Welcome to Our Website
-                    </h1>
-                    <p className="text-lg">
-                        Shop the latest trends in fashion, electronics, and
-                        more, all in one convenient place. Experience seamless
-                        shopping with secure payments and swift delivery.
-                    </p>
-                </div>
-                <button className="bg-[blue] font-bold p-4 mt-[15px] rounded-3xl text-white">
-                    Explore Now
-                </button>
+        <div className="relative overflow-hidden">
+            <div
+                className="flex transition-transform duration-1000 ease-in-out w-95"
+                style={{
+                    transform: `translateX(-${currentIndex * (100 / images.length)}%)`,
+                    width: `${images.length * 100}%`,
+                    marginTop: '10px',
+                }}
+            >
+                {images.map((imageUrl, index) => (
+                    <img
+                        key={index}
+                        src={imageUrl}
+                        alt={`Slide ${index}`}
+                        className="w-full h-[570px] object-cover"
+                    />
+                ))}
             </div>
         </div>
+    )
+}
+
+function Home() {
+    const images = [
+        // 'https://res.cloudinary.com/dxrzskzvj/image/upload/v1713254811/xvttg8jissobs5lw5q4r.jpg',
+        'https://res.cloudinary.com/dxrzskzvj/image/upload/v1713254811/n43hccvhjw53mcqt4y0s.jpg',
+        'https://res.cloudinary.com/dxrzskzvj/image/upload/v1713254808/kcwcu5rwwarjuwcbkgmg.jpg',
+        'https://res.cloudinary.com/dxrzskzvj/image/upload/v1713254805/cx3kes0kx1jvrgo8sdni.jpg',
+        'https://res.cloudinary.com/dxrzskzvj/image/upload/v1713255103/ctoxxlwfwc8yrbhfql0c.jpg',
+    ]
+
+    return (
+        <>
+            <Carousel images={images} />
+            <Slider />
+        </>
     )
 }
 

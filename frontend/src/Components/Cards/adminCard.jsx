@@ -44,7 +44,7 @@ const AdminCard = () => {
             )
             .then((response) => {
                 toast.success('Product approved successfully')
-                fetchProduct()
+                // fetchProduct()
             })
             .catch((error) => {
                 setApiError(error)
@@ -61,7 +61,7 @@ const AdminCard = () => {
                 },
             )
             toast.success('Product not approved')
-            fetchProduct()
+            // fetchProduct()
         } catch (error) {
             handleApiError(error)
         }
