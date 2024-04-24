@@ -9,6 +9,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {GoHeartFill} from 'react-icons/go'
 import {setUser} from '../../redux/user/userSlice'
 import {FaUserCircle} from 'react-icons/fa'
+import {ShoppingBag} from 'lucide-react'
 // import {useLocation} from 'react-router-dom'
 
 function SignInButton() {
@@ -89,9 +90,12 @@ function SignInButton() {
                 ) : (
                     <>
                         <Link to="/cart">
-                            <li className="p-2 cursor-pointer flex items-center">
+                            {/* <li className="p-2 cursor-pointer flex items-center">
                                 <FaShoppingCart /> &nbsp; Cart
-                            </li>
+                            </li> */}
+                            <div className="mr-[15px]">
+                                <ShoppingBag absoluteStrokeWidth />
+                            </div>
                         </Link>
                         &nbsp; &nbsp;
                         <Avatar

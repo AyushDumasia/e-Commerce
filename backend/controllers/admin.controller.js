@@ -16,25 +16,36 @@ export const showPendingProduct = asyncHandler(async (req, res) => {
 export const validProduct = asyncHandler(async (req, res) => {
     const userId = req.user?.id
     const productId = req.params.id
+
     const tempProduct = await TempProduct.findById(productId)
+    if (!tempProduct) {
+        throw new ApiError(404, 'Temporary product not found')
+    }
+
     const approvedProduct = new Product({
         productName: tempProduct.productName,
         category: tempProduct.category,
         description: tempProduct.description,
-        coverImage: tempProduct.coverImage,
-        // imageUrls: tempProduct.imageUrls,
+        images: tempProduct.images,
         stock: tempProduct.stock || 10,
         price: tempProduct.price,
         userId: tempProduct.userId,
     })
-    const user = await User.find({_id: tempProduct.userId})
+
+    const user = await User.findById(tempProduct.userId)
+    if (!user) {
+        throw new ApiError(404, 'User not found')
+    }
+
     await approvedProduct.save()
     await tempProduct.deleteOne()
+
     const info = await getMail(
         user.email,
         `Confirmation about product ${approvedProduct.productName}`,
-        `We approved your product  ${approvedProduct.productName}`,
+        `We approved your product ${approvedProduct.productName}`,
     )
+
     res.status(200).json(approvedProduct)
 })
 
@@ -44,8 +55,6 @@ export const notApprovedProduct = asyncHandler(async (req, res) => {
     const tempProduct = await TempProduct.findByIdAndDelete(productId)
     res.status(200).json(tempProduct)
 })
-
-// export const fetchProduct = asyncHandler(async (req, rse) => {})
 
 // * Fetch a Daily Active User
 export const dailyUser = asyncHandler(async (req, res) => {

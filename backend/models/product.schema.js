@@ -15,13 +15,12 @@ const productSchema = new Schema(
             type: String,
             required: true,
         },
-        coverImage: {
-            type: String,
-            required: true,
-        },
-        imageUrls: {
-            type: [String],
-        },
+        images: [
+            {
+                type: String,
+                required: true,
+            },
+        ],
         stock: {
             type: Number,
             required: true,

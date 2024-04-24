@@ -45,7 +45,7 @@ function ProductList() {
                     {/* Product Image */}
                     <div className="relative">
                         <img
-                            src={product.productId.coverImage}
+                            src={product.productId.images[0]}
                             alt={product.productId.productName}
                             className="w-[100%] h-[300px] object-cover rounded-t-lg"
                         />

@@ -15,14 +15,12 @@ const pendingProduct = new Schema(
             type: String,
             required: true,
         },
-        coverImage: {
-            type: String,
-            required: true,
-        },
-        imageUrls: {
-            type: [String],
-            // required: true,
-        },
+        images: [
+            {
+                type: String,
+                required: true,
+            },
+        ],
         stock: {
             type: Number,
             required: true,

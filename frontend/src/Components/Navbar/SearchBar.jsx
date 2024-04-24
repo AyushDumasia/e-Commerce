@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {FiSearch} from 'react-icons/fi'
 import {useNavigate} from 'react-router-dom'
+import {RxCross2} from 'react-icons/rx'
 
 function SearchBar() {
     const [search, setSearch] = useState('')
@@ -20,12 +21,8 @@ function SearchBar() {
         }
     }
 
-    function urlToSlug(url) {
-        let slug = url.toLowerCase()
-        slug = slug.replace(/[^\w\s-]/g, '')
-        slug = slug.replace(/\s+/g, '-')
-        slug = slug.replace(/^-+|-+$/g, '')
-        return slug
+    const clearSearch = () => {
+        setSearch('')
     }
 
     const filter = async (e) => {
@@ -34,22 +31,35 @@ function SearchBar() {
     }
 
     return (
-        <>
+        <div className="flex bg-[red] items-center border border-gray-300 rounded-md overflow-hidden">
             <button
-                className="flex items-center justify-center text-gray-600 focus:outline-none rounded-l-[5px] p-[7px] bg-white border border-gray-600 border-r-0 h-[2.5rem]"
                 onClick={handleSubmit}
+                className="flex items-center justify-center bg-white text-gray-600 focus:outline-none px-3 h-10"
+                aria-label="Search"
             >
-                <FiSearch />{' '}
+                <FiSearch />
             </button>
+
             <input
                 value={search}
                 onChange={filter}
                 onKeyPress={handleSubmit}
                 type="text"
                 placeholder="Search..."
-                className="border border-gray-600 h-[2.5rem] rounded-r-[5px] focus:outline-none p-[7px] border-l-0 pl-0  min-w-[35rem]"
+                className="border-none w-[700px] focus:outline-none flex-grow px-4 py-2"
             />
-        </>
+            {search ? (
+                <button
+                    onClick={clearSearch}
+                    className="flex items-center justify-center bg-white text-gray-600 focus:outline-none px-3 h-10"
+                    aria-label="Clear search"
+                >
+                    <RxCross2 />
+                </button>
+            ) : (
+                ''
+            )}
+        </div>
     )
 }
 

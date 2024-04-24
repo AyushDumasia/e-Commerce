@@ -22,6 +22,7 @@ const AdminCard = () => {
                 {withCredentials: true},
             )
             dispatch(setAdminCard(response.data.data))
+            console.log(response.data.data)
         } catch (error) {
             handleApiError(error)
         }
@@ -79,7 +80,7 @@ const AdminCard = () => {
                         >
                             <div className="flex items-center">
                                 <img
-                                    src={product.coverImage}
+                                    src={product?.images[0]}
                                     alt={product.productName}
                                     className="w-28 h-28 object-contain mr-4"
                                 />

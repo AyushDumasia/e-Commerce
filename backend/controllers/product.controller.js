@@ -58,37 +58,40 @@ export const createProduct = asyncHandler(async (req, res) => {
     const {productName, category, description, price, stock} = req.body
     const userId = req.user.id
     const user = await User.findOne({_id: userId})
-    const coverImageLocalPath = await req.file.path
-    // const imageLocalPath = req.files?.imageUrls[0]?.path
-    // console.log(coverImageLocalPath)
-    if (!coverImageLocalPath) {
-        throw new ApiError(406, 'images required') //Not Acceptable
-    }
-    const coverImage = await uploadOnCloudinary(coverImageLocalPath)
-    // const imageUrls = await uploadOnCloudinary(imageLocalPath)
 
-    if (!coverImage) {
-        throw new ApiError(406, ' images required')
+    const imagePaths = req.files.map((file) => file.path)
+    console.log(req.files)
+
+    const uploadedImages = await Promise.all(imagePaths.map(uploadOnCloudinary))
+
+    if (uploadedImages.some((image) => !image)) {
+        throw new ApiError(406, 'Images required')
     }
+
+    const imageUrls = uploadedImages.map((image) => image.url)
+    console.log(imageUrls)
+
     const newProduct = new TempProduct({
         productName,
         category,
         description,
         price,
-        coverImage: coverImage.url,
-        stock: stock,
-        // imageUrls: imageUrls?.url || '',
+        images: imageUrls,
+        stock,
         userId,
     })
+
     await newProduct.save()
-    const info = await getMail(
+
+    await getMail(
         user.email,
-        `Confirmation about product ${newProduct.productName}`,
-        `We will verify your product and product will display in website`,
+        `Confirmation about product ${productName}`,
+        `We will verify your product and it will display on the website.`,
     )
 
     res.status(200).json(new ApiResponse(200, newProduct))
 })
+
 // * Add to cart
 export const addCart = asyncHandler(async (req, res) => {
     const user = req.user

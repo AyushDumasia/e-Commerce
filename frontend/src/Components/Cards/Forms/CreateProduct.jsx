@@ -2,8 +2,7 @@ import React, {useState} from 'react'
 import axios from 'axios'
 import {toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import {FaSpinner} from 'react-icons/fa'
-import ReactLoading from 'react-loading' // Import ReactLoading
+import ReactLoading from 'react-loading'
 import Input from './../../Input/Input'
 import Button from './../../Button/Button'
 import CustomToastContainer from './../../Toast/CustomToastContainer'
@@ -13,10 +12,10 @@ function CreateProduct() {
         productName: '',
         category: '',
         description: '',
-        price: '',
-        stock: '',
+        price: 0,
+        stock: 0,
     })
-    const [selectedFile, setSelectedFile] = useState(null)
+    const [selectedFiles, setSelectedFiles] = useState([])
     const [loading, setLoading] = useState(false)
 
     const handleChange = (e) => {
@@ -29,7 +28,7 @@ function CreateProduct() {
 
     const handleFileChange = (e) => {
         const files = e.target.files
-        setSelectedFile(files[0])
+        setSelectedFiles([...selectedFiles, ...files])
     }
 
     const handleSubmit = async (e) => {
@@ -38,12 +37,16 @@ function CreateProduct() {
 
         try {
             const formDataWithFiles = new FormData()
-            formDataWithFiles.append('coverImage', selectedFile)
+            // Append form fields
             formDataWithFiles.append('productName', formData.productName)
             formDataWithFiles.append('category', formData.category)
             formDataWithFiles.append('description', formData.description)
             formDataWithFiles.append('price', formData.price)
             formDataWithFiles.append('stock', formData.stock)
+            // Append images
+            for (const file of selectedFiles) {
+                formDataWithFiles.append('images', file)
+            }
 
             const response = await axios.post(
                 'http://localhost:3000/api/product/createProduct',
@@ -67,6 +70,7 @@ function CreateProduct() {
                 price: '',
                 stock: '',
             })
+            setSelectedFiles([])
         } catch (error) {
             console.error('Error:', error)
             toast.error('An error occurred. Please try again later.')
@@ -99,14 +103,15 @@ function CreateProduct() {
                         handler={handleChange}
                         required
                     />
-                    <label htmlFor="images">Cover Image:</label>
-                    <Input
-                        type={'file'}
-                        id={'coverImage'}
-                        name={'coverImage'}
-                        accept={'image/*'}
-                        handler={handleFileChange}
+                    <label htmlFor="images">Images:</label>
+                    <input
+                        type="file"
+                        id="images"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                        multiple
                     />
+                    <br />
                     <label htmlFor="productName">Stock :</label>
                     <Input
                         type={'text'}

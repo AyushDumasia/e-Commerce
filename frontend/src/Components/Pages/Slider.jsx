@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
-
+import {MdKeyboardArrowLeft} from 'react-icons/md'
+import {MdKeyboardArrowRight} from 'react-icons/md'
 function Slider() {
     const images = [
         'https://res.cloudinary.com/dxrzskzvj/image/upload/v1713254811/n43hccvhjw53mcqt4y0s.jpg',
@@ -35,7 +36,7 @@ function Slider() {
                 onClick={goToPrevious}
                 className="rounded-full bg-gray-200 w-10 h-10 flex items-center justify-center mr-2"
             >
-                &lt;
+                <MdKeyboardArrowLeft />
             </button>
             <img
                 src={images[currentIndex]}
@@ -76,7 +77,7 @@ function Slider() {
                 onClick={goToNext}
                 className="rounded-full bg-gray-200 w-10 h-10 flex items-center justify-center ml-2"
             >
-                &gt;
+                <MdKeyboardArrowRight />
             </button>
         </div>
     )

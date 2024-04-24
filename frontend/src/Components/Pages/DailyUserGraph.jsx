@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
-import Chart from 'chart.js/auto'
-import {Doughnut} from 'react-chartjs-2'
+import {VictoryBar, VictoryChart, VictoryAxis, VictoryTheme} from 'victory'
 import axios from 'axios'
+import {Doughnut} from 'react-chartjs-2'
 
 const DailyUserGraph = () => {
     const [categoryCounts, setCategoryCounts] = useState([])
@@ -40,30 +40,21 @@ const DailyUserGraph = () => {
             return null
         }
 
-        const labels = categoryCounts.map((categoryCount) => categoryCount._id)
-        const counts = categoryCounts.map(
-            (categoryCount) => categoryCount.count,
+        const data = categoryCounts.map((categoryCount) => ({
+            x: categoryCount._id,
+            y: categoryCount.count,
+        }))
+
+        return (
+            <VictoryChart domainPadding={20}>
+                <VictoryBar
+                    data={data}
+                    style={{data: {fill: 'rgba(54, 162, 235)'}}}
+                />
+                <VictoryAxis tickFormat={(x) => x} />
+                <VictoryAxis dependentAxis />
+            </VictoryChart>
         )
-
-        const data = {
-            labels: labels,
-            datasets: [
-                {
-                    data: counts,
-                    backgroundColor: [
-                        'rgba(255, 99, 132)',
-                        'rgba(54, 162, 235)',
-                        'rgba(255, 206, 86)',
-                        'rgba(75, 192, 192)',
-                        'rgba(153, 102, 255)',
-                        'rgba(255, 159, 64)',
-                    ],
-                    hoverOffset: 40,
-                },
-            ],
-        }
-
-        return <Doughnut data={data} className="chart" />
     }
 
     const renderUserChart = () => {
@@ -71,51 +62,22 @@ const DailyUserGraph = () => {
             return null
         }
 
-        const data = {
-            labels: userData.label,
-            datasets: [
-                {
-                    label: 'Active Daily Users',
-                    data: userData.countVal,
-                    fill: true,
-                    borderColor: 'rgb(13, 13, 29)',
-                    tension: 0.5,
-                },
-            ],
-        }
+        const data = userData.label.map((label, index) => ({
+            x: label,
+            y: userData.countVal[index],
+        }))
 
-        return <canvas id="dailyUserChart" width="400" height="200"></canvas>
+        return (
+            <VictoryChart domainPadding={20}>
+                <VictoryBar
+                    data={data}
+                    style={{data: {fill: 'rgb(13, 13, 29)'}}}
+                />
+                <VictoryAxis tickFormat={(x) => x} />
+                <VictoryAxis dependentAxis />
+            </VictoryChart>
+        )
     }
-
-    useEffect(() => {
-        if (userData && userData.countVal && userData.label) {
-            const ctx = document.getElementById('dailyUserChart')
-            if (ctx) {
-                new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: userData.label,
-                        datasets: [
-                            {
-                                label: 'Active Daily Users',
-                                data: userData.countVal,
-                                fill: true,
-                                borderColor: 'rgb(13, 13, 29)',
-                                tension: 0.5,
-                            },
-                        ],
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                            },
-                        },
-                    },
-                })
-            }
-        }
-    }, [userData])
 
     return (
         <div className="container mx-auto max-w-screen-lg ">

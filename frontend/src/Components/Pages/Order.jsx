@@ -30,7 +30,7 @@ function Order() {
             >
                 <img
                     className="w-full h-56 object-cover object-center"
-                    src={order.productId.coverImage}
+                    src={order.productId?.images[0]}
                     alt={order.productId.productName}
                 />
                 <div className=" py-4">

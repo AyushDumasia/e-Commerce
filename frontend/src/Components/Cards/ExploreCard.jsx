@@ -126,7 +126,7 @@ function ExploreCard() {
                               onClick={() => showProduct(product._id)}
                           >
                               <img
-                                  src={product.coverImage}
+                                  src={product?.images[0]}
                                   alt={product.productName}
                                   className="w-[250px] h-[250px] object-cover rounded-lg mr-4"
                                   loading="lazy"
