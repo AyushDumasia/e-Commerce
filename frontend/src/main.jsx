@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
+import ReactDOM from 'react-dom'
 import {
     Route,
     RouterProvider,
@@ -30,23 +30,26 @@ import DailyUserGraph from './Components/Pages/DailyUserGraph.jsx'
 import SearchPage from './Components/Pages/SearchPage.jsx'
 import FilterPage from './Components/Pages/FilterPage.jsx'
 import AdminPage from './Components/Pages/AdminPage.jsx'
+import AuthProvider from './Components/auth/AuthProvider'
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<App />}>
-            <Route path="/" element={<Home />} />
+            <Route index element={<Home />} />
             <Route path="/login" element={<LogIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/explore" element={<Explore />} />
+            {/* <Route path="/*" element={<AuthProvider />}> */}
             <Route path="/cart" element={<Cart />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/createProduct" element={<CreateProduct />} />
             <Route path="/address" element={<ShowAddress />} />
             <Route path="/order" element={<Order />} />
-            <Route path="/showProduct/:id" element={<ShowInfo />} />
             <Route path="/becomeMerchant" element={<MerchantForm />} />
             <Route path="/createAddress" element={<AddressForm />} />
             <Route path="/chart" element={<DailyUserGraph />} />
+            {/* </Route> */}
+            <Route path="/showProduct/:id" element={<ShowInfo />} />
             <Route
                 path="/explore/search/:searchTerm"
                 element={<SearchPage />}
@@ -59,6 +62,7 @@ const router = createBrowserRouter(
         </Route>,
     ),
 )
+
 ReactDOM.createRoot(document.getElementById('root')).render(
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>

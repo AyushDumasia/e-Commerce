@@ -1,22 +1,18 @@
-// AuthProvider.js
-import React, {createContext, useContext, useState} from 'react'
+import React, {useEffect} from 'react'
+import {Outlet, useNavigate} from 'react-router-dom'
+import {useSelector} from 'react-redux'
 
-// Create AuthContext
-const AuthContext = createContext()
+function AuthProvider() {
+    const navigate = useNavigate()
+    const {user, apiError} = useSelector((state) => state.user)
 
-// AuthProvider component
-export const AuthProvider = ({children}) => {
-    const [user, setUser] = useState(null)
+    useEffect(() => {
+        if (!user) {
+            navigate('/home')
+        }
+    }, [user, navigate])
 
-    // Other authentication-related functions (login, logout, etc.) can be defined here
-
-    // Export useAuth hook
-    const useAuth = () => useContext(AuthContext)
-
-    return (
-        <AuthContext.Provider value={{user}}>{children}</AuthContext.Provider>
-    )
+    return user ? <Outlet /> : null
 }
 
-// Custom hook to use the AuthContext
-export const useAuth = () => useContext(AuthContext)
+export default AuthProvider

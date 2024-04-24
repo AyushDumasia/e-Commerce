@@ -67,7 +67,7 @@ export default function ChildCard({item, showProduct}) {
                     handleShare()
                 }}
             >
-                <IoMdShareAlt />{' '}
+                <IoMdShareAlt />
             </button>
             <div className="p-4 flex flex-col flex-grow">
                 <h2 className="text-[15px] font-semibold mb-2">

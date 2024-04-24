@@ -83,31 +83,39 @@ function LogIn() {
     }
 
     return (
-        <div className="mt-[100px] flex justify-center items-center">
+        <div className="flex justify-center items-center h-screen bg-gradient-to-br from-purple-600 to-indigo-600">
             <ToastContainer />
-            <div className="flex flex-col justify-center items-start w-[450px] bg-white p-8 rounded-lg">
-                <h1 className="font-bold text-3xl mb-3">Sign In</h1>
-                <Link to="/signup" className="text-sm text-gray-500 ml-auto">
-                    Already have an account
-                </Link>{' '}
-                <form onSubmit={handleSubmit} className="w-full">
+            <div className="flex flex-col justify-center w-[350px] bg-white bg-opacity-90 p-8 rounded-lg shadow-md">
+                <h1 className="font-bold text-3xl mb-6 text-center">
+                    Welcome Back!
+                </h1>
+                <form onSubmit={handleSubmit}>
                     <Input
                         label={'Email'}
                         type={'email'}
-                        placeholder={'abc@xyz.com'}
+                        placeholder={'Enter your email'}
                         value={formData.email}
                         name={'email'}
                         handler={handleChange}
                     />
                     <Password
                         label={'Password'}
-                        placeholder={'Password'}
+                        placeholder={'Enter your password'}
                         name={'password'}
                         value={formData.password}
                         handler={handleChange}
                     />
-                    <Button text={'Submit'} />
+                    <Button text={'Sign In'} className="w-full mt-4" />
                 </form>
+                <p className="text-center text-sm mt-4">
+                    Don't have an account?{' '}
+                    <Link
+                        to="/signup"
+                        className="text-blue-600 hover:underline"
+                    >
+                        Sign up here
+                    </Link>
+                </p>
             </div>
         </div>
     )

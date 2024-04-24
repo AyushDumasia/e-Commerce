@@ -27,7 +27,7 @@ function VerticalBar() {
                 {categories.map((category, index) => (
                     <div
                         key={index}
-                        className="w-full px-2 py-4 text-gray-700  border-b border-pink-600 hover:bg-gray-300 hover:rounded-md cursor-pointer "
+                        className="w-full px-2 py-4 text-gray-700  border-b  hover:bg-gray-300 hover:rounded-md cursor-pointer "
                         onClick={() => handleCategoryClick(category)}
                     >
                         <NavLink

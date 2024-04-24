@@ -4,6 +4,7 @@ import axios from 'axios'
 import {MdCreateNewFolder} from 'react-icons/md'
 import {FaRegUserCircle, FaAngleUp, FaShoppingCart} from 'react-icons/fa'
 import {IoStorefront} from 'react-icons/io5'
+import {CiLogout} from 'react-icons/ci'
 import Avatar from 'react-avatar'
 import {useDispatch, useSelector} from 'react-redux'
 import {GoHeartFill} from 'react-icons/go'
@@ -114,7 +115,7 @@ function SignInButton() {
                 />
             </div>
             <div
-                className={`absolute p-[15px] border border-black top-[50px] left-[-100px] bg-[#ffffff] shadow rounded-lg w-[250px] h-auto transition-opacity duration-300 ${
+                className={`absolute font-normal p-[15px]  top-[50px] left-[-120px] bg-[#ffffff] shadow rounded-lg w-[250px] h-auto transition-opacity duration-300 ${
                     showMenu ? 'opacity-100' : 'opacity-0 pointer-events-none'
                 }`}
             >
@@ -169,9 +170,10 @@ function SignInButton() {
                                 toggleMenu()
                                 logout()
                             }}
-                            className="p-[6px] text-[15px] cursor-pointer flex items-center border-b bg-[#bb2d3b] text-white rounded-sm"
+                            className="p-[6px] text-[15px] w-[100px] cursor-pointer flex items-center border-b  text-black rounded-sm"
                         >
-                            Logout
+                            <CiLogout />
+                            &nbsp; Logout
                         </button>
                     )}
                 </ul>

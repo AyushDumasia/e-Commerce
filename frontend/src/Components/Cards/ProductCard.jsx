@@ -4,6 +4,8 @@ import {useParams} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import {Share2} from 'lucide-react'
 import {useDispatch, useSelector} from 'react-redux'
+import {IoMdShareAlt} from 'react-icons/io'
+import {FaShare} from 'react-icons/fa6'
 import {
     setApiError,
     setProductCard,
@@ -16,7 +18,7 @@ function ProductCard() {
     const {showProductCard, apiError} = useSelector(
         (state) => state.productCard,
     )
-    const [currentImage, setCurrentImage] = useState(showProductCard.images[0])
+    const [currentImage, setCurrentImage] = useState(showProductCard?.images[0])
 
     useEffect(() => {
         fetchProductData()
@@ -108,7 +110,7 @@ function ProductCard() {
                             className="absolute top-0 right-3 mt-4 mr-4 rounded-full p-2 shadow-md text-white bg-[#00000045]"
                             onClick={handleShare}
                         >
-                            <Share2 />
+                            <FaShare />{' '}
                         </button>
                     </div>
                     <div className="flex-1 ">
