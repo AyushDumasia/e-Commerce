@@ -18,7 +18,8 @@ function ProductCard() {
     const {showProductCard, apiError} = useSelector(
         (state) => state.productCard,
     )
-    const [currentImage, setCurrentImage] = useState(showProductCard?.images[0])
+    // const [currentImage, setCurrentImage] = useState(showProductCard?.images[0])
+    const [currentImage, setCurrentImage] = useState()
 
     useEffect(() => {
         fetchProductData()
@@ -35,6 +36,7 @@ function ProductCard() {
             )
             setLoading(false)
             dispatch(setProductCard(response.data.product))
+            setCurrentImage(response.data.product.images[0])
         } catch (error) {
             dispatch(setApiError(error.message))
         }

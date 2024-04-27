@@ -9,6 +9,7 @@ import Order from './../models/order.schema.js'
 const saltRounds = 10
 import {getMail} from '../utils/nodemailer.js'
 import DailyUser from '../models/dailyActive.schema.js'
+import Merchant from './../models/merchant.schema.js'
 
 const countUser = async () => {
     const date = new Date().toISOString().split('T')[0]
@@ -22,7 +23,7 @@ const countUser = async () => {
         console.log('NEW Daily User : ', newDailyUser)
         await newDailyUser.save()
     } else {
-        dailyUser.count++
+        // dailyUser.count++
         await dailyUser.save()
         console.log('Daily User after update : ', dailyUser)
     }
@@ -132,6 +133,10 @@ export const getUserInfo = asyncHandler(async (req, res) => {
     if (!user) {
         return res.status(404).json({message: 'User not found in request'})
     }
+    const isMerchant = await Merchant.findOne({merchant: user.id})
+    if (!isMerchant) {
+        console.log('User is not merchant')
+    }
     const findUser = await User.findById(user.id)
     const order = await Order.find({userId: user.id}).populate('productId')
     console.log('Order : ', order)
@@ -142,6 +147,7 @@ export const getUserInfo = asyncHandler(async (req, res) => {
     }
     res.status(200).json({
         user: findUser,
+        merchant: isMerchant,
         order: order,
         address: address,
     })

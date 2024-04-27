@@ -31,6 +31,7 @@ import SearchPage from './Components/Pages/SearchPage.jsx'
 import FilterPage from './Components/Pages/FilterPage.jsx'
 import AdminPage from './Components/Pages/AdminPage.jsx'
 import AuthProvider from './Components/auth/AuthProvider'
+import Profile from './Components/Pages/Profile'
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -39,23 +40,21 @@ const router = createBrowserRouter(
             <Route path="/login" element={<LogIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/explore" element={<Explore />} />
-            {/* <Route path="/*" element={<AuthProvider />}> */}
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/createProduct" element={<CreateProduct />} />
-            <Route path="/address" element={<ShowAddress />} />
-            <Route path="/order" element={<Order />} />
-            <Route path="/becomeMerchant" element={<MerchantForm />} />
-            <Route path="/createAddress" element={<AddressForm />} />
-            <Route path="/chart" element={<DailyUserGraph />} />
-            {/* </Route> */}
-            <Route path="/showProduct/:id" element={<ShowInfo />} />
+            <Route path="/*" element={<AuthProvider />}>
+                <Route index element={<Dashboard />} />
+                <Route path="cart" element={<Cart />} />
+                <Route path="createProduct" element={<CreateProduct />} />
+                <Route path="address" element={<ShowAddress />} />
+                <Route path="order" element={<Order />} />
+                <Route path="becomeMerchant" element={<MerchantForm />} />
+                <Route path="createAddress" element={<AddressForm />} />
+                <Route path="chart" element={<DailyUserGraph />} />
+                <Route path="profile" element={<Profile />} />
+            </Route>
+            <Route path="showProduct/:id" element={<ShowInfo />} />
+            <Route path="explore/search/:searchTerm" element={<SearchPage />} />
             <Route
-                path="/explore/search/:searchTerm"
-                element={<SearchPage />}
-            />
-            <Route
-                path="/explore/search/:searchTerm/:option"
+                path="explore/search/:searchTerm/:option"
                 element={<FilterPage />}
             />
             <Route path="/admin" element={<AdminPage />} />

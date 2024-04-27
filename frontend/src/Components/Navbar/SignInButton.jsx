@@ -2,7 +2,12 @@ import {useEffect, useState} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import {MdCreateNewFolder} from 'react-icons/md'
-import {FaRegUserCircle, FaAngleUp, FaShoppingCart} from 'react-icons/fa'
+import {
+    FaRegUserCircle,
+    FaAngleUp,
+    FaShoppingCart,
+    FaUserAlt,
+} from 'react-icons/fa'
 import {IoStorefront} from 'react-icons/io5'
 import {CiLogout} from 'react-icons/ci'
 import Avatar from 'react-avatar'
@@ -11,6 +16,8 @@ import {GoHeartFill} from 'react-icons/go'
 import {setUser} from '../../redux/user/userSlice'
 import {FaUserCircle} from 'react-icons/fa'
 import {ShoppingBag} from 'lucide-react'
+import {FaLocationDot} from 'react-icons/fa6'
+import {GiConfirmed} from 'react-icons/gi'
 // import {useLocation} from 'react-router-dom'
 
 function SignInButton() {
@@ -75,8 +82,8 @@ function SignInButton() {
                 {!user ? (
                     <>
                         <Link hidden to="/cart">
-                            <li className="p-2 cursor-pointer flex items-center">
-                                <FaShoppingCart /> &nbsp; Cart
+                            <li className="cursor-pointer flex items-center">
+                                <FaShoppingCart /> &nbsp;
                             </li>
                         </Link>
                         &nbsp; &nbsp;
@@ -130,14 +137,19 @@ function SignInButton() {
                     )}
                     {user && (
                         <>
-                            <Link to="/">
+                            <Link to="/profile">
                                 <li className="p-2 cursor-pointer flex items-center">
-                                    <FaUserCircle /> &nbsp; My Profile
+                                    <FaUserAlt /> &nbsp; My Profile
                                 </li>
                             </Link>
                             <Link to="/order">
                                 <li className="p-2 cursor-pointer flex items-center border-b">
-                                    <GoHeartFill /> &nbsp; My Order
+                                    <GiConfirmed /> &nbsp; My Order
+                                </li>
+                            </Link>
+                            <Link to="/address">
+                                <li className="p-2 cursor-pointer flex items-center border-b">
+                                    <FaLocationDot /> &nbsp; Saved Address
                                 </li>
                             </Link>
                         </>

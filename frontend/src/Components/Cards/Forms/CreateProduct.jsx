@@ -6,8 +6,11 @@ import ReactLoading from 'react-loading'
 import Input from './../../Input/Input'
 import Button from './../../Button/Button'
 import CustomToastContainer from './../../Toast/CustomToastContainer'
+import {IoHome} from 'react-icons/io5'
+import {useNavigate} from 'react-router'
 
 function CreateProduct() {
+    const navigate = useNavigate()
     const [formData, setFormData] = useState({
         productName: '',
         category: '',
@@ -37,13 +40,11 @@ function CreateProduct() {
 
         try {
             const formDataWithFiles = new FormData()
-            // Append form fields
             formDataWithFiles.append('productName', formData.productName)
             formDataWithFiles.append('category', formData.category)
             formDataWithFiles.append('description', formData.description)
             formDataWithFiles.append('price', formData.price)
             formDataWithFiles.append('stock', formData.stock)
-            // Append images
             for (const file of selectedFiles) {
                 formDataWithFiles.append('images', file)
             }
@@ -80,10 +81,10 @@ function CreateProduct() {
     }
 
     return (
-        <div className="mt-[100px] flex justify-center items-center">
+        <div className="flex justify-center items-center min-h-screen bg-gray-100 overflow-y-hidden">
             <CustomToastContainer />
             {loading && (
-                <div className="flex justify-center items-center absolute inset-0 bg-gray-900 bg-opacity-50 z-50">
+                <div className="fixed top-0 left-0 z-50 w-full h-full bg-gray-900 bg-opacity-50 flex justify-center items-center">
                     <ReactLoading
                         type={'spin'}
                         color={'#123456'}
@@ -92,9 +93,27 @@ function CreateProduct() {
                     />
                 </div>
             )}
-            <div className="flex flex-col justify-center items-start w-[450px] bg-white p-8 rounded-lg">
+            <div className="flex flex-col justify-center items-start w-[450px] bg-white p-8 rounded-lg shadow-lg overflow-y-hidden">
+                <div className="flex mb-3  w-[80%] justify-between">
+                    <h2 className="text-2xl  justify-between font-semibold">
+                        Create Product
+                    </h2>
+                    <button
+                        className="p-2 rounded-full border-black border "
+                        onClick={() => {
+                            navigate('/')
+                        }}
+                    >
+                        <IoHome />
+                    </button>
+                </div>
                 <form onSubmit={handleSubmit} encType="multipart/form-data">
-                    <label htmlFor="productName">Product Name:</label>
+                    <label
+                        className="block mb-2 text-gray-700"
+                        htmlFor="productName"
+                    >
+                        Product Name:
+                    </label>
                     <Input
                         type={'text'}
                         name={'productName'}
@@ -103,16 +122,26 @@ function CreateProduct() {
                         handler={handleChange}
                         required
                     />
-                    <label htmlFor="images">Images:</label>
+                    <label
+                        className="block mt-4 mb-2 text-gray-700"
+                        htmlFor="images"
+                    >
+                        Images:
+                    </label>
                     <input
                         type="file"
                         id="images"
                         accept="image/*"
                         onChange={handleFileChange}
                         multiple
+                        className="mb-4"
                     />
-                    <br />
-                    <label htmlFor="productName">Stock :</label>
+                    <label
+                        className="block mb-2 text-gray-700"
+                        htmlFor="productName"
+                    >
+                        Stock :
+                    </label>
                     <Input
                         type={'text'}
                         name={'stock'}
@@ -121,8 +150,11 @@ function CreateProduct() {
                         handler={handleChange}
                         required
                     />
-                    <div className="mb-[5px] w-full">
-                        <label htmlFor="Gender" className="text-lg">
+                    <div className="mb-4">
+                        <label
+                            className="block mb-2 text-gray-700"
+                            htmlFor="category"
+                        >
                             Category
                         </label>
                         <select
@@ -130,62 +162,41 @@ function CreateProduct() {
                             value={formData.category}
                             name={'category'}
                             onChange={handleChange}
-                            className="border p-2 cursor-pointer rounded mt-[3px] w-full text-base focus:outline-none no-arrow text-placeholder"
+                            className="w-full px-3 py-2 text-base border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
                         >
                             <option value="" disabled hidden>
                                 Select Category
                             </option>
-                            <option value="Electronics" className="text-black">
-                                Electronics
-                            </option>
-                            <option
-                                value="Home & Kitchen"
-                                className="text-black"
-                            >
+                            <option value="Electronics">Electronics</option>
+                            <option value="Home & Kitchen">
                                 Home & Kitchen
                             </option>
-                            <option value="Books" className="text-black">
-                                Books
-                            </option>
-                            <option
-                                value="Health & Personal Care"
-                                className="text-black"
-                            >
+                            <option value="Books">Books</option>
+                            <option value="Health & Personal Care">
                                 Health & Personal Care
                             </option>
-                            <option
-                                value="Beauty & Personal Care"
-                                className="text-black"
-                            >
+                            <option value="Beauty & Personal Care">
                                 Beauty & Personal Care
                             </option>
-                            <option value="Toys & Games" className="text-black">
-                                Toys & Games
-                            </option>
-                            <option
-                                value="Sports & Outdoors"
-                                className="text-black"
-                            >
+                            <option value="Toys & Games">Toys & Games</option>
+                            <option value="Sports & Outdoors">
                                 Sports & Outdoors
                             </option>
-                            <option value="Food" className="text-black">
-                                Food
+                            <option value="Food">Food</option>
+                            <option value="pickles and Papad">
+                                Pickles and Papad
                             </option>
-                            <option
-                                value="pickles and Papad"
-                                className="text-black"
-                            >
-                                pickles and Papad
-                            </option>
-                            <option
-                                value="Clothing & Accessories"
-                                className="text-black"
-                            >
+                            <option value="Clothing & Accessories">
                                 Clothing & Accessories
                             </option>
                         </select>
                     </div>
-                    <label htmlFor="description">Description:</label>
+                    <label
+                        className="block mb-2 text-gray-700"
+                        htmlFor="description"
+                    >
+                        Description:
+                    </label>
                     <Input
                         type={'text'}
                         name={'description'}
@@ -194,7 +205,9 @@ function CreateProduct() {
                         handler={handleChange}
                         required
                     />
-                    <label htmlFor="price">Price:</label>
+                    <label className="block mb-2 text-gray-700" htmlFor="price">
+                        Price:
+                    </label>
                     <Input
                         type={'number'}
                         name={'price'}

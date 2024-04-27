@@ -10,6 +10,7 @@ import searchReducer from './search/searchSlice'
 import suggestedReducer from './suggestedProducts/suggestedProductSlice.jsx'
 import userReducer from './user/userSlice.js'
 import merchantReducer from './merchant/merchantSlice.js'
+import profileSlice from './profile/profile.js'
 
 const rootReducer = combineReducers({
     user: userReducer,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
     feedback: feedbackReducer,
     search: searchReducer,
     suggestedProduct: suggestedReducer,
+    profile: profileSlice,
 })
 
 const persistConfig = {

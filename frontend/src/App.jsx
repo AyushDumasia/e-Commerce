@@ -16,13 +16,15 @@ function ScrollToTop() {
 
 function App() {
     const {pathname} = useLocation()
-    const hideNavbarPaths = ['/login', '/signup']
-
+    const hideNavbarPaths = ['/login', '/signup', '/createProduct']
     const shouldHideNavbar = hideNavbarPaths.includes(pathname)
 
     return (
         <>
             {!shouldHideNavbar && <Navbar />}
+            {pathname !== '/login' &&
+                pathname !== '/signup' &&
+                pathname !== '/createProduct' && <div className="mb-16"></div>}
             <ScrollToTop />
             <Outlet />
         </>

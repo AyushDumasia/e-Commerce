@@ -35,21 +35,18 @@ const AdminCard = () => {
     }
 
     const approveProduct = async (id) => {
-        await axios
-            .post(
+        try {
+            await axios.post(
                 `${API_URL}/admin/validProduct/${id}`,
                 {},
                 {
                     withCredentials: true,
                 },
             )
-            .then((response) => {
-                toast.success('Product approved successfully')
-                // fetchProduct()
-            })
-            .catch((error) => {
-                setApiError(error)
-            })
+            fetchProduct()
+        } catch (error) {
+            setApiError(error)
+        }
     }
 
     const rejectProduct = async (id) => {
@@ -62,7 +59,7 @@ const AdminCard = () => {
                 },
             )
             toast.success('Product not approved')
-            // fetchProduct()
+            fetchProduct()
         } catch (error) {
             handleApiError(error)
         }
