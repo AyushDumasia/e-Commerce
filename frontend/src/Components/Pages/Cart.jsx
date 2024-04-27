@@ -33,22 +33,21 @@ const Cart = () => {
             <div className="overflow-y-auto max-h-[400px]">
                 <CartCard />
             </div>
-            <div className="flex justify-between item-center mt-[50px] ">
-                <p className="font-bold  text-start">
-                    {cart?.totalPrice === 0 ? (
-                        <p>Nothing in cart</p>
-                    ) : (
-                        <p>Total Price: ₹{cart?.totalPrice}</p>
-                    )}
-                </p>
-
-                <button
-                    onClick={orderBtn}
-                    className="bg-blue-500 text-white px-6 py-3  md:mr-4 rounded hover:bg-blue-600"
-                >
-                    Order Now
-                </button>
-            </div>
+            {!cart?.cartItems == [] && cart?.cartItems?.length == 0 ? (
+                ''
+            ) : (
+                <div className="flex  justify-between">
+                    <p className="font-bold text-[18px]">
+                        Total Price: ₹{cart?.totalPrice}
+                    </p>
+                    <button
+                        onClick={orderBtn}
+                        className="bg-blue-500 text-white px-6 py-3  md:mr-4 rounded hover:bg-blue-600"
+                    >
+                        Order Now
+                    </button>
+                </div>
+            )}
         </div>
     )
 }

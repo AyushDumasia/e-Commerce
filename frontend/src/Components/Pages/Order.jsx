@@ -26,25 +26,29 @@ function Order() {
         return orders.map((order) => (
             <div
                 key={order._id}
-                className="max-w-sm rounded-lg overflow-hidden shadow-md bg-white hover:shadow-lg transition duration-300"
+                className="max-w-xs sm:max-w-sm mx-auto bg-white rounded-lg overflow-hidden shadow-md mb-6"
             >
                 <img
-                    className="w-full h-56 object-cover object-center"
+                    className="w-full h-44 object-cover object-center"
                     src={order.productId?.images[0]}
                     alt={order.productId.productName}
                 />
-                <div className=" py-4">
-                    <div className="font-semibold text-xl mb-2">
+                <div className="p-4">
+                    <h3 className="text-lg font-semibold mb-2">
                         {order.productId.productName}
-                    </div>
-                    <p className="text-gray-700 text-base">
+                    </h3>
+                    <p className="text-gray-600 text-base">
                         Price: ₹{order.price}
                     </p>
-                    <p className={`text-base ${getStatusColor(order.status)}`}>
+                    <p
+                        className={`text-sm font-medium ${getStatusColor(
+                            order.status,
+                        )}`}
+                    >
                         {order.status}
                     </p>
                     {order.address && (
-                        <p className="text-gray-700 text-base">
+                        <p className="text-gray-700 text-sm mt-2">
                             {order.address.state} {order.address.pinCode}
                         </p>
                     )}
@@ -70,12 +74,14 @@ function Order() {
 
     return (
         <div className="container mx-auto py-8">
-            <h2 className="text-2xl font-bold mb-8 tracking-wide">
+            <h2 className="text-3xl font-bold mb-8 tracking-wide text-center">
                 Your Orders
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center">
                 {orders.length === 0 ? (
-                    <p>No orders found.</p>
+                    <p className="text-center text-gray-600">
+                        No orders found.
+                    </p>
                 ) : (
                     renderOrderCards()
                 )}

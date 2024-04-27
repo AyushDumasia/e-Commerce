@@ -24,7 +24,6 @@ function CartCard() {
                     withCredentials: true,
                 },
             )
-            console.log(response)
             dispatch(setCart(response.data))
         } catch (error) {
             dispatch(setApiError(error))
@@ -60,19 +59,21 @@ function CartCard() {
                         width={50}
                     />
                 </div>
-            ) : !cart || cart.length === 0 ? (
-                <p>No items in cart</p>
+            ) : !cart || cart.cartItems.length === 0 ? (
+                <p className="text-center text-gray-600 my-4">
+                    Nothing in cart
+                </p>
             ) : (
                 cart.cartItems.map((item) => (
                     <div
                         key={item._id}
-                        className=" rounded-lg p-4 flex items-center justify-between bg-white mb-4 shadow-md w-[70%]"
+                        className="rounded-lg p-4 flex items-center justify-between bg-white mb-4 shadow-md"
                     >
                         <div className="flex items-center ">
                             <img
                                 src={item.productId?.images[0]}
                                 alt={item.productId.productName}
-                                className="w-40 h-24 object-cover rounded mr-4"
+                                className="w-24 h-24 object-cover rounded mr-4"
                             />
                             <div>
                                 <h3 className="text-lg font-semibold mb-2">

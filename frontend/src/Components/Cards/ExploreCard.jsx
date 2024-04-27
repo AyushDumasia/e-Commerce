@@ -64,7 +64,7 @@ function ExploreCard() {
         <div className="overflow-hidden flex">
             <VerticalBar />
             <AnimatePresence>
-                <div className="flex flex-col w-screen items-center">
+                <div className="flex flex-col w-screen h-auto  items-center">
                     {loading ? (
                         <div className="w-full flex justify-center items-center h-96">
                             <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
@@ -122,7 +122,7 @@ function ExploreCard() {
                         ))
                     )}
 
-                    <PaginationFooter />
+                    <PaginationFooter pageCount={pageCount} />
                 </div>
             </AnimatePresence>
         </div>

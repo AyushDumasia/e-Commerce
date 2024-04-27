@@ -31,12 +31,15 @@ function MerchantForm() {
             )
             fetchMerchantData()
             // dispatch(setMerchant())
+            setSelectedFile(null) // Clear selected file after submission
+            toast.success('Merchant application submitted successfully!')
         } catch (error) {
             toast.error('An error occurred. Please try again later.')
         } finally {
             setLoading(false)
         }
     }
+
     const fetchMerchantData = async () => {
         try {
             const response = await axios.get(
@@ -59,7 +62,7 @@ function MerchantForm() {
             <CustomToastContainer />
 
             {loading && (
-                <div className="flex mt-24 justify-center items-center">
+                <div className="fixed top-0 left-0 w-full h-full bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
                     <ReactLoading
                         type={'cylon'}
                         color={'#123456'}
@@ -69,32 +72,44 @@ function MerchantForm() {
                 </div>
             )}
 
-            <h1 className="text-3xl font-bold mb-8">Become a Merchant</h1>
+            <div className="max-w-md bg-white rounded-lg shadow-lg p-8">
+                <h1 className="text-3xl font-bold mb-8 text-center">
+                    Merchant Application
+                </h1>
 
-            <form
-                className="flex flex-col items-center"
-                onSubmit={becomeMerchant}
-            >
-                <label htmlFor="document" className="mb-4">
-                    <span className="text-lg font-semibold">
-                        Upload Document:
-                    </span>
-                    <input
-                        type="file"
-                        name="document"
-                        id="document"
-                        onChange={handleFileChange}
-                        className="mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
-                    />
-                </label>
+                <p className="text-gray-600 mb-4">
+                    Upon submission of your valid document, your merchant
+                    application will be reviewed for approval.
+                </p>
 
-                <button
-                    type="submit"
-                    className="bg-blue-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-500"
+                <form
+                    onSubmit={becomeMerchant}
+                    className="flex flex-col items-center"
                 >
-                    Submit
-                </button>
-            </form>
+                    <label htmlFor="document" className="mb-4 w-full">
+                        <span className="text-lg font-semibold block mb-2">
+                            Upload Document:
+                        </span>
+                        <input
+                            type="file"
+                            name="document"
+                            id="document"
+                            onChange={handleFileChange}
+                            className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500 w-full"
+                        />
+                    </label>
+
+                    <button
+                        type="submit"
+                        className={`bg-blue-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-500 ${
+                            loading ? 'opacity-50 cursor-not-allowed' : ''
+                        }`}
+                        disabled={loading}
+                    >
+                        {loading ? 'Submitting...' : 'Submit Application'}
+                    </button>
+                </form>
+            </div>
         </div>
     )
 }
