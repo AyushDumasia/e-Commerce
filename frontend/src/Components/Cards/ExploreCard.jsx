@@ -110,7 +110,7 @@ function ExploreCard() {
                                             onClick={(e) => {
                                                 addCart(product._id, e)
                                             }}
-                                            className="text-red hover:before:bg-greenborder-green-500 relative h-[40px] w-280 overflow-hidden border border-green-500 bg-white px-3 text-green-500 shadow-2xl transition-all before:absolute before:bottom-0 before:left-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-green-500 before:transition-all before:duration-500 hover:text-white hover:shadow-red-500 hover:before:left-0 hover:before:w-full text-sm mt-[10px] justify-end align-baseline rounded-[5px]"
+                                            className="text-red hover:before:bg-greenborder-green-500 relative h-[40px] w-280 overflow-hidden border border-green-500 bg-white px-3 text-green-500 shadow-2xl transition-all before:absolute before:bottom-0 before:left-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-green-500 before:transition-all before:duration-500 hover:text-white hover:shadow-green-500 hover:before:left-0 hover:before:w-full text-sm mt-[10px] justify-end align-baseline rounded-[5px]"
                                         >
                                             <span className="relative z-10">
                                                 Add to Cart

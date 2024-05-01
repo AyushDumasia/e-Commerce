@@ -1,13 +1,10 @@
-import React, {useState} from 'react'
-import {useNavigate} from 'react-router-dom'
+import React, {useState, useEffect} from 'react'
+import {useNavigate, Link} from 'react-router-dom'
 import {ToastContainer, toast} from 'react-toastify'
-import {Link} from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css'
-
 import Button from '../../Button/Button.jsx'
 import Password from '../../Password/Password.jsx'
 import Input from '../../Input/Input.jsx'
-
 import axios from 'axios'
 import {useDispatch, useSelector} from 'react-redux'
 import {setApiError, setUser} from '../../../redux/user/userSlice.js'
@@ -25,6 +22,7 @@ function LogIn() {
         email: '',
         password: '',
     })
+    const [imageIndex, setImageIndex] = useState(null)
 
     const handleChange = (e) => {
         const {name, value} = e.target
@@ -82,40 +80,61 @@ function LogIn() {
         setFormData({email: '', password: ''})
     }
 
+    const images = [
+        'https://res.cloudinary.com/dxrzskzvj/image/upload/v1714574519/lugwtmo5frftmbl8arow.jpg',
+        'https://res.cloudinary.com/dxrzskzvj/image/upload/v1714574517/fdstvw6hvptflfo40dbv.jpg',
+        'https://res.cloudinary.com/dxrzskzvj/image/upload/v1714574516/rv6akq6plnizkzhohgh4.jpg',
+        'https://res.cloudinary.com/dxrzskzvj/image/upload/v1713523173/pdllkh07cwyuwtpr6ma0.jpg',
+        'https://res.cloudinary.com/dxrzskzvj/image/upload/v1713944396/aep9j4vbebq36iwkdpwo.jpg',
+    ]
+
+    useEffect(() => {
+        const randomIndex = Math.floor(Math.random() * images.length)
+        setImageIndex(randomIndex)
+    }, [])
+
     return (
-        <div className="flex justify-center items-center h-screen bg-gradient-to-br from-purple-600 to-indigo-600">
+        <div className="flex justify-center items-center min-h-screen">
             <ToastContainer />
-            <div className="flex flex-col justify-center w-[350px] bg-white bg-opacity-90 p-8 rounded-lg shadow-md">
-                <h1 className="font-bold text-3xl mb-6 text-center">
-                    Welcome Back!
-                </h1>
-                <form onSubmit={handleSubmit}>
-                    <Input
-                        label={'Email'}
-                        type={'email'}
-                        placeholder={'Enter your email'}
-                        value={formData.email}
-                        name={'email'}
-                        handler={handleChange}
-                    />
-                    <Password
-                        label={'Password'}
-                        placeholder={'Enter your password'}
-                        name={'password'}
-                        value={formData.password}
-                        handler={handleChange}
-                    />
-                    <Button text={'Sign In'} className="w-full mt-4" />
-                </form>
-                <p className="text-center text-sm mt-4">
-                    Don't have an account?{' '}
-                    <Link
-                        to="/signup"
-                        className="text-blue-600 hover:underline"
-                    >
-                        Sign up here
-                    </Link>
-                </p>
+            <div className="flex w-[70%] max-w-screen-xl ">
+                <div
+                    className="lg:block lg:w-[70%] bg-cover bg-center"
+                    style={{
+                        backgroundImage: `url(${images[imageIndex]})`,
+                    }}
+                ></div>
+                <div className="bg-[#fafafa] lg:w-1/2 px-10 py-16 shadow-md">
+                    <h1 className="text-3xl font-bold mb-6 text-center">
+                        Welcome Back!
+                    </h1>
+                    <form onSubmit={handleSubmit}>
+                        <Input
+                            label={'Email'}
+                            type={'email'}
+                            placeholder={'Enter your email'}
+                            value={formData.email}
+                            name={'email'}
+                            handler={handleChange}
+                        />
+                        <Password
+                            label={'Password'}
+                            placeholder={'Enter your password'}
+                            name={'password'}
+                            value={formData.password}
+                            handler={handleChange}
+                        />
+                        <Button text={'Sign In'} className="w-full mt-4" />
+                    </form>
+                    <p className="text-center text-sm mt-4">
+                        Don't have an account?{' '}
+                        <Link
+                            to="/signup"
+                            className="text-blue-600 hover:underline"
+                        >
+                            Sign up here
+                        </Link>
+                    </p>
+                </div>
             </div>
         </div>
     )

@@ -1,18 +1,17 @@
+import React, {useState} from 'react'
 import axios from 'axios'
-import {useParams} from 'react-router-dom'
+import {toast} from 'react-toastify'
 import Rating from 'react-rating-stars-component'
 import {useDispatch, useSelector} from 'react-redux'
-import {toast} from 'react-toastify'
-import {useState} from 'react'
+import Avatar from 'react-avatar'
+import {useParams} from 'react-router-dom'
 import {setFeedbackCard} from '../../../redux/feedback/feedbackSlice'
 
 function FeedbackForm() {
     const {id} = useParams()
     const [comment, setComment] = useState('')
-
+    const {user} = useSelector((state) => state.user)
     const [rating, setRating] = useState(0)
-    const [loading, setLoading] = useState(true)
-    const {feedbackCard} = useSelector((state) => state.feedback)
     const dispatch = useDispatch()
 
     const ratingChanged = (newRating) => {
@@ -43,6 +42,7 @@ function FeedbackForm() {
             }
         }
     }
+
     return (
         <div>
             <div className="mt-8">
@@ -54,25 +54,34 @@ function FeedbackForm() {
                             count={5}
                             onChange={ratingChanged}
                             size={35}
+                            value={rating}
                             activeColor="#ffd700"
                             isHalf={true}
                             required
                         />
                     </div>
-                    <textarea
-                        onChange={(e) => {
-                            setComment(e.target.value)
-                        }}
-                        name="comment"
-                        id="comment"
-                        cols="30"
-                        value={comment}
-                        required
-                        rows="10"
-                        className="border-black border rounded-md resize-none mb-4 p-2"
-                        placeholder="Enter your comment here..."
-                    />
-                    <button className="bg-blue-500 w-40 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    <div className="flex align-middle justify-center">
+                        <Avatar
+                            name={user?.username || 'U'}
+                            size={35}
+                            round={true}
+                            className="mt-[2px]"
+                        />
+                        <textarea
+                            onChange={(e) => {
+                                setComment(e.target.value)
+                            }}
+                            name="comment"
+                            id="comment"
+                            cols="30"
+                            value={comment}
+                            required
+                            rows="1"
+                            className="border-black w-[100%] active:border-none border-b resize-none mb-6 ml-4 p-2"
+                            placeholder="Enter your comment here..."
+                        />
+                    </div>
+                    <button className="bg-blue-500 w-40 text-white px-4 self-end py-2 rounded hover:bg-blue-600">
                         Submit
                     </button>
                 </form>

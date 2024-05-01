@@ -15,8 +15,8 @@ function CreateProduct() {
         productName: '',
         category: '',
         description: '',
-        price: 0,
-        stock: 0,
+        price: '',
+        stock: '',
     })
     const [selectedFiles, setSelectedFiles] = useState([])
     const [loading, setLoading] = useState(false)
@@ -93,13 +93,13 @@ function CreateProduct() {
                     />
                 </div>
             )}
-            <div className="flex flex-col justify-center items-start w-[450px] bg-white p-8 rounded-lg shadow-lg overflow-y-hidden">
-                <div className="flex mb-3  w-[80%] justify-between">
+            <div className="flex flex-col justify-center items-start  bg-white p-8 rounded-lg shadow-lg overflow-y-hidden">
+                <div className="flex mb-3  w-[100%] justify-between">
                     <h2 className="text-2xl  justify-between font-semibold">
                         Create Product
                     </h2>
                     <button
-                        className="p-2 rounded-full border-black border "
+                        className="p-2 rounded-full self-end border-black border "
                         onClick={() => {
                             navigate('/')
                         }}
