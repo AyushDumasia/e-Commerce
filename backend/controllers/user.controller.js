@@ -20,16 +20,12 @@ const countUser = async () => {
             count: 1,
             date: date,
         })
-        console.log('NEW Daily User : ', newDailyUser)
         await newDailyUser.save()
     } else {
         // dailyUser.count++
         await dailyUser.save()
-        console.log('Daily User after update : ', dailyUser)
     }
 }
-
-// const saveCookie = async () => {}
 
 // * Sign Up
 export const signUp = asyncHandler(async (req, res) => {
@@ -55,8 +51,8 @@ export const signUp = asyncHandler(async (req, res) => {
                 id: newUser.id,
             },
         },
-        '123',
-        {expiresIn: '90m'},
+        process.env.ACCESS_TOKEN,
+        {expiresIn: process.env.EXPIRE_IN},
     )
 
     req.user = {
@@ -104,8 +100,8 @@ export const logIn = asyncHandler(async (req, res) => {
                 id: user.id,
             },
         },
-        '123',
-        {expiresIn: '90m'},
+        process.env.ACCESS_TOKEN,
+        {expiresIn: process.env.EXPIRE_IN},
     )
 
     req.user = {
@@ -139,9 +135,7 @@ export const getUserInfo = asyncHandler(async (req, res) => {
     }
     const findUser = await User.findById(user.id)
     const order = await Order.find({userId: user.id}).populate('productId')
-    console.log('Order : ', order)
     const address = await Address.find({userId: user.id})
-    console.log('Address : ', address)
     if (!findUser) {
         return res.status(404).json({message: 'User not found'})
     }

@@ -39,8 +39,6 @@ export const fetchFeedback = asyncHandler(async (req, res) => {
             totalRating += feedback.rating
         })
         averageRating = totalRating / feedbacks.length
-    } else {
-        console.log('No feedback available for this product.')
     }
 
     product.rating = averageRating

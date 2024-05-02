@@ -19,7 +19,6 @@ export const mergeAddress = asyncHandler(async (req, res) => {
     })
 
     const validAddress = await Address.find({address1: newAddress.address1})
-    console.log('Valid : ', validAddress)
     if (validAddress.length > 0) {
         throw new ApiError(401, 'You already added  this address')
     }

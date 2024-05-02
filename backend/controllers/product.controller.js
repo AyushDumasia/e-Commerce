@@ -60,7 +60,6 @@ export const createProduct = asyncHandler(async (req, res) => {
     const user = await User.findOne({_id: userId})
 
     const imagePaths = req.files.map((file) => file.path)
-    console.log(req.files)
 
     const uploadedImages = await Promise.all(imagePaths.map(uploadOnCloudinary))
 
@@ -69,7 +68,6 @@ export const createProduct = asyncHandler(async (req, res) => {
     }
 
     const imageUrls = uploadedImages.map((image) => image.url)
-    console.log(imageUrls)
 
     const newProduct = new TempProduct({
         productName,
@@ -312,7 +310,6 @@ export const search = asyncHandler(async (req, res) => {
 
 export const sortProducts = asyncHandler(async (req, res) => {
     const option = req.params.option
-    console.log(req.params)
     const productId = req.params.searchTerm
     const product = await Product.find({productName: productId})
     if (!product) {

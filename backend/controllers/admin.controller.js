@@ -70,8 +70,6 @@ export const dailyUser = asyncHandler(async (req, res) => {
         countArr.label.push(count.date)
     }
 
-    console.log(countArr)
-
     res.status(200).json(countArr)
 })
 
@@ -94,6 +92,5 @@ export const chartOrder = asyncHandler(async (req, res) => {
             },
         },
     ])
-    console.log(order)
     res.json(order)
 })

@@ -8,13 +8,11 @@ export const fetchDailyUser = asyncHandler(async (req, res) => {
     try {
         const userCount = await DailyUser.countDocuments({date: todayDate})
 
-        console.log(userCount)
         res.status(200).json({
             count: userCount,
             message: 'Daily user count for today',
         })
     } catch (err) {
-        console.log(err)
         res.status(500).json({message: 'Error fetching daily user count'})
     }
 })
