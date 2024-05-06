@@ -87,7 +87,7 @@ function ProductCard() {
                 <p>Loading...</p>
             ) : showProductCard ? (
                 <div className="flex flex-col md:flex-row ">
-                    <div className="flex flex-col items-center">
+                    <div className="flex flex-col items-center mr-4">
                         {showProductCard.images.map((image, index) => (
                             <img
                                 key={index}
@@ -102,7 +102,7 @@ function ProductCard() {
                             />
                         ))}
                     </div>
-                    <div className="w-full md:w-1/2 flex justify-center relative">
+                    <div className="w-full md:w-1/2 flex justify-center relative ">
                         <img
                             src={currentImage}
                             alt={showProductCard.productName}
@@ -115,7 +115,7 @@ function ProductCard() {
                             <FaShare />{' '}
                         </button>
                     </div>
-                    <div className="flex-1 ">
+                    <div className="flex-1 pl-4 ">
                         <h2 className="text-2xl font-bold mb-4">
                             {showProductCard.productName}
                         </h2>

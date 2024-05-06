@@ -52,7 +52,7 @@ export const createOrder = asyncHandler(async (req, res) => {
 // * Fetch an Order for a specific User
 export const fetchSpecificOrder = asyncHandler(async (req, res) => {
     const userId = req.user.id
-    const order = await Order.find({userId})
+    const order = await Order.find({userId: userId})
         .populate('productId')
         .populate('address')
     res.status(200).json({

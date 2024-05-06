@@ -1,7 +1,8 @@
 import {useEffect, useState} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import axios from 'axios'
-import {MdCreateNewFolder} from 'react-icons/md'
+import {RiAdminLine} from 'react-icons/ri'
+import {MdCreateNewFolder, MdSpaceDashboard} from 'react-icons/md'
 import {
     FaRegUserCircle,
     FaAngleUp,
@@ -16,36 +17,21 @@ import {GoHeartFill} from 'react-icons/go'
 import {setUser} from '../../redux/user/userSlice'
 import {FaUserCircle} from 'react-icons/fa'
 import {ShoppingBag} from 'lucide-react'
-import {FaLocationDot} from 'react-icons/fa6'
+import {FaChartBar, FaLocationDot} from 'react-icons/fa6'
 import {GiConfirmed} from 'react-icons/gi'
 // import {useLocation} from 'react-router-dom'
 
 function SignInButton() {
-    // const {pathname} = useLocation()
-
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const {user, apiError} = useSelector((state) => state.user)
-
     const [showMenu, setShowMenu] = useState(false)
     const {merchant} = useSelector((state) => state.merchant)
 
     useEffect(() => {
         setShowMenu(false)
     }, [location.pathname])
-
-    // const checkAuthentication = async () => {
-    //     try {
-    //         const response = await axios.get(
-    //             'http://localhost:3000/api/auth/currentUser',
-    //             {withCredentials: true},
-    //         )
-    //         setUser(response.data)
-    //     } catch (error) {
-    //         setUser(null)
-    //     }
-    // }
 
     const becomeMerchant = () => {
         navigate('/becomeMerchant')
@@ -57,7 +43,6 @@ function SignInButton() {
                 withCredentials: true,
             })
             dispatch(setUser(null))
-            // checkAuthentication()
         } catch (err) {
             console.log(err)
         }
@@ -154,7 +139,7 @@ function SignInButton() {
                             </Link>
                         </>
                     )}
-                    {user && !merchant && (
+                    {((user && !merchant) || !user?.username == 'admin') && (
                         <button
                             onClick={becomeMerchant}
                             className="p-2 cursor-pointer flex items-center border-b"
@@ -187,6 +172,31 @@ function SignInButton() {
                             <CiLogout />
                             &nbsp; Logout
                         </button>
+                    )}
+                    {user?.username == 'admin' ? (
+                        <>
+                            <Link
+                                to="/dashboard"
+                                className="p-2 cursor-pointer flex items-center border-b"
+                            >
+                                <MdSpaceDashboard /> &nbsp; Dashboard
+                            </Link>
+                            <Link
+                                to="/chart"
+                                className="p-2 cursor-pointer flex items-center border-b"
+                            >
+                                <FaChartBar />
+                                &nbsp; Chart
+                            </Link>
+                            <Link
+                                to="/admin"
+                                className="p-2 cursor-pointer flex items-center border-b"
+                            >
+                                <RiAdminLine /> &nbsp; Pending Products
+                            </Link>
+                        </>
+                    ) : (
+                        ''
                     )}
                 </ul>
             </div>

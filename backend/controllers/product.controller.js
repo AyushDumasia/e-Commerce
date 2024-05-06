@@ -7,31 +7,49 @@ import {ApiError} from './../utils/ApiError.js'
 import {uploadOnCloudinary} from './../utils/cloudinary.js'
 import {ApiResponse} from './../utils/ApiResponse.js'
 import {getMail} from '../utils/nodemailer.js'
+import NodeCache from 'node-cache'
 import Order from '../models/order.schema.js'
+
+const nodeCache = new NodeCache()
 
 // * Fetch Products for Explore page
 export const fetchProduct = asyncHandler(async (req, res) => {
-    const page = parseInt(req.query.page) || 1
-    const limit = parseInt(req.query.limit) || 5
-    const skip = (page - 1) * limit
+    let cacheData
+    if (nodeCache.has('products')) {
+        cacheData = JSON.parse(nodeCache.get('products'))
+        return res.status(200).json({
+            pagination: {
+                count: cacheData.length,
+                pageCount: 1,
+                currentPage: 1,
+            },
+            products: cacheData,
+        })
+    } else {
+        const page = parseInt(req.query.page) || 1
+        const limit = parseInt(req.query.limit) || 5
+        const skip = (page - 1) * limit
 
-    const query = {}
-    const count = await Product.countDocuments(query)
-    const pageCount = Math.ceil(count / limit)
+        const query = {}
+        const count = await Product.countDocuments(query)
+        const pageCount = Math.ceil(count / limit)
 
-    const products = await Product.find(query)
-        .sort({createdAt: -1})
-        .skip(skip)
-        .limit(limit)
+        const products = await Product.find(query)
+            .sort({createdAt: -1})
+            .skip(skip)
+            .limit(limit)
 
-    res.status(200).json({
-        pagination: {
-            count,
-            pageCount,
-            currentPage: page,
-        },
-        products,
-    })
+        nodeCache.set('products', JSON.stringify(products))
+
+        res.status(200).json({
+            pagination: {
+                count,
+                pageCount,
+                currentPage: page,
+            },
+            products,
+        })
+    }
 })
 
 // * Show Latest Products
@@ -307,7 +325,6 @@ export const search = asyncHandler(async (req, res) => {
 })
 
 // * Filter products by Price
-
 export const sortProducts = asyncHandler(async (req, res) => {
     const option = req.params.option
     const productId = req.params.searchTerm

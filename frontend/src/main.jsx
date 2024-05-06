@@ -32,6 +32,7 @@ import FilterPage from './Components/Pages/FilterPage.jsx'
 import AdminPage from './Components/Pages/AdminPage.jsx'
 import AuthProvider from './Components/auth/AuthProvider'
 import Profile from './Components/Pages/Profile'
+import AuthAdmin from './Components/auth/AuthAdmin'
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -39,16 +40,19 @@ const router = createBrowserRouter(
             <Route index element={<Home />} />
             <Route path="/login" element={<LogIn />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/*" element={<AuthAdmin />}>
+                <Route path="chart" element={<DailyUserGraph />} />
+                <Route path="dashboard" element={<Dashboard />} />
+                <Route path="admin" element={<AdminPage />} />
+            </Route>
             <Route path="/explore" element={<Explore />} />
             <Route path="/*" element={<AuthProvider />}>
-                <Route index element={<Dashboard />} />
                 <Route path="cart" element={<Cart />} />
                 <Route path="createProduct" element={<CreateProduct />} />
                 <Route path="address" element={<ShowAddress />} />
                 <Route path="order" element={<Order />} />
                 <Route path="becomeMerchant" element={<MerchantForm />} />
                 <Route path="createAddress" element={<AddressForm />} />
-                <Route path="chart" element={<DailyUserGraph />} />
                 <Route path="profile" element={<Profile />} />
             </Route>
             <Route path="showProduct/:id" element={<ShowInfo />} />
@@ -57,7 +61,6 @@ const router = createBrowserRouter(
                 path="explore/search/:searchTerm/:option"
                 element={<FilterPage />}
             />
-            <Route path="/admin" element={<AdminPage />} />
         </Route>,
     ),
 )

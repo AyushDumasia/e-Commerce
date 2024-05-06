@@ -3,6 +3,7 @@ const router = express.Router()
 import moment from 'moment'
 
 import validateToken from './../middlewares/validateUser.js'
+import validateAdmin from './../middlewares/auth.js'
 import {
     chartOrder,
     dailyUser,
@@ -11,6 +12,8 @@ import {
     totalCategory,
     validProduct,
 } from '../controllers/admin.controller.js'
+
+router.use(validateAdmin)
 
 // * Show a pending product for an approval
 router.get('/showPendingProducts', showPendingProduct)

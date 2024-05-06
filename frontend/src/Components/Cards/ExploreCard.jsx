@@ -62,7 +62,9 @@ function ExploreCard() {
 
     return (
         <div className="overflow-hidden flex">
-            <VerticalBar />
+            <div className="sticky top-0">
+                <VerticalBar />
+            </div>
             <AnimatePresence>
                 <div className="flex flex-col w-screen h-auto  items-center">
                     {loading ? (

@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import dotenv from 'dotenv'
+import morgan from 'morgan'
 import connectDB from './db/connectDB.js' //Database connection
 
 //Routes
@@ -20,6 +21,7 @@ const app = express()
 dotenv.config({
     path: './.env',
 })
+
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
 app.use(express.json())
@@ -36,13 +38,14 @@ const corsOptions = {
     credentials: true,
 }
 app.use(cors(corsOptions))
+app.use(morgan('dev'))
 
-app.use((req, res, next) => {
-    if (req.path !== '/favicon.ico') {
-        console.log(req.method, req.path)
-    }
-    next()
-})
+// app.use((req, res, next) => {
+//     if (req.path !== '/favicon.ico') {
+//         console.log(req.method, req.path)
+//     }
+//     next()
+// })
 
 app.use('/api/auth', userAuthRoutes)
 app.use('/api/merchant', merchantRoutes)

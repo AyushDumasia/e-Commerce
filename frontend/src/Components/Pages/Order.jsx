@@ -5,20 +5,21 @@ function Order() {
     const [orders, setOrders] = useState([])
     const [address, setAddress] = useState([])
 
-    useEffect(() => {
-        const fetchOrder = async () => {
-            try {
-                const response = await axios.get(
-                    'http://localhost:3000/api/order/fetchOrder',
-                    {withCredentials: true},
-                )
-                setOrders(response.data.order)
-                setAddress(response.data.address)
-            } catch (err) {
-                console.log(err)
-            }
+    const fetchOrder = async () => {
+        try {
+            const response = await axios.get(
+                'http://localhost:3000/api/order/fetchOrder',
+                {withCredentials: true},
+            )
+            console.log(response)
+            setOrders(response.data.order)
+            setAddress(response.data.address)
+        } catch (err) {
+            console.log(err)
         }
+    }
 
+    useEffect(() => {
         fetchOrder()
     }, [])
 
@@ -78,13 +79,16 @@ function Order() {
                 Your Orders
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center">
-                {orders.length === 0 ? (
-                    <p className="text-center text-gray-600">
-                        No orders found.
-                    </p>
-                ) : (
+                {
+                    // orders.length === 0 ? (
+                    // <p className="text-center text-gray-600">
+                    // No orders found.
+                    // </p>
+                    // ) : (
                     renderOrderCards()
-                )}
+
+                    // )
+                }
             </div>
         </div>
     )

@@ -5,6 +5,8 @@ import User from './../models/user.schema.js'
 import {getMail} from '../utils/nodemailer.js'
 import DailyUser from '../models/dailyActive.schema.js'
 import Order from './../models/order.schema.js'
+import NodeCache from 'node-cache'
+const nodeCache = new NodeCache()
 
 // * Show a pending products for a Approval
 export const showPendingProduct = asyncHandler(async (req, res) => {
@@ -16,6 +18,10 @@ export const showPendingProduct = asyncHandler(async (req, res) => {
 export const validProduct = asyncHandler(async (req, res) => {
     const userId = req.user?.id
     const productId = req.params.id
+
+    if (nodeCache.has('products')) {
+        nodeCache.del('products')
+    }
 
     const tempProduct = await TempProduct.findById(productId)
     if (!tempProduct) {

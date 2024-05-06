@@ -11,9 +11,11 @@ import suggestedReducer from './suggestedProducts/suggestedProductSlice.jsx'
 import userReducer from './user/userSlice.js'
 import merchantReducer from './merchant/merchantSlice.js'
 import profileSlice from './profile/profile.js'
+import adminPanel from './adminPanel/adminPanelSlice.js'
 
 const rootReducer = combineReducers({
     user: userReducer,
+    adminPanel: adminPanel,
     merchant: merchantReducer,
     cart: cartReducer,
     admin: adminReducer,
@@ -29,7 +31,7 @@ const persistConfig = {
     key: 'root',
     version: 1,
     storage: storageSession,
-    whitelist: ['user', 'merchant'],
+    whitelist: ['user', 'merchant', 'adminPanel'],
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

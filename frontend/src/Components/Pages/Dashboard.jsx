@@ -21,74 +21,59 @@ function ProductList() {
     }
 
     const handleStatusChange = async (id, newStatus) => {
-        axios
-            .put(
+        try {
+            const response = await axios.put(
                 `http://localhost:3000/api/order/changeStatus/${id}`,
                 {status: newStatus},
-                {
-                    withCredentials: true,
-                },
+                {withCredentials: true},
             )
-            .then((response) => {
-                console.log(response, newStatus)
-                fetchData()
-            })
+            console.log(response, newStatus)
+            fetchData()
+        } catch (error) {
+            console.error('Error updating status:', error)
+        }
     }
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 p-5 lg:grid-cols-3 gap-4">
-            {products.map((product) => (
+        <div className="p-5">
+            {products?.map((product) => (
                 <div
                     key={product._id}
-                    className="bg-[#cbc9c9] rounded-lg shadow-md overflow-hidden"
+                    className="bg-gray-200 rounded-lg shadow-md overflow-hidden flex mb-4"
                 >
-                    {/* Product Image */}
-                    <div className="relative">
-                        <img
-                            src={product.productId.images[0]}
-                            alt={product.productId.productName}
-                            className="w-[100%] h-[300px] object-cover rounded-t-lg"
-                        />
-                    </div>
+                    <img
+                        src={product.productId.images[0]}
+                        alt={product.productId.productName}
+                        className="w-[250px] h-auto object-cover"
+                    />
 
-                    {/* Product Details */}
-                    <div className="p-4">
-                        <p>Order Id : {product?.orderId}</p>
-                        <h2 className="text-xl font-bold mb-2">
-                            {product.productId.productName}
-                        </h2>
-                        <p className="text-gray-600 mb-2">
-                            Category: {product.productId.category}
-                        </p>
-                        <p className="text-gray-600 mb-2">
-                            Price: ₹{product.price}
-                        </p>
-                    </div>
-
-                    {/* User Details */}
-                    {product.userId && (
-                        <div className="p-4 border-t border-gray-300">
-                            <div className="mb-4">
-                                <p className="text-gray-600 mb-1">
-                                    Username: {product.userId.username}
-                                </p>
-                                <p className="text-gray-600 mb-1">
-                                    Email: {product.userId.email}
-                                </p>
-                                <p className="text-gray-600 mb-1">
-                                    {product.userId.address}
-                                </p>
-                            </div>
+                    <div className="p-4 flex-1">
+                        <div>
+                            <h2 className="text-xl font-bold mb-2">
+                                {product.productId.productName}
+                            </h2>
+                            <p className="text-gray-600 mb-2">
+                                Email: {product.userId.email}
+                            </p>
+                            <p className="text-gray-600 mb-2">
+                                Price: ₹{product.price}
+                            </p>
                         </div>
-                    )}
+                    </div>
 
-                    {/* Button */}
-                    <div className="p-4 flex justify-end">
+                    <div className="p-4">
                         <select
                             value={product.status}
                             onChange={(e) =>
                                 handleStatusChange(product._id, e.target.value)
                             }
+                            className="border border-gray-300 rounded px-3 py-1 focus:outline-none focus:border-blue-500"
+                            style={{
+                                backgroundColor: '#f7f7f7',
+                                color: '#333',
+                                fontSize: '14px',
+                                width: '200px',
+                            }}
                         >
                             <option value="confirm">Order Confirmed</option>
                             <option value="Shipped">Ready for shipping</option>

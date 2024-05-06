@@ -2,6 +2,7 @@ import DailyUser from '../models/dailyActive.schema.js'
 import {ApiResponse} from '../utils/ApiResponse.js'
 import {asyncHandler} from '../utils/asyncHandler.js'
 import moment from 'moment'
+
 export const fetchDailyUser = asyncHandler(async (req, res) => {
     const todayDate = moment().startOf('day')
 

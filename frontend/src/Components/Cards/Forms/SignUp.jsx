@@ -26,9 +26,22 @@ function SignUp() {
         username: '',
         email: '',
         phone: '',
-        gender: '',
+        sex: '',
         password: '',
     })
+
+    const checkAuthentication = async () => {
+        try {
+            const response = await axios.get(
+                'http://localhost:3000/api/auth/currentUser',
+                {withCredentials: true},
+            )
+            dispatch(setUser(response.data))
+            // fetchMerchantData()
+        } catch (error) {
+            setApiError(null)
+        }
+    }
 
     const images = [
         'https://res.cloudinary.com/dxrzskzvj/image/upload/v1714574519/lugwtmo5frftmbl8arow.jpg',
@@ -61,12 +74,8 @@ function SignUp() {
                     withCredentials: true,
                 },
             )
-            if (response.status === 200) {
-                toast.success('User signed up successfully')
-                setTimeout(() => {
-                    navigate('/')
-                }, 2000)
-            }
+            navigate('/')
+            checkAuthentication()
         } catch (error) {
             if (error.response && error.response.status === 409) {
                 toast.error('Email is already registered')
@@ -115,14 +124,25 @@ function SignUp() {
                             value={formData.phone}
                             handler={handleChange}
                         />
-                        <Input
-                            label={'Gender'}
-                            type={'text'}
-                            placeholder={'Gender'}
-                            name={'gender'}
-                            value={formData.gender}
-                            handler={handleChange}
-                        />
+                        <label>Gender : </label>
+                        <select
+                            label={'sex'}
+                            name={'sex'}
+                            value={formData.sex}
+                            onChange={handleChange}
+                            className="border border-[grey] p-2 cursor-pointer rounded mt-[3px] w-full text-base focus:outline-none no-arrow text-placeholder"
+                        >
+                            <option value="" disabled hidden>
+                                Select Gender
+                            </option>
+                            <option value="Male" className="text-black">
+                                Male
+                            </option>
+                            <option value="Female" className="text-black">
+                                Female
+                            </option>
+                        </select>
+
                         <Password
                             label={'Password'}
                             placeholder={'Password'}
