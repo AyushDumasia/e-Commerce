@@ -17,7 +17,9 @@ function Carousel({images}) {
             <div
                 className="flex transition-transform duration-1000 ease-in-out w-full relative"
                 style={{
-                    transform: `translateX(-${currentIndex * (100 / images.length)}%)`,
+                    transform: `translateX(-${
+                        currentIndex * (100 / images.length)
+                    }%)`,
                     width: `${images.length * 100}%`,
                 }}
             >
@@ -53,6 +55,10 @@ function Home() {
     const images = [
         'https://res.cloudinary.com/dxrzskzvj/image/upload/v1713254811/n43hccvhjw53mcqt4y0s.jpg',
         'https://res.cloudinary.com/dxrzskzvj/image/upload/v1713254805/cx3kes0kx1jvrgo8sdni.jpg',
+        'https://res.cloudinary.com/dxrzskzvj/image/upload/v1714574519/lugwtmo5frftmbl8arow.jpg',
+        'https://res.cloudinary.com/dxrzskzvj/image/upload/v1714574516/rv6akq6plnizkzhohgh4.jpg',
+        'https://res.cloudinary.com/dxrzskzvj/image/upload/v1713523173/pdllkh07cwyuwtpr6ma0.jpg',
+        'https://res.cloudinary.com/dxrzskzvj/image/upload/v1713944396/aep9j4vbebq36iwkdpwo.jpg',
     ]
 
     return (

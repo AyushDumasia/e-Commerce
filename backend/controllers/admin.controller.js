@@ -6,8 +6,7 @@ import {getMail} from '../utils/nodemailer.js'
 import DailyUser from '../models/dailyActive.schema.js'
 import Order from './../models/order.schema.js'
 import NodeCache from 'node-cache'
-const nodeCache = new NodeCache()
-
+import {nodeCache} from './product.controller.js'
 // * Show a pending products for a Approval
 export const showPendingProduct = asyncHandler(async (req, res) => {
     const product = await TempProduct.findOne()

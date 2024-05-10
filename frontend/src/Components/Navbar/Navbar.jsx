@@ -8,7 +8,7 @@ function Navbar() {
         <nav className="bg-[#fafafa] text-black p-2 fixed w-full top-0 z-50   border-b">
             <div className="container mx-auto flex justify-between items-center">
                 <div className="flex justify-center items-center">
-                    <Link to="/" className="text-2xl font-bold">
+                    <Link to="/" className="text-2xl ml-[40px] font-bold">
                         eCommerce
                     </Link>
                 </div>
