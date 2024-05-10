@@ -1,8 +1,8 @@
-import {ToastContainer, toast} from 'react-toastify'
+import {Flip, ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import './CustomToastContainer.css'
 import React from 'react'
-import './CustomToastContainer.css'
+// import './CustomToastContainer.css'
 
 function CustomToastContainer() {
     return (
@@ -11,7 +11,8 @@ function CustomToastContainer() {
                 autoClose={500}
                 hideProgressBar={true}
                 newestOnTop={false}
-                closeOnClick
+                position="top-center"
+                transition:closeOnClick
                 draggable
             />
         </div>

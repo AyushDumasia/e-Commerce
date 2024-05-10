@@ -4,16 +4,22 @@ import axios from 'axios'
 import {FaSortAmountDown} from 'react-icons/fa'
 
 function FilterCard() {
-    const {searchTerm} = useParams()
+    const {searchTerm, option} = useParams()
     const [selectedFilter, setSelectedFilter] = useState('')
     const navigate = useNavigate()
 
     useEffect(() => {
-        console.log(searchTerm)
-    }, [searchTerm])
+        setSelectedFilter(option || '')
+    }, [searchTerm, option])
 
     const handleFilterChange = (option) => {
-        navigate(`/explore/search/${searchTerm}/${option}`)
+        let routeOption
+        if (option === 'asc') {
+            routeOption = 'asc'
+        } else if (option === 'dsc') {
+            routeOption = 'dsc'
+        }
+        navigate(`/explore/search/${searchTerm}/${routeOption}`)
         setSelectedFilter(option)
     }
 
@@ -34,8 +40,8 @@ function FilterCard() {
                 <option value="" disabled>
                     Select Filter
                 </option>
-                <option value="asc">Low to High</option>
-                <option value="dsc">High to Low</option>
+                <option value="dsc">Low to High</option>
+                <option value="asc">High to Low</option>
             </select>
         </div>
     )

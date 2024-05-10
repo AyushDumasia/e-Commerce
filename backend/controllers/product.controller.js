@@ -12,11 +12,16 @@ import Order from '../models/order.schema.js'
 
 const nodeCache = new NodeCache()
 
+const fetchUser = (req, res) => {
+    return req?.user?.id
+}
+
 // * Fetch Products for Explore page
 export const fetchProduct = asyncHandler(async (req, res) => {
     let cacheData
     if (nodeCache.has('products')) {
         cacheData = JSON.parse(nodeCache.get('products'))
+        console.log('Already exists')
         return res.status(200).json({
             pagination: {
                 count: cacheData.length,
@@ -26,6 +31,9 @@ export const fetchProduct = asyncHandler(async (req, res) => {
             products: cacheData,
         })
     } else {
+        console.log(
+            'Cache does not exist. Fetching products from the database.',
+        )
         const page = parseInt(req.query.page) || 1
         const limit = parseInt(req.query.limit) || 5
         const skip = (page - 1) * limit
@@ -40,7 +48,7 @@ export const fetchProduct = asyncHandler(async (req, res) => {
             .limit(limit)
 
         nodeCache.set('products', JSON.stringify(products))
-
+        console.log('Cache created')
         res.status(200).json({
             pagination: {
                 count,

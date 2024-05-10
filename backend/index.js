@@ -4,7 +4,7 @@ import cookieParser from 'cookie-parser'
 import dotenv from 'dotenv'
 import morgan from 'morgan'
 import connectDB from './db/connectDB.js' //Database connection
-
+import Razorpay from 'razorpay'
 //Routes
 import userAuthRoutes from './routes/user.routes.js'
 import productRoutes from './routes/product.routes.js'
@@ -40,12 +40,18 @@ const corsOptions = {
 app.use(cors(corsOptions))
 app.use(morgan('dev'))
 
+// !
 // app.use((req, res, next) => {
 //     if (req.path !== '/favicon.ico') {
 //         console.log(req.method, req.path)
 //     }
 //     next()
 // })
+
+export const instance = new Razorpay({
+    key_id: process.env.RAZOR_PAY_API,
+    key_secret: process.env.RAZOR_PAY_KEY,
+})
 
 app.use('/api/auth', userAuthRoutes)
 app.use('/api/merchant', merchantRoutes)

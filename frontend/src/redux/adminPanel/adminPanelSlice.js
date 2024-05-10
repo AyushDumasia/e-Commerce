@@ -1,6 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
 
-// !NOT WORKING
 const initialState = {
     adminPanel: null,
     apiError: null,

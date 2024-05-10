@@ -61,7 +61,7 @@ function CreateProduct() {
             )
 
             if (response.status === 200) {
-                toast.success('Product created successfully')
+                toast.promise('Product created successfully')
             }
 
             setFormData({

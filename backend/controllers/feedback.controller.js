@@ -3,6 +3,9 @@ import {asyncHandler} from './../utils/asyncHandler.js'
 import {ApiError} from './../utils/ApiError.js'
 import {ApiResponse} from './../utils/ApiResponse.js'
 import Product from '../models/product.schema.js'
+import NodeCache from 'node-cache'
+
+const nodeCache = new NodeCache()
 
 // * Create a New Feedback
 export const createFeedback = asyncHandler(async (req, res) => {
@@ -18,6 +21,14 @@ export const createFeedback = asyncHandler(async (req, res) => {
         comment: req.body.comment,
     })
     await newFeedback.save()
+
+    try {
+        nodeCache.del('products')
+        console.log('delete')
+    } catch (err) {
+        console.error(err)
+    }
+
     res.status(200).json(
         new ApiResponse(200, newFeedback, 'Feedback saved successfully'),
     )
