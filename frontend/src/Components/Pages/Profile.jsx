@@ -48,12 +48,12 @@ function Profile() {
                     <div>
                         {profile?.merchant ? (
                             <>
-                                <h3 className="text-lg font-semibold mb-2">
-                                    Merchant ID:
+                                <h3 className="text-lg flex font-semibold mb-2">
+                                    Merchant ID:&nbsp;&nbsp;
+                                    <p className="text-gray-700 font-medium">
+                                        {profile?.merchant?.licenseId}
+                                    </p>
                                 </h3>
-                                <p className="text-gray-700">
-                                    {profile?.merchant?.licenseId}
-                                </p>
                             </>
                         ) : (
                             <p>You are not a merchant</p>

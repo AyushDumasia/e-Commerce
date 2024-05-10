@@ -40,7 +40,7 @@ function FeedbackCard() {
                 ) : feedbackCard.length > 0 ? (
                     feedbackCard.map((feedbackItem) => (
                         <div
-                            className="bg-white shadow-md rounded-lg p-6 mb-6"
+                            className="bg-[#fafafa] border-b border-black shadow-md rounded-lg p-6 mb-6"
                             key={feedbackItem._id}
                         >
                             <div className="flex items-center mb-4">
