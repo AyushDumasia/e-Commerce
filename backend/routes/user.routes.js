@@ -1,5 +1,7 @@
 import express from 'express'
 import validateToken from './../middlewares/validateUser.js'
+import {validate} from './../middlewares/zodValidator.js'
+import validUser from './../validators/authValidators.js'
 import {
     currentUser,
     getUserInfo,
@@ -12,7 +14,7 @@ import {
 const router = express.Router()
 
 // * Sign Up
-router.post('/signup', signUp)
+router.post('/signup', validate(validUser), signUp)
 
 // * Log in
 router.post('/login', logIn)
