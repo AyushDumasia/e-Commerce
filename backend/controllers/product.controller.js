@@ -77,39 +77,46 @@ export const showProduct = asyncHandler(async (req, res) => {
 
 // * Create product
 export const createProduct = asyncHandler(async (req, res) => {
-    const {productName, category, description, price, stock} = req.body
-    const userId = req.user.id
-    const user = await User.findOne({_id: userId})
+    try {
+        const {productName, category, description, price, stock} = req.body
+        const userId = req.user.id
+        const user = await User.findOne({_id: userId})
 
-    const imagePaths = req.files.map((file) => file.path)
+        const imagePaths = req.files.map((file) => file.path)
 
-    const uploadedImages = await Promise.all(imagePaths.map(uploadOnCloudinary))
+        const uploadedImages = await Promise.all(
+            imagePaths.map(uploadOnCloudinary),
+        )
 
-    if (uploadedImages.some((image) => !image)) {
-        throw new ApiError(406, 'Images required')
+        if (uploadedImages.some((image) => !image)) {
+            throw new ApiError(406, 'Images required')
+        }
+
+        const imageUrls = uploadedImages.map((image) => image.url)
+
+        const newProduct = new TempProduct({
+            productName,
+            category,
+            description,
+            price,
+            images: imageUrls,
+            stock,
+            userId,
+        })
+
+        await newProduct.save()
+
+        await getMail(
+            user.email,
+            `Confirmation about product ${productName}`,
+            `We will verify your product and it will display on the website.`,
+        )
+
+        res.status(200).json(new ApiResponse(200, newProduct))
+    } catch (error) {
+        console.error('Error creating product:', error)
+        res.status(500).json({error: 'Error creating product'})
     }
-
-    const imageUrls = uploadedImages.map((image) => image.url)
-
-    const newProduct = new TempProduct({
-        productName,
-        category,
-        description,
-        price,
-        images: imageUrls,
-        stock,
-        userId,
-    })
-
-    await newProduct.save()
-
-    await getMail(
-        user.email,
-        `Confirmation about product ${productName}`,
-        `We will verify your product and it will display on the website.`,
-    )
-
-    res.status(200).json(new ApiResponse(200, newProduct))
 })
 
 // * Add to cart

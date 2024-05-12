@@ -23,7 +23,7 @@ router.post(
     '/createProduct',
     validateToken,
     validateMerchant,
-    upload?.array('images', 6),
+    upload?.array('images', 10),
     createProduct,
 )
 
