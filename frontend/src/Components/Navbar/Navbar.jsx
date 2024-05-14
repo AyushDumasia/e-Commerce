@@ -22,7 +22,7 @@ function Navbar() {
                         <List goto="/" content="Home" />
                     </ul>
                     <ul className="flex space-x-4 ">
-                        <List goto="/explore" content="Explore" />
+                        <List goto="/explore/1" content="Explore" />
                     </ul>
                     <SignInButton />
                 </div>

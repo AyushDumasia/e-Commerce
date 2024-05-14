@@ -9,9 +9,6 @@ import {nodeCache} from './product.controller.js'
 // * Create a New Feedback
 export const createFeedback = asyncHandler(async (req, res) => {
     const user = req?.user
-    if (!user) {
-        return res.status(401).json('User is not logged in')
-    }
 
     const newFeedback = new Feedback({
         productId: req.body.productId,

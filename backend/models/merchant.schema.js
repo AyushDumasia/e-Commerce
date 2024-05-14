@@ -7,6 +7,9 @@ const merchantSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'User',
         },
+        shopName: {
+            type: String,
+        },
         document: {
             type: String,
             required: true,

@@ -12,10 +12,6 @@ import Order from '../models/order.schema.js'
 
 export const nodeCache = new NodeCache()
 
-const fetchUser = (req, res) => {
-    return req?.user?.id
-}
-
 // * Fetch Products for Explore page
 export const fetchProduct = asyncHandler(async (req, res) => {
     let cacheData
@@ -31,7 +27,7 @@ export const fetchProduct = asyncHandler(async (req, res) => {
         })
     } else {
         const page = parseInt(req.query.page) || 1
-        const limit = parseInt(req.query.limit) || 5
+        const limit = parseInt(req.query.limit) || 2
         const skip = (page - 1) * limit
 
         const query = {}
@@ -43,8 +39,7 @@ export const fetchProduct = asyncHandler(async (req, res) => {
             .skip(skip)
             .limit(limit)
 
-        nodeCache.set('products', JSON.stringify(products))
-        console.log('Cache created')
+        // nodeCache.set('products', JSON.stringify(products))
         res.status(200).json({
             pagination: {
                 count,
@@ -77,46 +72,39 @@ export const showProduct = asyncHandler(async (req, res) => {
 
 // * Create product
 export const createProduct = asyncHandler(async (req, res) => {
-    try {
-        const {productName, category, description, price, stock} = req.body
-        const userId = req.user.id
-        const user = await User.findOne({_id: userId})
+    const {productName, category, description, price, stock} = req.body
+    const userId = req.user.id
+    const user = await User.findOne({_id: userId})
 
-        const imagePaths = req.files.map((file) => file.path)
+    const imagePaths = req.files.map((file) => file.path)
 
-        const uploadedImages = await Promise.all(
-            imagePaths.map(uploadOnCloudinary),
-        )
+    const uploadedImages = await Promise.all(imagePaths.map(uploadOnCloudinary))
 
-        if (uploadedImages.some((image) => !image)) {
-            throw new ApiError(406, 'Images required')
-        }
-
-        const imageUrls = uploadedImages.map((image) => image.url)
-
-        const newProduct = new TempProduct({
-            productName,
-            category,
-            description,
-            price,
-            images: imageUrls,
-            stock,
-            userId,
-        })
-
-        await newProduct.save()
-
-        await getMail(
-            user.email,
-            `Confirmation about product ${productName}`,
-            `We will verify your product and it will display on the website.`,
-        )
-
-        res.status(200).json(new ApiResponse(200, newProduct))
-    } catch (error) {
-        console.error('Error creating product:', error)
-        res.status(500).json({error: 'Error creating product'})
+    if (uploadedImages.some((image) => !image)) {
+        throw new ApiError(406, 'Images required')
     }
+
+    const imageUrls = uploadedImages.map((image) => image.url)
+
+    const newProduct = new TempProduct({
+        productName,
+        category,
+        description,
+        price,
+        images: imageUrls,
+        stock,
+        userId,
+    })
+
+    await newProduct.save()
+
+    await getMail(
+        user.email,
+        `Confirmation about product ${productName}`,
+        `We will verify your product and it will display on the website.`,
+    )
+
+    res.status(200).json(new ApiResponse(200, newProduct))
 })
 
 // * Add to cart
@@ -245,22 +233,6 @@ export const fetchTempProducts = asyncHandler(async (req, res) => {
     )
 })
 
-// ! Not working ,
-// export const checkBox = asyncHandler(async (req, res) => {
-//     const {checkedProducts} = req.body // Array of checked product IDs
-
-//     const checkedCartItems = await Cart.find({
-//         productId: {$in: checkedProducts},
-//     }).populate('productId')
-
-//     let totalPrice = 0
-//     for (const cartItem of checkedCartItems) {
-//         totalPrice += parseFloat(cartItem.productId.price) * cartItem.quantity
-//     }
-
-//     res.status(200).json({total: totalPrice})
-// })
-
 // * Sort category for suggestions
 export const suggestions = asyncHandler(async (req, res) => {
     const id = req.params.id
@@ -365,3 +337,5 @@ export const sortProducts = asyncHandler(async (req, res) => {
         return res.status(200).json(new ApiResponse(200, results, 'OK'))
     }
 })
+
+// ! Bug in a nodeCache while changing in a Pagination

@@ -6,12 +6,22 @@ import 'react-toastify/dist/ReactToastify.css'
 import CustomToastContainer from './../Toast/CustomToastContainer'
 import {useDispatch, useSelector} from 'react-redux'
 import {setErrMerchant, setMerchant} from '../../redux/merchant/merchantSlice'
+import Input from './../Input/Input'
 
 function MerchantForm() {
     const dispatch = useDispatch()
+    const [formData, setFormData] = useState({shopName: ''})
     const [selectedFile, setSelectedFile] = useState(null)
     const [loading, setLoading] = useState(false)
     const {merchant, errMerchant} = useSelector((state) => state.merchant)
+
+    const handleChange = (e) => {
+        const {name, value} = e.target
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }))
+    }
 
     const becomeMerchant = async (e) => {
         e.preventDefault()
@@ -30,8 +40,7 @@ function MerchantForm() {
                 },
             )
             fetchMerchantData()
-            // dispatch(setMerchant())
-            setSelectedFile(null) // Clear selected file after submission
+            setSelectedFile(null)
             toast.success('Merchant application submitted successfully!')
         } catch (error) {
             toast.error('An error occurred. Please try again later.')
@@ -58,7 +67,7 @@ function MerchantForm() {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+        <div className="flex flex-col items-center min-h-screen h-screens bg-gray-100">
             <CustomToastContainer />
 
             {loading && (
@@ -72,12 +81,12 @@ function MerchantForm() {
                 </div>
             )}
 
-            <div className="max-w-md bg-white rounded-lg shadow-lg p-8">
+            <div className="max-w-md flex flex-col  h-[500px] bg-white  rounded-lg shadow-lg p-8">
                 <h1 className="text-3xl font-bold mb-8 text-center">
                     Merchant Application
                 </h1>
 
-                <p className="text-gray-600 mb-4">
+                <p className="text-red-600 mb-4 text-center">
                     Upon submission of your valid document, your merchant
                     application will be reviewed for approval.
                 </p>
@@ -87,9 +96,18 @@ function MerchantForm() {
                     className="flex flex-col items-center"
                 >
                     <label htmlFor="document" className="mb-4 w-full">
-                        <span className="text-lg font-semibold block mb-2">
+                        <span className="text-lg font-semibold block my-5">
                             Upload Document:
                         </span>
+                        <Input
+                            label={'Shop Name : '}
+                            type={'text'}
+                            placeholder={'Enter a your shop name'}
+                            value={formData.shopData}
+                            name={'shopName'}
+                            handler={handleChange}
+                        />
+                        <p className="m-4"></p>
                         <input
                             type="file"
                             name="document"
@@ -101,7 +119,7 @@ function MerchantForm() {
 
                     <button
                         type="submit"
-                        className={`bg-blue-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-500 ${
+                        className={`bg-blue-500 mt-6 text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-500 ${
                             loading ? 'opacity-50 cursor-not-allowed' : ''
                         }`}
                         disabled={loading}

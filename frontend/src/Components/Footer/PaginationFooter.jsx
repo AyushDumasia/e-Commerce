@@ -3,15 +3,18 @@ import {setExploreCard} from '../../redux/explore/exploreSlice'
 import axios from 'axios'
 import {useDispatch} from 'react-redux'
 import {ToastContainer, toast} from 'react-toastify'
+import {useNavigate, useParams} from 'react-router'
 
 function PaginationFooter({pageCount}) {
+    const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
-    const [page, setPage] = useState(1)
+    const {page} = useParams()
+    const currentPage = parseInt(page) || 1
     const dispatch = useDispatch()
 
     useEffect(() => {
-        fetchProduct(page)
-    }, [page]) // Fetch products whenever the page changes
+        fetchProduct(currentPage)
+    }, [currentPage])
 
     const fetchProduct = async (page) => {
         setLoading(true)
@@ -28,25 +31,31 @@ function PaginationFooter({pageCount}) {
     }
 
     const handlePrevious = () => {
-        setPage((prevPage) => Math.max(prevPage - 1, 1))
+        if (currentPage > 1) {
+            const prevPage = currentPage - 1
+            navigate(`/explore/${prevPage}`)
+        }
     }
 
     const handleNext = () => {
-        setPage((prevPage) => Math.min(prevPage + 1, pageCount))
+        if (currentPage < pageCount) {
+            const nextPage = currentPage + 1
+            navigate(`/explore/${nextPage}`)
+        }
     }
 
     return (
         <footer className="flex justify-between w-full mt-8">
             <button
                 className="bg-gray-800 text-white px-4 py-2 rounded-sm disabled:opacity-50"
-                disabled={page === 1 || loading}
+                disabled={currentPage === 1 || loading}
                 onClick={handlePrevious}
             >
                 Previous
             </button>
             <button
                 className="bg-gray-800 text-white px-4 py-2 rounded-sm disabled:opacity-50"
-                disabled={page === pageCount || loading}
+                disabled={currentPage === pageCount || loading}
                 onClick={handleNext}
             >
                 Next

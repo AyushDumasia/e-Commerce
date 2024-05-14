@@ -32,15 +32,7 @@ export const createOrder = asyncHandler(async (req, res) => {
             address: user.address[0] || null,
             status: 'Order Confirmed',
         })
-        // const products = await Product.findOne({
-        //     productName: cartItem.productId,
-        // })
-        // console.log('PRO : ', products)
-        // products.stock -=
         const validOrder = await Order.find({cartId: cartItem._id})
-        // if (validOrder) {
-        //     await cartItem.deleteOne()
-        // }
 
         await newOrder.save()
         orders.push(newOrder)
