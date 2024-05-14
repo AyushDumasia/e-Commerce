@@ -48,10 +48,10 @@ app.use(morgan('dev'))
 //     next()
 // })
 
-export const instance = new Razorpay({
-    key_id: process.env.RAZOR_PAY_API,
-    key_secret: process.env.RAZOR_PAY_KEY,
-})
+// export const instance = new Razorpay({
+//     key_id: process.env.RAZOR_PAY_API,
+//     key_secret: process.env.RAZOR_PAY_KEY,
+// })
 
 app.use('/api/auth', userAuthRoutes)
 app.use('/api/merchant', merchantRoutes)

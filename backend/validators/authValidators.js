@@ -12,7 +12,7 @@ const validUser = z.object({
         .min(3, 'Email must be at least 3 characters long')
         .max(200, 'Email must be at most 200 characters long'),
     phone: z
-        .number()
+        .string()
         .min(10, 'Phone number must be at least 10 characters long'),
     sex: z.string().min(4, 'Gender must be specified'),
     password: z.string().min(5, 'Password must be at least 5 characters long'),

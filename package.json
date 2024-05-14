@@ -3,12 +3,10 @@
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
-    "dependencies": {},
     "scripts": {
-        "start": "backend/index.js",
-        "dev": "frontend/npm run dev"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "cd backend && node index.js"
     },
-    "keywords": [],
-    "author": "",
+    "author": "Ayush Dumasia",
     "license": "ISC"
 }
