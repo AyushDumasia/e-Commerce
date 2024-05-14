@@ -13,7 +13,7 @@ function ProductList() {
             const response = await axios.get(
                 'http://localhost:3000/api/order/getOrder',
             )
-            console.log(response.data)
+            console.log(response.data.data)
             setProducts(response.data)
         } catch (error) {
             console.error('Error fetching data:', error)
@@ -36,54 +36,63 @@ function ProductList() {
 
     return (
         <div className="p-5">
-            {products?.map((product) => (
-                <div
-                    key={product._id}
-                    className="bg-gray-200 rounded-lg shadow-md overflow-hidden flex mb-4"
-                >
-                    <img
-                        src={product.productId.images[0]}
-                        alt={product.productId.productName}
-                        className="w-[250px] h-auto object-cover"
-                    />
+            {products.data === null ? (
+                <p>No Orders yet</p>
+            ) : (
+                products.map((product) => (
+                    <div
+                        key={product._id}
+                        className="bg-gray-200 rounded-lg shadow-md overflow-hidden flex mb-4"
+                    >
+                        <img
+                            src={product.productId.images[0]}
+                            alt={product.productId.productName}
+                            className="w-[250px] h-auto object-cover"
+                        />
 
-                    <div className="p-4 flex-1">
-                        <div>
-                            <h2 className="text-xl font-bold mb-2">
-                                {product.productId.productName}
-                            </h2>
-                            <p className="text-gray-600 mb-2">
-                                Email: {product.userId.email}
-                            </p>
-                            <p className="text-gray-600 mb-2">
-                                Price: ₹{product.price}
-                            </p>
+                        <div className="p-4 flex-1">
+                            <div>
+                                <h2 className="text-xl font-bold mb-2">
+                                    {product.productId.productName}
+                                </h2>
+                                <p className="text-gray-600 mb-2">
+                                    Email: {product.userId.email}
+                                </p>
+                                <p className="text-gray-600 mb-2">
+                                    Price: ₹{product.price}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="p-4">
+                            <select
+                                value={product.status}
+                                onChange={(e) =>
+                                    handleStatusChange(
+                                        product._id,
+                                        e.target.value,
+                                    )
+                                }
+                                className="border border-gray-300 rounded px-3 py-1 focus:outline-none focus:border-blue-500"
+                                style={{
+                                    backgroundColor: '#f7f7f7',
+                                    color: '#333',
+                                    fontSize: '14px',
+                                    width: '200px',
+                                }}
+                            >
+                                <option value="confirm">Order Confirmed</option>
+                                <option value="Shipped">
+                                    Ready for shipping
+                                </option>
+                                <option value="Delivered">Delivered</option>
+                                <option value="Processing">Processing</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
                         </div>
                     </div>
-
-                    <div className="p-4">
-                        <select
-                            value={product.status}
-                            onChange={(e) =>
-                                handleStatusChange(product._id, e.target.value)
-                            }
-                            className="border border-gray-300 rounded px-3 py-1 focus:outline-none focus:border-blue-500"
-                            style={{
-                                backgroundColor: '#f7f7f7',
-                                color: '#333',
-                                fontSize: '14px',
-                                width: '200px',
-                            }}
-                        >
-                            <option value="confirm">Order Confirmed</option>
-                            <option value="Shipped">Ready for shipping</option>
-                            <option value="Delivered">Delivered</option>
-                            <option value="Processing">Processing</option>
-                            <option value="Cancelled">Cancelled</option>
-                        </select>
-                    </div>
-                </div>
-            ))}
+                ))
+            )}
         </div>
     )
 }

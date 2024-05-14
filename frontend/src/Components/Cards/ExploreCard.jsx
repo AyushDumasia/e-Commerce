@@ -26,7 +26,6 @@ function ExploreCard() {
             dispatch(setExploreCard(response.data.products))
             setPagination(response.data.pagination)
             setPageCount(response.data.pagination.pageCount)
-            console.log(response.data)
         } catch (error) {
             toast.error(error.message)
         } finally {

@@ -61,7 +61,7 @@ function CreateProduct() {
             )
 
             if (response.status === 200) {
-                toast.promise('Product created successfully')
+                toast.success('Product created successfully')
             }
 
             setFormData({
@@ -73,7 +73,6 @@ function CreateProduct() {
             })
             setSelectedFiles([])
         } catch (error) {
-            console.error('Error:', error)
             toast.error('An error occurred. Please try again later.')
         } finally {
             setLoading(false)

@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {setSearchCard} from '../../redux/search/searchSlice'
 import ChildCard from './ChildCards/ChildSearchCard'
 import CustomToastContainer from '../Toast/CustomToastContainer'
+import {toast} from 'react-toastify'
 
 function SearchCard() {
     const dispatch = useDispatch()
@@ -22,7 +23,7 @@ function SearchCard() {
             )
             dispatch(setSearchCard(response.data.data))
         } catch (err) {
-            console.error(err)
+            toast.error(err.message)
         }
     }
 

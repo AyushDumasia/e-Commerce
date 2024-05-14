@@ -32,7 +32,7 @@ import FilterPage from './Components/Pages/FilterPage.jsx'
 import AdminPage from './Components/Pages/AdminPage.jsx'
 import AuthProvider from './Components/auth/AuthProvider'
 import Profile from './Components/Pages/Profile'
-import AuthAdmin from './Components/auth/AuthAdmin'
+import AuthAdmin from './Components/auth/AuthAdmin.jsx'
 
 const router = createBrowserRouter(
     createRoutesFromElements(

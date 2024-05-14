@@ -27,9 +27,12 @@ function FeedbackForm() {
                 {withCredentials: true},
             )
             if (response.status === 200) {
+                if (response.data.data.rating == 0) {
+                    return toast.error('Select rating')
+                }
+                setComment('')
                 toast.success(response.data.message)
                 setRating(0)
-                setComment('')
                 const feedbackResponse = await axios.get(
                     `http://localhost:3000/api/feedback/fetchFeedback/${id}`,
                     {withCredentials: true},
@@ -50,6 +53,7 @@ function FeedbackForm() {
                 <form className="flex flex-col mt-4" onSubmit={handleFeedback}>
                     <div className="mb-4">
                         <Rating
+                            key={rating}
                             name="rating"
                             count={5}
                             onChange={ratingChanged}
@@ -57,7 +61,6 @@ function FeedbackForm() {
                             value={rating}
                             activeColor="#ffd700"
                             isHalf={true}
-                            required
                         />
                     </div>
                     <div className="flex align-middle justify-center">

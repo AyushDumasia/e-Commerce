@@ -12,6 +12,9 @@ function VerticalBar() {
         'Electronics',
         'Home & Kitchen',
         'Health & Personal Care',
+        'Sports & Outdoors',
+        'Pickles and Papad',
+        'Clothing & Accessories',
     ]
 
     const handleCategoryClick = (category) => {
@@ -39,7 +42,11 @@ function VerticalBar() {
                             <NavLink
                                 to={`/explore/search/${category}`}
                                 className={({isActive}) =>
-                                    `${isActive ? 'text-[blue] text-sm ' : 'text-black text-sm'}`
+                                    `${
+                                        isActive
+                                            ? 'text-[blue] text-sm '
+                                            : 'text-black text-sm'
+                                    }`
                                 }
                             >
                                 <div>{category}</div>

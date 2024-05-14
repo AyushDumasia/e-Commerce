@@ -14,7 +14,8 @@ import {
 const router = express.Router()
 
 // * Sign Up
-router.post('/signup', validate(validUser), signUp)
+// router.post('/signup', validate(validUser), signUp)
+router.post('/signup', signUp)
 
 // * Log in
 router.post('/login', logIn)
