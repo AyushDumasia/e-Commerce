@@ -1,6 +1,5 @@
 import {v2 as cloudinary} from 'cloudinary'
 import fs from 'fs'
-import sharp from 'sharp'
 import {asyncHandler} from './asyncHandler.js'
 
 cloudinary.config({
