@@ -19,7 +19,7 @@ function CartCard() {
         setLoading(true)
         try {
             const response = await axios.get(
-                'http://localhost:3000/api/product/cart',
+                'https://testingbackend-82j4.onrender.com/api/product/cart',
                 {
                     withCredentials: true,
                 },
@@ -35,7 +35,7 @@ function CartCard() {
     const updateQuantity = async (id, action) => {
         try {
             await axios.get(
-                `http://localhost:3000/api/product/${action}/${id}`,
+                `https://testingbackend-82j4.onrender.com/api/product/${action}/${id}`,
                 {
                     withCredentials: true,
                 },

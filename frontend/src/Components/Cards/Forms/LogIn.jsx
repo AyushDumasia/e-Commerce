@@ -35,7 +35,7 @@ function LogIn() {
     const fetchMerchantData = async () => {
         try {
             const response = await axios.get(
-                'http://localhost:3000/api/merchant/currentMerchant',
+                'https://testingbackend-82j4.onrender.com/api/merchant/currentMerchant',
                 {withCredentials: true},
             )
             dispatch(setMerchant(response?.data?.licenseId))
@@ -47,7 +47,7 @@ function LogIn() {
     const checkAuthentication = async () => {
         try {
             const response = await axios.get(
-                'http://localhost:3000/api/auth/currentUser',
+                'https://testingbackend-82j4.onrender.com/api/auth/currentUser',
                 {withCredentials: true},
             )
             dispatch(setUser(response.data))
@@ -61,7 +61,7 @@ function LogIn() {
         e.preventDefault()
         try {
             const response = await axios.post(
-                'http://localhost:3000/api/auth/login',
+                'https://testingbackend-82j4.onrender.com/api/auth/login',
                 formData,
                 {withCredentials: true},
             )

@@ -3,7 +3,6 @@
     "private": true,
     "version": "0.0.0",
     "type": "module",
-    "proxy": "http://localhost:3000/api",
     "scripts": {
         "dev": "vite",
         "build": "vite build",
@@ -51,5 +50,6 @@
         "postcss": "^8.4.38",
         "tailwindcss": "^3.4.1",
         "vite": "^5.2.0"
-    }
+    },
+    "proxy": "https://testingbackend-82j4.onrender.com/"
 }

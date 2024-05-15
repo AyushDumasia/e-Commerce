@@ -22,7 +22,7 @@ function FeedbackForm() {
         e.preventDefault()
         try {
             const response = await axios.post(
-                'http://localhost:3000/api/feedback/createFeedback',
+                'https://testingbackend-82j4.onrender.com/api/feedback/createFeedback',
                 {productId: id, rating: rating, comment: comment},
                 {withCredentials: true},
             )
@@ -34,7 +34,7 @@ function FeedbackForm() {
                 toast.success(response.data.message)
                 setRating(0)
                 const feedbackResponse = await axios.get(
-                    `http://localhost:3000/api/feedback/fetchFeedback/${id}`,
+                    `https://testingbackend-82j4.onrender.com/api/feedback/fetchFeedback/${id}`,
                     {withCredentials: true},
                 )
                 dispatch(setFeedbackCard(feedbackResponse.data.data))

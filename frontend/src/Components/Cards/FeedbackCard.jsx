@@ -19,7 +19,7 @@ function FeedbackCard() {
     const fetchFeedback = async (id) => {
         try {
             const response = await axios.get(
-                `http://localhost:3000/api/feedback/fetchFeedback/${id}`,
+                `https://testingbackend-82j4.onrender.com/api/feedback/fetchFeedback/${id}`,
                 {
                     withCredentials: true,
                 },

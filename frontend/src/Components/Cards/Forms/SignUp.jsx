@@ -33,7 +33,7 @@ function SignUp() {
     const checkAuthentication = async () => {
         try {
             const response = await axios.get(
-                'http://localhost:3000/api/auth/currentUser',
+                'https://testingbackend-82j4.onrender.com/api/auth/currentUser',
                 {withCredentials: true},
             )
             dispatch(setUser(response.data))

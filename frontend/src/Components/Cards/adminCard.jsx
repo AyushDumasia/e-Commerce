@@ -6,7 +6,7 @@ import {setAdminCard, setApiError} from '../../redux/admin/adminSlice'
 import {useDispatch, useSelector} from 'react-redux'
 import ReactLoading from 'react-loading'
 
-const API_URL = 'http://localhost:3000/api'
+const API_URL = 'https://testingbackend-82j4.onrender.com'
 
 const AdminCard = () => {
     const dispatch = useDispatch()

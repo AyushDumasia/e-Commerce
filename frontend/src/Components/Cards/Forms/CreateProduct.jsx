@@ -50,7 +50,7 @@ function CreateProduct() {
             }
 
             const response = await axios.post(
-                'http://localhost:3000/api/product/createProduct',
+                'https://testingbackend-82j4.onrender.com/api/product/createProduct',
                 formDataWithFiles,
                 {
                     withCredentials: true,

@@ -29,7 +29,7 @@ function ProductCard() {
     const fetchProductData = async () => {
         try {
             const response = await axios.get(
-                `http://localhost:3000/api/product/showProduct/${id}`,
+                `https://testingbackend-82j4.onrender.com/api/product/showProduct/${id}`,
                 {
                     withCredentials: true,
                 },
@@ -62,7 +62,7 @@ function ProductCard() {
     const addCart = async (productId) => {
         try {
             const response = await axios.get(
-                `http://localhost:3000/api/product/addToCart/${productId}`,
+                `https://testingbackend-82j4.onrender.com/api/product/addToCart/${productId}`,
                 {
                     withCredentials: true,
                 },
