@@ -52,7 +52,7 @@ function ExploreCard() {
 
     const showProduct = async (id) => {
         await axios.get(
-            `https://testingbackend-82j4.onrender.com/api/product/${id}`,
+            `https://testingbackend-82j4.onrender.com/api/product/showProduct/${id}`,
         )
         navigate(`/showProduct/${id}`)
     }
