@@ -32,10 +32,9 @@ function SignUp() {
 
     const checkAuthentication = async () => {
         try {
-            const response = await axios.get(
-                'https://testingbackend-82j4.onrender.com/api/auth/currentUser',
-                {withCredentials: true},
-            )
+            const response = await axios.get('/api/auth/currentUser', {
+                withCredentials: true,
+            })
             dispatch(setUser(response.data))
             // fetchMerchantData()
         } catch (error) {
@@ -67,13 +66,9 @@ function SignUp() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const response = await axios.post(
-                'http://localhost:3000/api/auth/signup',
-                formData,
-                {
-                    withCredentials: true,
-                },
-            )
+            const response = await axios.post('/api/auth/signup', formData, {
+                withCredentials: true,
+            })
             navigate('/')
             checkAuthentication()
         } catch (error) {

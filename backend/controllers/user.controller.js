@@ -22,7 +22,7 @@ const countUser = async () => {
         })
         await newDailyUser.save()
     } else {
-        dailyUser.count++
+        // dailyUser.count++
         await dailyUser.save()
     }
 }

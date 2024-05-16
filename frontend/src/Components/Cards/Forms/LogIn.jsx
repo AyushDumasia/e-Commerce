@@ -34,10 +34,9 @@ function LogIn() {
 
     const fetchMerchantData = async () => {
         try {
-            const response = await axios.get(
-                'https://testingbackend-82j4.onrender.com/api/merchant/currentMerchant',
-                {withCredentials: true},
-            )
+            const response = await axios.get('/api/merchant/currentMerchant', {
+                withCredentials: true,
+            })
             dispatch(setMerchant(response?.data?.licenseId))
         } catch (err) {
             dispatch(setErrMerchant(err.message))
@@ -46,10 +45,9 @@ function LogIn() {
 
     const checkAuthentication = async () => {
         try {
-            const response = await axios.get(
-                'https://testingbackend-82j4.onrender.com/api/auth/currentUser',
-                {withCredentials: true},
-            )
+            const response = await axios.get('/api/auth/currentUser', {
+                withCredentials: true,
+            })
             dispatch(setUser(response.data))
             fetchMerchantData()
         } catch (error) {
@@ -60,11 +58,9 @@ function LogIn() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const response = await axios.post(
-                'https://testingbackend-82j4.onrender.com/api/auth/login',
-                formData,
-                {withCredentials: true},
-            )
+            const response = await axios.post('/api/auth/login', formData, {
+                withCredentials: true,
+            })
             if (response.status === 200) {
                 localStorage.setItem('userCookie', response.data.accessToken)
                 navigate('/')

@@ -16,7 +16,7 @@ export default function FilterPage() {
     const fetchData = async () => {
         try {
             const response = await axios.get(
-                `http://localhost:3000/api/product/search/${searchTerm}/${option}`,
+                `/api/product/search/${searchTerm}/${option}`,
             )
             dispatch(setSearchCard(response.data.data))
         } catch (err) {
@@ -25,7 +25,7 @@ export default function FilterPage() {
     }
 
     const showProduct = async (id) => {
-        await axios.get(`http://localhost:3000/api/product/showProduct/${id}`)
+        await axios.get(`/api/product/showProduct/${id}`)
         navigate(`/showProduct/${id}`)
     }
 

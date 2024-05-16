@@ -7,10 +7,9 @@ function Order() {
 
     const fetchOrder = async () => {
         try {
-            const response = await axios.get(
-                'http://localhost:3000/api/order/fetchOrder',
-                {withCredentials: true},
-            )
+            const response = await axios.get('/api/order/fetchOrder', {
+                withCredentials: true,
+            })
             console.log(response)
             setOrders(response.data.order)
             setAddress(response.data.address)

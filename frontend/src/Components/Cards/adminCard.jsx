@@ -6,8 +6,6 @@ import {setAdminCard, setApiError} from '../../redux/admin/adminSlice'
 import {useDispatch, useSelector} from 'react-redux'
 import ReactLoading from 'react-loading'
 
-const API_URL = 'https://testingbackend-82j4.onrender.com'
-
 const AdminCard = () => {
     const dispatch = useDispatch()
     const {adminCard, apiError} = useSelector((state) => state.admin)
@@ -19,10 +17,9 @@ const AdminCard = () => {
     const fetchProduct = async () => {
         setLoading(true)
         try {
-            const response = await axios.get(
-                `${API_URL}/product/showTempProduct`,
-                {withCredentials: true},
-            )
+            const response = await axios.get(`/api/product/showTempProduct`, {
+                withCredentials: true,
+            })
             dispatch(setAdminCard(response.data.data))
         } catch (error) {
             handleApiError(error)
@@ -40,7 +37,7 @@ const AdminCard = () => {
         setLoading(true)
         try {
             await axios.post(
-                `${API_URL}/admin/validProduct/${id}`,
+                `/admin/validProduct/${id}`,
                 {},
                 {
                     withCredentials: true,
@@ -59,7 +56,7 @@ const AdminCard = () => {
         setLoading(true)
         try {
             await axios.post(
-                `${API_URL}/admin/notApproved/${id}`,
+                `/admin/notApproved/${id}`,
                 {},
                 {
                     withCredentials: true,

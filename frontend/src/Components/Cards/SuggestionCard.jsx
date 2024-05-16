@@ -20,12 +20,9 @@ function SuggestionCard() {
 
     const fetchData = async () => {
         axios
-            .get(
-                `https://testingbackend-82j4.onrender.com/api/product/category/${id}`,
-                {
-                    withCredentials: true,
-                },
-            )
+            .get(`/api/product/category/${id}`, {
+                withCredentials: true,
+            })
             .then((response) => {
                 dispatch(setSuggestedCard(response.data.data))
             })
@@ -35,9 +32,7 @@ function SuggestionCard() {
     }
 
     const showProduct = async (id) => {
-        await axios.get(
-            `https://testingbackend-82j4.onrender.com/api/product/showProduct/${id}`,
-        )
+        await axios.get(`/api/product/showProduct/${id}`)
         navigate(`/showProduct/${id}`)
     }
 

@@ -39,7 +39,7 @@ function SignInButton() {
 
     const logout = async () => {
         try {
-            await axios.get('http://localhost:3000/api/auth/logout', {
+            await axios.get('/api/auth/logout', {
                 withCredentials: true,
             })
             dispatch(setUser(null))

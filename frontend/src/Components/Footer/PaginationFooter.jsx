@@ -20,7 +20,7 @@ function PaginationFooter({pageCount}) {
         setLoading(true)
         try {
             const response = await axios.get(
-                `http://localhost:3000/api/product/fetchProduct?page=${page}`,
+                `/api/product/fetchProduct?page=${page}`,
             )
             dispatch(setExploreCard(response.data.products))
         } catch (error) {

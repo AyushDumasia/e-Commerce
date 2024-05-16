@@ -10,9 +10,7 @@ function ProductList() {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get(
-                'http://localhost:3000/api/order/getOrder',
-            )
+            const response = await axios.get('/api/order/getOrder')
             console.log(response.data.data)
             setProducts(response.data)
         } catch (error) {
@@ -23,7 +21,7 @@ function ProductList() {
     const handleStatusChange = async (id, newStatus) => {
         try {
             const response = await axios.put(
-                `http://localhost:3000/api/order/changeStatus/${id}`,
+                `/api/order/changeStatus/${id}`,
                 {status: newStatus},
                 {withCredentials: true},
             )

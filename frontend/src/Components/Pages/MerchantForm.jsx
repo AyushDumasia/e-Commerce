@@ -30,7 +30,7 @@ function MerchantForm() {
             const formDataWithFiles = new FormData()
             formDataWithFiles.append('document', selectedFile)
             await axios.post(
-                'http://localhost:3000/api/merchant/becomeMerchant',
+                '/api/merchant/becomeMerchant',
                 formDataWithFiles,
                 {
                     withCredentials: true,
@@ -51,10 +51,9 @@ function MerchantForm() {
 
     const fetchMerchantData = async () => {
         try {
-            const response = await axios.get(
-                'http://localhost:3000/api/merchant/currentMerchant',
-                {withCredentials: true},
-            )
+            const response = await axios.get('/api/merchant/currentMerchant', {
+                withCredentials: true,
+            })
             dispatch(setMerchant(response?.data?.licenseId))
         } catch (err) {
             dispatch(setErrMerchant(err.message))

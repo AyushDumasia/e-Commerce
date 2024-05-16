@@ -54,7 +54,7 @@ function AddressForm() {
         e.preventDefault()
         try {
             const response = await axios.post(
-                'https://testingbackend-82j4.onrender.com/api/address/createAddress',
+                '/api/address/createAddress',
                 formData,
                 {withCredentials: true},
             )

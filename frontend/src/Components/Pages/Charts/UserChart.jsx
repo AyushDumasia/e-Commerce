@@ -10,9 +10,7 @@ function UserChart() {
 
     const fetchDailyUserData = async () => {
         try {
-            const response = await fetch(
-                'http://localhost:3000/api/admin/dailyUser',
-            )
+            const response = await fetch('/api/admin/dailyUser')
             const data = await response.json()
             setUserData(data)
         } catch (error) {

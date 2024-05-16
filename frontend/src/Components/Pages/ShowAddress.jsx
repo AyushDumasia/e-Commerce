@@ -9,12 +9,9 @@ function ShowAddress() {
     useEffect(() => {
         const fetchAddress = async () => {
             try {
-                const response = await axios.get(
-                    'http://localhost:3000/api/address/fetchAddress',
-                    {
-                        withCredentials: true,
-                    },
-                )
+                const response = await axios.get('/api/address/fetchAddress', {
+                    withCredentials: true,
+                })
                 console.log(response.data)
                 setAddressData(response.data.data)
             } catch (err) {

@@ -18,12 +18,9 @@ function CartCard() {
     const fetchCartData = async () => {
         setLoading(true)
         try {
-            const response = await axios.get(
-                'https://testingbackend-82j4.onrender.com/api/product/cart',
-                {
-                    withCredentials: true,
-                },
-            )
+            const response = await axios.get('/api/product/cart', {
+                withCredentials: true,
+            })
             dispatch(setCart(response.data))
         } catch (error) {
             dispatch(setApiError(error))
@@ -34,12 +31,9 @@ function CartCard() {
 
     const updateQuantity = async (id, action) => {
         try {
-            await axios.get(
-                `https://testingbackend-82j4.onrender.com/api/product/${action}/${id}`,
-                {
-                    withCredentials: true,
-                },
-            )
+            await axios.get(`/api/product/${action}/${id}`, {
+                withCredentials: true,
+            })
             fetchCartData()
             // Show toast notification for quantity update
             toast.success('Quantity updated successfully')

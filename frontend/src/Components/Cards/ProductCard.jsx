@@ -28,12 +28,9 @@ function ProductCard() {
 
     const fetchProductData = async () => {
         try {
-            const response = await axios.get(
-                `https://testingbackend-82j4.onrender.com/api/product/showProduct/${id}`,
-                {
-                    withCredentials: true,
-                },
-            )
+            const response = await axios.get(`/api/product/showProduct/${id}`, {
+                withCredentials: true,
+            })
             setLoading(false)
             dispatch(setProductCard(response.data.product))
             setCurrentImage(response.data.product.images[0])
@@ -62,7 +59,7 @@ function ProductCard() {
     const addCart = async (productId) => {
         try {
             const response = await axios.get(
-                `https://testingbackend-82j4.onrender.com/api/product/addToCart/${productId}`,
+                `/api/product/addToCart/${productId}`,
                 {
                     withCredentials: true,
                 },

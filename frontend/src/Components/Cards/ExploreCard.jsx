@@ -21,7 +21,7 @@ function ExploreCard() {
     const fetchProduct = async (page) => {
         try {
             const response = await axios.get(
-                `https://testingbackend-82j4.onrender.com/api/product/fetchProduct?page=${page}`,
+                `/api/product/fetchProduct?page=${page}`,
             )
             dispatch(setExploreCard(response.data.products))
             setPagination(response.data.pagination)
@@ -37,7 +37,7 @@ function ExploreCard() {
         e.stopPropagation()
         try {
             const response = await axios.get(
-                `https://testingbackend-82j4.onrender.com/api/product/addToCart/${productId}`,
+                `/api/product/addToCart/${productId}`,
                 {withCredentials: true},
             )
             if (response.status === 200) {
@@ -51,9 +51,7 @@ function ExploreCard() {
     }
 
     const showProduct = async (id) => {
-        await axios.get(
-            `https://testingbackend-82j4.onrender.com/api/product/showProduct/${id}`,
-        )
+        await axios.get(`/api/product/showProduct/${id}`)
         navigate(`/showProduct/${id}`)
     }
 

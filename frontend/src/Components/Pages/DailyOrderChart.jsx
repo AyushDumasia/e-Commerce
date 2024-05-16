@@ -13,7 +13,7 @@ const DailyOrderChart = () => {
     const fetchOrderData = async () => {
         try {
             const response = await fetch(
-                'http://localhost:3000/api/admin/countOrder',
+                '/api/admin/countOrder',
             )
             const data = await response.json()
 

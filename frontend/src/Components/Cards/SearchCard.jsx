@@ -18,7 +18,7 @@ function SearchCard() {
     const fetchData = async () => {
         try {
             const response = await axios.get(
-                `https://testingbackend-82j4.onrender.com/api/product/search/${searchTerm.searchTerm}`,
+                `/api/product/search/${searchTerm.searchTerm}`,
                 {withCredentials: true},
             )
             dispatch(setSearchCard(response.data.data))
@@ -28,9 +28,7 @@ function SearchCard() {
     }
 
     const showProduct = async (id) => {
-        await axios.get(
-            `https://testingbackend-82j4.onrender.com/api/product/showProduct/${id}`,
-        )
+        await axios.get(`/api/product/showProduct/${id}`)
         navigate(`/showProduct/${id}`)
     }
 

@@ -12,7 +12,7 @@ function Profile() {
 
     const fetchData = async () => {
         axios
-            .get('http://localhost:3000/api/auth/passInfo', {
+            .get('/api/auth/passInfo', {
                 withCredentials: true,
             })
             .then((response) => {

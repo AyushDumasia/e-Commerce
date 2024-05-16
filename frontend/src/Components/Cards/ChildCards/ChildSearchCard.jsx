@@ -10,7 +10,7 @@ export default function ChildCard({item, showProduct}) {
     const addToCart = async (productId) => {
         try {
             const response = await axios.get(
-                `https://testingbackend-82j4.onrender.com/api/product/addToCart/${productId}`,
+                `/api/product/addToCart/${productId}`,
                 {withCredentials: true},
             )
             if (response.status === 200) {

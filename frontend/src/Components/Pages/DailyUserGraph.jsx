@@ -14,9 +14,7 @@ const DailyUserGraph = () => {
 
     const fetchCategoryCounts = async () => {
         try {
-            const response = await axios.get(
-                'http://localhost:3000/api/admin/countCategory',
-            )
+            const response = await axios.get('/api/admin/countCategory')
             setCategoryCounts(response.data)
         } catch (error) {
             console.error('Error fetching category product counts:', error)
@@ -25,9 +23,7 @@ const DailyUserGraph = () => {
 
     const fetchDailyUserData = async () => {
         try {
-            const response = await fetch(
-                'http://localhost:3000/api/admin/dailyUser',
-            )
+            const response = await fetch('/api/admin/dailyUser')
             const data = await response.json()
             setUserData(data)
         } catch (error) {

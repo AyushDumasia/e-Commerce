@@ -10,13 +10,9 @@ const Cart = () => {
 
     const orderBtn = async () => {
         try {
-            const res = await axios.post(
-                'http://localhost:3000/api/order/createOrder',
-                null,
-                {
-                    withCredentials: true,
-                },
-            )
+            const res = await axios.post('/api/order/createOrder', null, {
+                withCredentials: true,
+            })
             navigate('/order')
             console.log(res)
         } catch (err) {
