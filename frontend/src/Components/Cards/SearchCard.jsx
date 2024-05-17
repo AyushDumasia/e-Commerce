@@ -26,6 +26,8 @@ function SearchCard() {
             dispatch(setSearchCard(response.data.data))
         } catch (err) {
             toast.error(err.message)
+        } finally {
+            setLoading(false)
         }
     }
 
