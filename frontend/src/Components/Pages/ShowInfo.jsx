@@ -6,7 +6,7 @@ import SuggestionCard from './../Cards/SuggestionCard'
 
 function ShowInfo() {
     return (
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto  py-8">
             <CustomToastContainer />
             <ProductCard />
             <h2 className="text-3xl mt-[50px]">Similar Products</h2>

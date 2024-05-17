@@ -77,7 +77,7 @@ function LogIn() {
                 toast.error('An error occurred. Please try again later.')
             }
         }
-        setLoading(false) // Set loading to false after form submission
+        setLoading(false)
         setFormData({email: '', password: ''})
     }
 
@@ -97,19 +97,27 @@ function LogIn() {
     const override = css`
         display: block;
         margin: 0 auto;
-    ` // CSS override for ClipLoader
+    `
 
     return (
-        <div className="flex justify-center items-center min-h-screen">
+        <div className="flex justify-center items-center min-h-screen relative">
             <ToastContainer />
-            <div className="flex w-[70%] max-w-screen-xl ">
+            <div
+                className={`flex w-[70%] max-w-screen-xl ${
+                    loading ? 'blur' : ''
+                }`}
+            >
                 <div
-                    className="lg:block lg:w-[70%] bg-cover bg-center"
+                    className="lg:block lg:w-[70%] bg-cover  bg-center"
                     style={{
-                        backgroundImage: `url(${images[imageIndex]})`,
+                        backgroundPosition: 'center',
+                        backgroundSize: 'contain',
+                        backgroundRepeat: 'no-repeat',
+                        // backgroundImage: `url(${images[imageIndex]})`,
+                        backgroundImage: `url("https://res.cloudinary.com/dxrzskzvj/image/upload/v1715939311/vrelfidsjlkxwpbg9yhk.svg")`,
                     }}
                 ></div>
-                <div className="bg-[#fafafa] lg:w-1/2 px-10 py-16 shadow-md">
+                <div className=" lg:w-1/2 px-10 py-16 ">
                     <h1 className="text-3xl font-bold mb-6 text-center">
                         Welcome Back!
                     </h1>
@@ -140,8 +148,7 @@ function LogIn() {
                                 size={35}
                             />
                         </div>
-                    )}{' '}
-                    {/* Show loading animation if loading is true */}
+                    )}
                     <p className="text-center text-sm mt-4">
                         Don't have an account?{' '}
                         <Link
@@ -153,6 +160,9 @@ function LogIn() {
                     </p>
                 </div>
             </div>
+            {loading && (
+                <div className="absolute inset-0 bg-black opacity-20 pointer-events-none"></div>
+            )}
         </div>
     )
 }

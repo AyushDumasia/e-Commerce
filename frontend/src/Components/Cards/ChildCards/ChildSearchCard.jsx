@@ -77,19 +77,11 @@ export default function ChildCard({item, showProduct}) {
                 <Rating
                     value={item.rating}
                     count={5}
-                    size={20}
+                    size={25}
                     activeColor="orange"
                     edit={false}
                     isHalf={true}
                 />
-                {/* <div className="mt-auto flex justify-between">
-                    <button className="text-gray-500 hover:text-[red] focus:outline-none">
-                        <FaHeart />
-                    </button>
-                    <button className="text-gray-500 hover:text-blue-400 focus:outline-none">
-                        <FaShare />
-                    </button>
-                </div> */}
             </div>
         </div>
     )

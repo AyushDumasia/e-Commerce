@@ -95,9 +95,13 @@ function SignUp() {
             <ToastContainer />
             <div className="flex w-[75%] justify-center max-w-screen-xl">
                 <div
-                    className="hidden lg:block lg:w-1/2 bg-cover bg-center"
+                    className="lg:block lg:w-[70%] bg-cover  bg-center"
                     style={{
-                        backgroundImage: `url(${images[imageIndex]})`,
+                        backgroundPosition: 'center',
+                        backgroundSize: 'contain',
+                        backgroundRepeat: 'no-repeat',
+                        // backgroundImage: `url(${images[imageIndex]})`,
+                        backgroundImage: `url("https://res.cloudinary.com/dxrzskzvj/image/upload/v1715940250/oypykrrpbcky6tjrbuqy.svg")`,
                     }}
                 ></div>
                 <div className="bg-white lg:w-[40%] p-10 shadow-md">

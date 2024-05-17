@@ -74,7 +74,7 @@ function ExploreCard() {
                         exploreCard?.map((product, index) => (
                             <motion.div
                                 key={product._id}
-                                className="w-[100%] self-start bg-[#fafafa] flex  max-h-[350px] h-[300px] p-4 mb-4 rounded-lg shadow-md cursor-pointer transition duration-300 hover:shadow-lg"
+                                className="w-[100%] self-start bg-[#fafafa] flex  max-h-[350px] h-[300px] p-4 mb-4 rounded-sm cursor-pointer transition duration-300 hover:shadow-lg"
                                 initial={{opacity: 0, y: 50}}
                                 animate={{opacity: 1, y: 0}}
                                 exit={{opacity: 0, y: -50}}
@@ -87,7 +87,7 @@ function ExploreCard() {
                                 <img
                                     src={product?.images[0]}
                                     alt={product.productName}
-                                    className="w-[250px] h-[250px] object-cover rounded-lg mr-4"
+                                    className="w-[250px] h-[250px] object-cover rounded-sm mr-4"
                                     loading="lazy"
                                 />
 

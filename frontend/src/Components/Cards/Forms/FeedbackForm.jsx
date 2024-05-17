@@ -6,6 +6,8 @@ import {useDispatch, useSelector} from 'react-redux'
 import Avatar from 'react-avatar'
 import {useParams} from 'react-router-dom'
 import {setFeedbackCard} from '../../../redux/feedback/feedbackSlice'
+import {CiStar} from 'react-icons/ci'
+import {FaStar} from 'react-icons/fa'
 
 function FeedbackForm() {
     const {id} = useParams()
@@ -67,7 +69,6 @@ function FeedbackForm() {
                         <Avatar
                             name={user?.username || 'U'}
                             size={35}
-                            // facebookId={user}
                             round={true}
                             className="mt-[2px]"
                         />

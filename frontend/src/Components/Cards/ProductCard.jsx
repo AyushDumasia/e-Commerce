@@ -1,11 +1,10 @@
+// ProductCard.js
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import {useParams} from 'react-router-dom'
 import {toast} from 'react-toastify'
-import {Share2} from 'lucide-react'
 import {useDispatch, useSelector} from 'react-redux'
-import {IoMdShareAlt} from 'react-icons/io'
-import {FaShare} from 'react-icons/fa6'
+import {FaShare} from 'react-icons/fa'
 import {
     setApiError,
     setProductCard,
@@ -18,13 +17,19 @@ function ProductCard() {
     const {showProductCard, apiError} = useSelector(
         (state) => state.productCard,
     )
-    // const [currentImage, setCurrentImage] = useState(showProductCard?.images[0])
     const [currentImage, setCurrentImage] = useState()
+    const [sidebarImages, setSidebarImages] = useState([])
 
     useEffect(() => {
         fetchProductData()
-        console.log(currentImage)
     }, [id])
+
+    useEffect(() => {
+        if (showProductCard) {
+            setSidebarImages(showProductCard.images)
+            setCurrentImage(showProductCard.images[0])
+        }
+    }, [showProductCard])
 
     const fetchProductData = async () => {
         try {
@@ -33,7 +38,6 @@ function ProductCard() {
             })
             setLoading(false)
             dispatch(setProductCard(response.data.product))
-            setCurrentImage(response.data.product.images[0])
         } catch (error) {
             dispatch(setApiError(error.message))
         }
@@ -79,13 +83,13 @@ function ProductCard() {
     }
 
     return (
-        <div className="p-4 border border-gray-300 rounded-lg">
+        <div className="p-4 border border-gray-300 rounded-sm">
             {loading ? (
                 <p>Loading...</p>
             ) : showProductCard ? (
                 <div className="flex flex-col md:flex-row ">
                     <div className="flex flex-col items-center mr-4">
-                        {showProductCard.images.map((image, index) => (
+                        {sidebarImages.map((image, index) => (
                             <img
                                 key={index}
                                 src={image}
@@ -99,11 +103,11 @@ function ProductCard() {
                             />
                         ))}
                     </div>
-                    <div className="w-full md:w-1/2 flex justify-center relative ">
+                    <div className="w-full md:w-1/2 flex mr-2 justify-center relative ">
                         <img
                             src={currentImage}
                             alt={showProductCard.productName}
-                            className="w-full h-[500px] max-h-96 object-contain mb-4 rounded-lg"
+                            className="w-full max-h-[500px] object-contain mb-4 rounded-lg"
                         />
                         <button
                             className="absolute top-0 right-3 mt-4 mr-4 rounded-full p-2 shadow-md text-white bg-[#00000045]"
