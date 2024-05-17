@@ -74,7 +74,7 @@ function ExploreCard() {
                         exploreCard?.map((product, index) => (
                             <motion.div
                                 key={product._id}
-                                className="w-[100%] self-start bg-[#fafafa] flex  max-h-[350px] h-[300px] p-4 mb-4 rounded-sm cursor-pointer transition duration-300 hover:shadow-lg"
+                                className="w-[100%] self-start  flex  max-h-[350px] h-[300px] p-4 bg-white mb-[4px] rounded-md cursor-pointer transition duration-300"
                                 initial={{opacity: 0, y: 50}}
                                 animate={{opacity: 1, y: 0}}
                                 exit={{opacity: 0, y: -50}}
@@ -87,7 +87,7 @@ function ExploreCard() {
                                 <img
                                     src={product?.images[0]}
                                     alt={product.productName}
-                                    className="w-[250px] h-[250px] object-cover rounded-sm mr-4"
+                                    className="w-[250px] h-[250px] object-cover rounded-md mr-4"
                                     loading="lazy"
                                 />
 
@@ -111,7 +111,7 @@ function ExploreCard() {
                                             onClick={(e) => {
                                                 addCart(product._id, e)
                                             }}
-                                            className="text-red hover:before:bg-greenborder-green-500 relative h-[40px] w-280 overflow-hidden border border-green-500 bg-white px-3 text-green-500 shadow-2xl transition-all before:absolute before:bottom-0 before:left-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-green-500 before:transition-all before:duration-500 hover:text-white hover:shadow-green-500 hover:before:left-0 hover:before:w-full text-sm mt-[10px] justify-end align-baseline rounded-[5px]"
+                                            className="text-red hover:before:bg-greenborder-green-500 relative h-[40px] w-280 overflow-hidden border border-green-500 bg-white px-3 text-green-500 transition-all before:absolute before:bottom-0 before:left-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-green-500 before:transition-all before:duration-500 hover:text-white hover:shadow-green-500 hover:before:left-0 hover:before:w-full text-sm mt-[10px] justify-end align-baseline rounded-[5px]"
                                         >
                                             <span className="relative z-10">
                                                 Add to Cart

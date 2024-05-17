@@ -21,6 +21,7 @@ function CartCard() {
             const response = await axios.get('/api/product/cart', {
                 withCredentials: true,
             })
+            console.log(response.data)
             dispatch(setCart(response.data))
         } catch (error) {
             dispatch(setApiError(error))
@@ -61,13 +62,13 @@ function CartCard() {
                 cart.cartItems.map((item) => (
                     <div
                         key={item._id}
-                        className="rounded-lg p-4 flex items-center justify-between bg-white mb-4 shadow-md"
+                        className="rounded-lg p-4 flex items-center justify-between bg-white mb-4"
                     >
                         <div className="flex items-center ">
                             <img
                                 src={item.productId?.images[0]}
                                 alt={item.productId.productName}
-                                className="w-24 h-24 object-cover rounded mr-4"
+                                className="w-36 h-36 object-cover rounded mr-4"
                             />
                             <div>
                                 <h3 className="text-lg font-semibold mb-2">
@@ -83,7 +84,7 @@ function CartCard() {
                         </div>
                         <div className="flex items-center space-x-2">
                             <button
-                                className="text-gray-700 px-2 py-1 rounded-full  hover:bg-gray-300 focus:outline-none"
+                                className="text-gray-800 px-2 py-2 rounded-full  hover:bg-gray-100 focus:outline-none"
                                 onClick={() =>
                                     updateQuantity(
                                         item.productId._id,
@@ -97,7 +98,7 @@ function CartCard() {
                                 {item.quantity}
                             </span>
                             <button
-                                className="text-gray-700 px-2 py-1 rounded-full  hover:bg-gray-300 focus:outline-none"
+                                className="text-gray-800 px-2 py-2 rounded-full  hover:bg-gray-100 focus:outline-none"
                                 onClick={() =>
                                     updateQuantity(
                                         item.productId._id,

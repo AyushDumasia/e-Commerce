@@ -37,7 +37,7 @@ function SearchCard() {
     }, [searchTerm])
 
     return (
-        <div className="container mx-auto p-3">
+        <div className="container mx-auto p-3 ">
             <CustomToastContainer />
             <h1 className="text-xl font-semibold mb-8">
                 Search Results for '{searchTerm.searchTerm}'

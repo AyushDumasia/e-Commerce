@@ -83,7 +83,7 @@ function ProductCard() {
     }
 
     return (
-        <div className="p-4 border border-gray-300 rounded-sm">
+        <div className="p-4  rounded-sm">
             {loading ? (
                 <p>Loading...</p>
             ) : showProductCard ? (

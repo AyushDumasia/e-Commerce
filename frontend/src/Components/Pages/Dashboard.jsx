@@ -40,7 +40,7 @@ function ProductList() {
                 products.map((product) => (
                     <div
                         key={product._id}
-                        className="bg-gray-200 rounded-lg shadow-md overflow-hidden flex mb-4"
+                        className=" rounded-sm h-[200px] bg-white overflow-hidden flex mb-4"
                     >
                         <img
                             src={product.productId.images[0]}
@@ -73,9 +73,9 @@ function ProductList() {
                                 }
                                 className="border border-gray-300 rounded px-3 py-1 focus:outline-none focus:border-blue-500"
                                 style={{
-                                    backgroundColor: '#f7f7f7',
+                                    backgroundColor: 'white',
                                     color: '#333',
-                                    fontSize: '14px',
+                                    fontSize: '15px',
                                     width: '200px',
                                 }}
                             >

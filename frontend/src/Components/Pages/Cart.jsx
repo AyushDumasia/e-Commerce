@@ -21,29 +21,43 @@ const Cart = () => {
     }
 
     return (
-        <div className="container mx-auto">
+        <div className="container mx-auto flex flex-col md:flex-row justify-evenly p-5 gap-6">
             <CustomToastContainer />
-            <div className="text-center pt-5 pb-1">
+            <div className="w-full md:w-2/3 bg-white rounded-lg p-5">
                 <h2 className="text-2xl font-bold mb-5 text-start">My Cart</h2>
+                <div className="overflow-y-auto max-h-96">
+                    <CartCard />
+                </div>
             </div>
-            <div className="overflow-y-auto max-h-[400px]">
-                <CartCard />
-            </div>
-            {!cart?.cartItems == [] && cart?.cartItems?.length == 0 ? (
-                ''
-            ) : (
-                <div className="flex  justify-between">
-                    <p className="font-bold text-[18px]">
-                        Total Price: ₹{cart?.totalPrice}
-                    </p>
+            <div className="w-full md:w-1/4 bg-white text-black rounded-lg p-5 flex flex-col justify-between   h-[300px] mt-[50px]">
+                <h1 className="text-2xl font-semibold mb-4">Summary</h1>
+                <div className="flex self-start flex-col">
+                    <div className="mb-[20px] flex flex-col gap-2">
+                        <h2>Subtotal : &nbsp;&nbsp;₹{cart?.totalPrice ?? 0}</h2>
+                        <h2>Quantity({cart?.count})</h2>
+                        <h2>
+                            Shipping Charges: &nbsp;&nbsp;₹
+                            {cart?.totalPrice / 4}
+                        </h2>
+                    </div>
+                </div>
+                <div>
+                    <div className="font-bold flex justify-between text-xl">
+                        <div>Total</div>
+                        <div>
+                            ₹
+                            {Number(cart?.totalPrice ?? 0) +
+                                (cart?.totalPrice ?? 0) / 4}
+                        </div>
+                    </div>
                     <button
+                        className="mt-5 bg-[#017acb] text-white py-2 px-4 rounded-sm w-full font-bold hover:bg-[#0e66a0]"
                         onClick={orderBtn}
-                        className="bg-blue-500 text-white px-6 py-3  md:mr-4 rounded hover:bg-blue-600"
                     >
-                        Order Now
+                        Checkout
                     </button>
                 </div>
-            )}
+            </div>
         </div>
     )
 }

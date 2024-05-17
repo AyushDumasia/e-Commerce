@@ -22,7 +22,7 @@ function VerticalBar() {
     }
 
     return (
-        <div className="static rounded-lg top-0 h-full p-3 mr-2 w-60 flex flex-col">
+        <div className="bg-white static rounded-lg top-0 h-full p-3 mr-2 w-[13rem] min-w-[13rem] flex flex-col">
             <h2 className="text-lg font-semibold mt-4 mb-2 flex items-center">
                 <BiSolidCategory />
                 &nbsp; Categories
@@ -32,7 +32,7 @@ function VerticalBar() {
                     {categories?.map((category, index) => (
                         <motion.div
                             key={index}
-                            className="w-full px-2 py-4 text-gray-700   cursor-pointer "
+                            className="w-full px-2 py-[10px] text-gray-700   cursor-pointer "
                             initial={{opacity: 0, y: 50}}
                             animate={{opacity: 1, y: 0}}
                             exit={{opacity: 0, y: -50}}

@@ -24,6 +24,7 @@ function SuggestionCard() {
                 withCredentials: true,
             })
             .then((response) => {
+                console.log(response.data.data)
                 dispatch(setSuggestedCard(response.data.data))
             })
             .catch((error) => {
@@ -37,9 +38,9 @@ function SuggestionCard() {
     }
 
     return (
-        <div className="grid mt-10 border border-gray-400 p-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {suggestedCard ? (
-                suggestedCard?.map((item) => (
+        <div className="grid   p-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {suggestedCard?.length > 0 ? (
+                suggestedCard.map((item) => (
                     <ChildCard
                         key={item._id}
                         item={item}
