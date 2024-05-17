@@ -1,9 +1,11 @@
 import {useEffect, useState} from 'react'
 import axios from 'axios'
+import LoadingComponent from '../Cards/LoadingComponent'
 
 function Order() {
     const [orders, setOrders] = useState([])
     const [address, setAddress] = useState([])
+    const [loading, setLoading] = useState(true)
 
     const fetchOrder = async () => {
         try {
@@ -15,6 +17,8 @@ function Order() {
             setAddress(response.data.address)
         } catch (err) {
             console.log(err)
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -78,16 +82,7 @@ function Order() {
                 Your Orders
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center">
-                {
-                    // orders.length === 0 ? (
-                    // <p className="text-center text-gray-600">
-                    // No orders found.
-                    // </p>
-                    // ) : (
-                    renderOrderCards()
-
-                    // )
-                }
+                {loading ? <LoadingComponent /> : renderOrderCards()}
             </div>
         </div>
     )

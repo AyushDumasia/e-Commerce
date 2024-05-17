@@ -8,10 +8,12 @@ import {setSearchCard} from '../../redux/search/searchSlice'
 import ChildCard from './ChildCards/ChildSearchCard'
 import CustomToastContainer from '../Toast/CustomToastContainer'
 import {toast} from 'react-toastify'
+import LoadingComponent from './LoadingComponent'
 
 function SearchCard() {
     const dispatch = useDispatch()
     const {searchCard} = useSelector((state) => state.search)
+    const [loading, setLoading] = useState(true)
     const searchTerm = useParams()
     const navigate = useNavigate()
 
@@ -39,19 +41,25 @@ function SearchCard() {
     return (
         <div className="container mx-auto p-3 ">
             <CustomToastContainer />
-            <h1 className="text-xl font-semibold mb-8">
-                Search Results for '{searchTerm.searchTerm}'
-            </h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {searchCard &&
-                    searchCard.map((item) => (
-                        <ChildCard
-                            key={item._id}
-                            item={item}
-                            showProduct={showProduct}
-                        />
-                    ))}
-            </div>
+            {loading ? (
+                <LoadingComponent />
+            ) : (
+                <>
+                    <h1 className="text-xl font-semibold mb-8">
+                        Search Results for '{searchTerm.searchTerm}'
+                    </h1>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {searchCard &&
+                            searchCard.map((item) => (
+                                <ChildCard
+                                    key={item._id}
+                                    item={item}
+                                    showProduct={showProduct}
+                                />
+                            ))}
+                    </div>
+                </>
+            )}
         </div>
     )
 }

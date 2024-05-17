@@ -9,6 +9,7 @@ import {
     setApiError,
     setProductCard,
 } from '../../redux/showProducts/showProductSlice'
+import LoadingComponent from './LoadingComponent'
 
 function ProductCard() {
     const dispatch = useDispatch()
@@ -85,7 +86,9 @@ function ProductCard() {
     return (
         <div className="p-4  rounded-sm">
             {loading ? (
-                <p>Loading...</p>
+                <div className="mt-[100px] overflow-x-hidden ml-[50px] w-[100%]">
+                    <LoadingComponent />
+                </div>
             ) : showProductCard ? (
                 <div className="flex flex-col md:flex-row ">
                     <div className="flex flex-col items-center mr-4">

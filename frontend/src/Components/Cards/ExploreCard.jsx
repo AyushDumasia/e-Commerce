@@ -1,13 +1,14 @@
 import axios from 'axios'
 import Rating from 'react-rating-stars-component'
-import {NavLink, useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
-import React, {useState, useEffect} from 'react'
+import {useState, useEffect} from 'react'
 import {setExploreCard} from '../../redux/explore/exploreSlice'
-import {ToastContainer, toast} from 'react-toastify'
+import {toast} from 'react-toastify'
 import PaginationFooter from '../Footer/PaginationFooter'
 import VerticalBar from './VerticalBar'
 import {motion, AnimatePresence} from 'framer-motion'
+import LoadingComponent from './LoadingComponent'
 
 function ExploreCard() {
     const dispatch = useDispatch()
@@ -67,9 +68,7 @@ function ExploreCard() {
             <AnimatePresence>
                 <div className="flex flex-col w-screen h-auto  items-center">
                     {loading ? (
-                        <div className="w-full flex justify-center items-center h-96">
-                            <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900"></div>
-                        </div>
+                        <LoadingComponent />
                     ) : (
                         exploreCard?.map((product, index) => (
                             <motion.div
@@ -122,7 +121,6 @@ function ExploreCard() {
                             </motion.div>
                         ))
                     )}
-
                     <PaginationFooter pageCount={pageCount} />
                 </div>
             </AnimatePresence>

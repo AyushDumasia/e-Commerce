@@ -49,7 +49,7 @@ function CartCard() {
                 <div className="flex mt-24 justify-center items-center">
                     <ReactLoading
                         type={'spin'}
-                        color={'#123456'}
+                        color={'blue'}
                         height={50}
                         width={50}
                     />

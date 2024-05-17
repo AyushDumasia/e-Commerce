@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
+import LoadingComponent from '../Cards/LoadingComponent'
 
 function ProductList() {
     const [products, setProducts] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         fetchData()
@@ -15,6 +17,8 @@ function ProductList() {
             setProducts(response.data)
         } catch (error) {
             console.error('Error fetching data:', error)
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -34,7 +38,11 @@ function ProductList() {
 
     return (
         <div className="p-5">
-            {products.data === null ? (
+            {loading ? (
+                <div className="flex justify-center items-center mt-[200px]">
+                    <LoadingComponent />
+                </div>
+            ) : products.data === null ? (
                 <p>No Orders yet</p>
             ) : (
                 products.map((product) => (
