@@ -2,13 +2,15 @@ import React, {useState} from 'react'
 import {useNavigate, Link} from 'react-router-dom'
 import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import {css} from '@emotion/react'
+import {ClipLoader} from 'react-spinners' // Import ClipLoader from react-spinners
 
 import Button from '../../Button/Button'
 import Password from '../../Password/Password'
 import Input from '../../Input/Input'
 import axios from 'axios'
 import {useDispatch, useSelector} from 'react-redux'
-import {setApiError, setUser} from '../../../redux/user/userSlice'
+import {setUser, setApiError} from '../../../redux/user/userSlice'
 import {
     setMerchant,
     setErrMerchant,
@@ -20,6 +22,7 @@ function SignUp() {
     const {user, apiError} = useSelector((state) => state.user)
     const {merchant, errMerchant} = useSelector((state) => state.merchant)
     const [imageIndex, setImageIndex] = useState(null)
+    const [loading, setLoading] = useState(false) // Add loading state
 
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
@@ -65,6 +68,7 @@ function SignUp() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setLoading(true) // Set loading to true on form submission
         try {
             const response = await axios.post('/api/auth/signup', formData, {
                 withCredentials: true,
@@ -78,7 +82,13 @@ function SignUp() {
                 toast.error('An error occurred. Please try again later.')
             }
         }
+        setLoading(false) // Set loading to false after form submission
     }
+
+    const override = css`
+        display: block;
+        margin: 0 auto;
+    ` // CSS override for ClipLoader
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -145,8 +155,23 @@ function SignUp() {
                             value={formData.password}
                             handler={handleChange}
                         />
-                        <Button text={'Submit'} className="w-full mt-4" />
+                        <Button
+                            text={'Submit'}
+                            className="w-full mt-4"
+                            disabled={loading}
+                        />
                     </form>
+                    {loading && (
+                        <div className="flex justify-center mt-4">
+                            <ClipLoader
+                                color={'#000'}
+                                loading={loading}
+                                css={override}
+                                size={35}
+                            />
+                        </div>
+                    )}{' '}
+                    {/* Show loading animation if loading is true */}
                     <p className="text-center text-sm mt-4">
                         Already have an account?{' '}
                         <Link

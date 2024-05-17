@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react'
 import {useNavigate, Link} from 'react-router-dom'
 import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import {css} from '@emotion/react'
+import {ClipLoader} from 'react-spinners' // Import ClipLoader from react-spinners
 import Button from '../../Button/Button.jsx'
 import Password from '../../Password/Password.jsx'
 import Input from '../../Input/Input.jsx'
@@ -23,6 +25,7 @@ function LogIn() {
         password: '',
     })
     const [imageIndex, setImageIndex] = useState(null)
+    const [loading, setLoading] = useState(false) // Add loading state
 
     const handleChange = (e) => {
         const {name, value} = e.target
@@ -57,6 +60,7 @@ function LogIn() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setLoading(true) // Set loading to true on form submission
         try {
             const response = await axios.post('/api/auth/login', formData, {
                 withCredentials: true,
@@ -73,6 +77,7 @@ function LogIn() {
                 toast.error('An error occurred. Please try again later.')
             }
         }
+        setLoading(false) // Set loading to false after form submission
         setFormData({email: '', password: ''})
     }
 
@@ -88,6 +93,11 @@ function LogIn() {
         const randomIndex = Math.floor(Math.random() * images.length)
         setImageIndex(randomIndex)
     }, [])
+
+    const override = css`
+        display: block;
+        margin: 0 auto;
+    ` // CSS override for ClipLoader
 
     return (
         <div className="flex justify-center items-center min-h-screen">
@@ -121,6 +131,17 @@ function LogIn() {
                         />
                         <Button text={'Sign In'} className="w-full mt-4" />
                     </form>
+                    {loading && (
+                        <div className="flex justify-center mt-4">
+                            <ClipLoader
+                                color={'#000'}
+                                loading={loading}
+                                css={override}
+                                size={35}
+                            />
+                        </div>
+                    )}{' '}
+                    {/* Show loading animation if loading is true */}
                     <p className="text-center text-sm mt-4">
                         Don't have an account?{' '}
                         <Link

@@ -50,7 +50,7 @@ export default function ChildCard({item, showProduct}) {
                 alt={item.productName}
                 className="w-full h-48 object-cover"
             />
-            <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-60 transition-opacity"></div>
+            <div className="absolute inset-0  opacity-0 group-hover:opacity-60 transition-opacity"></div>
             <button
                 onClick={(e) => {
                     e.stopPropagation()
