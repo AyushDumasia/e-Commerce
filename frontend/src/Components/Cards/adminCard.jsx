@@ -75,7 +75,7 @@ const AdminCard = () => {
         <div className="container mx-auto px-4 py-8">
             {loading && (
                 <div className="fixed top-0 left-0 z-50 w-full h-full flex justify-center items-center">
-                    <div className="bg-gray-900 bg-opacity-50 absolute top-0 left-0 w-full h-full"></div>
+                    <div className="absolute top-0 left-0 w-full h-full"></div>
                     <ReactLoading
                         type={'spin'}
                         color={'#123456'}

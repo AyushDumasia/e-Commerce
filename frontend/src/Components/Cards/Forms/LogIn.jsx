@@ -1,9 +1,8 @@
-import React, {useState, useEffect} from 'react'
+import {useState, useEffect} from 'react'
 import {useNavigate, Link} from 'react-router-dom'
 import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import {css} from '@emotion/react'
-import {ClipLoader} from 'react-spinners' // Import ClipLoader from react-spinners
+import Loading from 'react-loading' // Import react-loading
 import Button from '../../Button/Button.jsx'
 import Password from '../../Password/Password.jsx'
 import Input from '../../Input/Input.jsx'
@@ -25,7 +24,7 @@ function LogIn() {
         password: '',
     })
     const [imageIndex, setImageIndex] = useState(null)
-    const [loading, setLoading] = useState(false) // Add loading state
+    const [loading, setLoading] = useState(false)
 
     const handleChange = (e) => {
         const {name, value} = e.target
@@ -54,13 +53,13 @@ function LogIn() {
             dispatch(setUser(response.data))
             fetchMerchantData()
         } catch (error) {
-            setApiError(null)
+            dispatch(setApiError(null))
         }
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        setLoading(true) // Set loading to true on form submission
+        setLoading(true)
         try {
             const response = await axios.post('/api/auth/login', formData, {
                 withCredentials: true,
@@ -94,61 +93,50 @@ function LogIn() {
         setImageIndex(randomIndex)
     }, [])
 
-    const override = css`
-        display: block;
-        margin: 0 auto;
-    `
-
     return (
         <div className="flex justify-center items-center min-h-screen relative">
             <ToastContainer />
-            <div
-                className={`flex w-[70%] max-w-screen-xl ${
-                    loading ? 'blur' : ''
-                }`}
-            >
+            <div className="flex w-[70%] max-w-screen-xl">
                 <div
-                    className="lg:block lg:w-[70%] bg-cover  bg-center"
+                    className="lg:block lg:w-[70%] bg-cover bg-center"
                     style={{
                         backgroundPosition: 'center',
                         backgroundSize: 'contain',
                         backgroundRepeat: 'no-repeat',
                         // backgroundImage: `url(${images[imageIndex]})`,
-                        backgroundImage: `url("https://res.cloudinary.com/dxrzskzvj/image/upload/v1715939311/vrelfidsjlkxwpbg9yhk.svg")`,
+                        backgroundImage: `url("https://res.cloudinary.com/dxrzskzvj/image/upload/v1715968109/mmhwlbsmptyvmubyfcr6.svg")`,
                     }}
                 ></div>
-                <div className=" lg:w-1/2 px-10 py-16 ">
+                <div className="lg:w-1/2 px-10 py-16 relative">
+                    {loading && (
+                        <div className="absolute inset-0 flex justify-center items-center bg-white bg-opacity-75 z-10">
+                            <Loading type="spin" color="#000" />
+                        </div>
+                    )}
                     <h1 className="text-3xl font-bold mb-6 text-center">
                         Welcome Back!
                     </h1>
-                    <form onSubmit={handleSubmit}>
+                    <form
+                        onSubmit={handleSubmit}
+                        className={loading ? 'blur-sm' : ''}
+                    >
                         <Input
-                            label={'Email'}
-                            type={'email'}
-                            placeholder={'Enter your email'}
+                            label="Email"
+                            type="email"
+                            placeholder="Enter your email"
                             value={formData.email}
-                            name={'email'}
+                            name="email"
                             handler={handleChange}
                         />
                         <Password
-                            label={'Password'}
-                            placeholder={'Enter your password'}
-                            name={'password'}
+                            label="Password"
+                            placeholder="Enter your password"
+                            name="password"
                             value={formData.password}
                             handler={handleChange}
                         />
-                        <Button text={'Sign In'} className="w-full mt-4" />
+                        <Button text="Sign In" className="w-full mt-4" />
                     </form>
-                    {loading && (
-                        <div className="flex justify-center mt-4">
-                            <ClipLoader
-                                color={'#000'}
-                                loading={loading}
-                                css={override}
-                                size={35}
-                            />
-                        </div>
-                    )}
                     <p className="text-center text-sm mt-4">
                         Don't have an account?{' '}
                         <Link
@@ -160,9 +148,6 @@ function LogIn() {
                     </p>
                 </div>
             </div>
-            {loading && (
-                <div className="absolute inset-0 bg-black opacity-20 pointer-events-none"></div>
-            )}
         </div>
     )
 }

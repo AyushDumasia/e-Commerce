@@ -1,9 +1,9 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {useNavigate, Link} from 'react-router-dom'
 import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import {css} from '@emotion/react'
-import {ClipLoader} from 'react-spinners' // Import ClipLoader from react-spinners
+import {ClipLoader} from 'react-spinners'
 
 import Button from '../../Button/Button'
 import Password from '../../Password/Password'
@@ -15,14 +15,13 @@ import {
     setMerchant,
     setErrMerchant,
 } from '../../../redux/merchant/merchantSlice'
-import {useEffect} from 'react'
 
 function SignUp() {
     const dispatch = useDispatch()
     const {user, apiError} = useSelector((state) => state.user)
     const {merchant, errMerchant} = useSelector((state) => state.merchant)
     const [imageIndex, setImageIndex] = useState(null)
-    const [loading, setLoading] = useState(false) // Add loading state
+    const [loading, setLoading] = useState(false)
 
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
@@ -39,7 +38,6 @@ function SignUp() {
                 withCredentials: true,
             })
             dispatch(setUser(response.data))
-            // fetchMerchantData()
         } catch (error) {
             setApiError(null)
         }
@@ -68,7 +66,7 @@ function SignUp() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        setLoading(true) // Set loading to true on form submission
+        setLoading(true)
         try {
             const response = await axios.post('/api/auth/signup', formData, {
                 withCredentials: true,
@@ -82,61 +80,74 @@ function SignUp() {
                 toast.error('An error occurred. Please try again later.')
             }
         }
-        setLoading(false) // Set loading to false after form submission
+        setLoading(false)
     }
 
     const override = css`
         display: block;
         margin: 0 auto;
-    ` // CSS override for ClipLoader
+    `
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-100">
+        <div className="flex justify-center items-center min-h-screen ">
             <ToastContainer />
-            <div className="flex w-[75%] justify-center max-w-screen-xl">
+            <div className="flex w-[75%] justify-center max-w-screen-xl relative">
                 <div
-                    className="lg:block lg:w-[70%] bg-cover  bg-center"
+                    className="lg:block lg:w-[70%] bg-cover bg-center"
                     style={{
                         backgroundPosition: 'center',
                         backgroundSize: 'contain',
                         backgroundRepeat: 'no-repeat',
-                        // backgroundImage: `url(${images[imageIndex]})`,
-                        backgroundImage: `url("https://res.cloudinary.com/dxrzskzvj/image/upload/v1715940250/oypykrrpbcky6tjrbuqy.svg")`,
+                        backgroundColor: 'white',
+                        backgroundImage: `url("https://res.cloudinary.com/dxrzskzvj/image/upload/v1715968502/ypm6dg1vuogboygjkdmt.svg")`,
                     }}
                 ></div>
-                <div className="bg-white lg:w-[40%] p-10 shadow-md">
+                <div className="bg-white lg:w-[40%] p-10 relative">
+                    {loading && (
+                        <div className="absolute inset-0 flex justify-center items-center  bg-opacity-75 z-10">
+                            <ClipLoader
+                                color="#000"
+                                loading={loading}
+                                css={override}
+                                size={35}
+                            />
+                        </div>
+                    )}
                     <h1 className="text-3xl font-bold mb-6 text-center">
                         Sign Up
                     </h1>
-                    <form onSubmit={handleSubmit}>
+                    <form
+                        onSubmit={handleSubmit}
+                        className={loading ? 'blur-sm' : ''}
+                    >
                         <Input
-                            label={'Name'}
-                            type={'text'}
-                            placeholder={'Name'}
-                            name={'username'}
+                            label="Name"
+                            type="text"
+                            placeholder="Name"
+                            name="username"
                             value={formData.username}
                             handler={handleChange}
                         />
                         <Input
-                            label={'Email'}
-                            type={'email'}
-                            placeholder={'abc@xyz.com'}
-                            name={'email'}
+                            label="Email"
+                            type="email"
+                            placeholder="abc@xyz.com"
+                            name="email"
                             value={formData.email}
                             handler={handleChange}
                         />
                         <Input
-                            label={'Phone'}
-                            type={'number'}
-                            placeholder={'Mobile Number'}
-                            name={'phone'}
+                            label="Phone"
+                            type="number"
+                            placeholder="Mobile Number"
+                            name="phone"
                             value={formData.phone}
                             handler={handleChange}
                         />
-                        <label>Gender : </label>
+                        <label>Gender: </label>
                         <select
-                            label={'sex'}
-                            name={'sex'}
+                            label="sex"
+                            name="sex"
                             value={formData.sex}
                             onChange={handleChange}
                             className="border border-[grey] p-2 cursor-pointer rounded mt-[3px] w-full text-base focus:outline-none no-arrow text-placeholder"
@@ -151,31 +162,19 @@ function SignUp() {
                                 Female
                             </option>
                         </select>
-
                         <Password
-                            label={'Password'}
-                            placeholder={'Password'}
-                            name={'password'}
+                            label="Password"
+                            placeholder="Password"
+                            name="password"
                             value={formData.password}
                             handler={handleChange}
                         />
                         <Button
-                            text={'Submit'}
+                            text="Submit"
                             className="w-full mt-4"
                             disabled={loading}
                         />
                     </form>
-                    {loading && (
-                        <div className="flex justify-center mt-4">
-                            <ClipLoader
-                                color={'#000'}
-                                loading={loading}
-                                css={override}
-                                size={35}
-                            />
-                        </div>
-                    )}{' '}
-                    {/* Show loading animation if loading is true */}
                     <p className="text-center text-sm mt-4">
                         Already have an account?{' '}
                         <Link

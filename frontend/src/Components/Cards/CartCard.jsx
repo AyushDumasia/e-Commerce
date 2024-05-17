@@ -9,7 +9,7 @@ import {setCart, setApiError} from '../../redux/cart/cartSlice'
 function CartCard() {
     const [loading, setLoading] = useState(false)
     const dispatch = useDispatch()
-    const {cart, apiError} = useSelector((state) => state.cart)
+    const {cart} = useSelector((state) => state.cart)
 
     useEffect(() => {
         fetchCartData()
