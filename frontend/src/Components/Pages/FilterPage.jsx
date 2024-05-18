@@ -41,7 +41,9 @@ export default function FilterPage() {
         <div className="overflow-hidden p-7 pl-3 flex">
             <VerticalBar />
             {loading ? (
-                <LoadingComponent />
+                <div className="flex  w-[100%] justify-center">
+                    <LoadingComponent />
+                </div>
             ) : (
                 <>
                     <div className="container p-3 mx-auto ">

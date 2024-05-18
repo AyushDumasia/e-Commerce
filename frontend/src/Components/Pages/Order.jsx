@@ -82,7 +82,13 @@ function Order() {
                 Your Orders
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center">
-                {loading ? <LoadingComponent /> : renderOrderCards()}
+                {loading ? (
+                    <div className=" w-[1250px] flex justify-center align-middle item-center overflow-x-hidden">
+                        <LoadingComponent />
+                    </div>
+                ) : (
+                    renderOrderCards()
+                )}
             </div>
         </div>
     )

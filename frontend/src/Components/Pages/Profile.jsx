@@ -33,7 +33,9 @@ function Profile() {
     return (
         <div className="flex justify-center items-start h-screen bg-gray-200">
             {loading ? (
-                <LoadingComponent />
+                <div className="w-[100%] flex justify-center h-[70%]">
+                    <LoadingComponent />
+                </div>
             ) : (
                 <div className="flex justify-between w-[90%] bg-white mt-6 shadow-md rounded-lg p-6">
                     <div className="flex-shrink-0 mr-6">

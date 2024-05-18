@@ -3,8 +3,13 @@ import ReactLoading from 'react-loading'
 
 const LoadingComponent = () => {
     return (
-        <div className="flex h-[90%] justify-center items-center overflow-hidden">
-            <ReactLoading type={'spin'} color={'blue'} height={50} width={50} />
+        <div className="flex h-full justify-center items-center">
+            <ReactLoading
+                type={'spin'}
+                color={'black'}
+                height={50}
+                width={50}
+            />
         </div>
     )
 }
