@@ -37,7 +37,7 @@ const AdminCard = () => {
         setLoading(true)
         try {
             await axios.post(
-                `/admin/validProduct/${id}`,
+                `api/admin/validProduct/${id}`,
                 {},
                 {
                     withCredentials: true,
@@ -56,7 +56,7 @@ const AdminCard = () => {
         setLoading(true)
         try {
             await axios.post(
-                `/admin/notApproved/${id}`,
+                `api/admin/notApproved/${id}`,
                 {},
                 {
                     withCredentials: true,
