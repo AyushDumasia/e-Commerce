@@ -10,6 +10,7 @@ import {
     setProductCard,
 } from '../../redux/showProducts/showProductSlice'
 import LoadingComponent from './LoadingComponent'
+import RatingCard from './ChildCards/RatingCard'
 
 function ProductCard() {
     const dispatch = useDispatch()
@@ -120,27 +121,36 @@ function ProductCard() {
                         </button> */}
                     </div>
                     <div className="flex-1 pl-4 ">
-                        <h2 className="text-2xl font-bold mb-4">
+                        <h2 className="text-2xl font-bold mb-2">
                             {showProductCard.productName}
                         </h2>
-                        <p className="text-xl mb-4">
+                        <div className="flex  items-center">
+                            <RatingCard value={showProductCard} size={22} />
+                            &nbsp;
+                            <span>({showProductCard.rating.toFixed(1)})</span>
+                        </div>
+                        <div className="mb-2"></div>
+                        {/* <p className="text-xl mb-4">
                             {showProductCard.category}
-                        </p>
-                        <p className="text-sm mb-4">
+                        </p> */}
+                        <p className="text-[1rem] mb-4">
                             {showProductCard.description}
                         </p>
-                        <p className="text-lg font-bold mb-4">
+                        <p className="text-lg  mb-2">
                             ₹{showProductCard.price}
                         </p>
-
-                        <div className="flex items-center">
+                        <p className="text-[1rem] text-gray-400  mb-4">
+                            Imported Fees Deposit and Shipping Changes included
+                            : ₹{showProductCard.price / 4}
+                        </p>
+                        <div className="flex  items-center">
                             <button
                                 onClick={() => addCart(showProductCard._id)}
-                                className="text-black  border-black border  px-6 py-3 mr-4 rounded"
+                                className="text-black  border-black border  px-6 py-3 mr-2 rounded"
                             >
                                 Add to Cart
                             </button>
-                            <button className="text-white bg-green-500 border border-green-500 px-6 py-3 mr-4 rounded hover:bg-green-600">
+                            <button className="text-white bg-green-500 border border-green-500 px-6 py-3 mr-2 rounded hover:bg-green-600">
                                 Buy Now
                             </button>
                             <button

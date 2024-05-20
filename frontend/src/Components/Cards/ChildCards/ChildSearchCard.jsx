@@ -70,7 +70,7 @@ export default function ChildCard({item, showProduct}) {
                 <IoMdShareAlt />
             </button>
             <div className="p-4 flex flex-col flex-grow">
-                <h2 className="text-[15px] font-semibold mb-2">
+                <h2 className="text-[15px] font-[600] mb-2">
                     {item.productName}
                 </h2>
                 <p className="text-gray-700">₹{item.price}</p>

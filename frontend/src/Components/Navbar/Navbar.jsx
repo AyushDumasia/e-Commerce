@@ -8,7 +8,7 @@ function Navbar() {
         <nav className="bg-[#fafafa] text-black p-2 fixed w-full top-0 z-50">
             <div className="container mx-auto flex justify-between items-center">
                 <div className="flex justify-center items-center">
-                    <Link to="/" className="text-2xl ml-[40px] font-bold">
+                    <Link to="/" className="text-2xl ml-[40px] font-semibold">
                         eCommerce
                     </Link>
                 </div>
@@ -18,10 +18,10 @@ function Navbar() {
                 </div>
 
                 <div className="flex w-[250px] justify-between items-center font-bold">
-                    <ul className="flex space-x-4 mr-3">
+                    <ul className="flex font-semibold space-x-4 mr-3">
                         <List goto="/" content="Home" />
                     </ul>
-                    <ul className="flex space-x-4 ">
+                    <ul className="flex font-semibold space-x-4 ">
                         <List goto="/explore/1" content="Explore" />
                     </ul>
                     <SignInButton />

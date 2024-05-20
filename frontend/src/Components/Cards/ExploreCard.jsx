@@ -99,11 +99,15 @@ function ExploreCard() {
                                         <p className="text-gray-800 font-semibold">
                                             ₹{product.price}
                                         </p>
-                                        <div className="my-2">
+                                        <div className="flex my-2  items-center">
                                             <RatingCard
                                                 value={product}
-                                                size={23}
+                                                size={20}
                                             />
+                                            &nbsp;
+                                            <span>
+                                                ({product.rating.toFixed(1)})
+                                            </span>
                                         </div>
                                         <button
                                             onClick={(e) => {

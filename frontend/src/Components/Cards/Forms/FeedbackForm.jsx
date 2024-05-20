@@ -6,6 +6,10 @@ import {useDispatch, useSelector} from 'react-redux'
 import Avatar from 'react-avatar'
 import {useParams} from 'react-router-dom'
 import {setFeedbackCard} from '../../../redux/feedback/feedbackSlice'
+import {
+    setApiError,
+    setProductCard,
+} from '../../../redux/showProducts/showProductSlice'
 
 function FeedbackForm() {
     const {id} = useParams()
@@ -16,6 +20,17 @@ function FeedbackForm() {
 
     const ratingChanged = (newRating) => {
         setRating(newRating)
+    }
+    const fetchProductData = async () => {
+        try {
+            const response = await axios.get(`/api/product/showProduct/${id}`, {
+                withCredentials: true,
+            })
+            // setLoading(false)
+            dispatch(setProductCard(response.data.product))
+        } catch (error) {
+            dispatch(setApiError(error.message))
+        }
     }
 
     const handleFeedback = async (e) => {
@@ -42,6 +57,7 @@ function FeedbackForm() {
                 )
                 dispatch(setFeedbackCard(feedbackResponse.data.data))
             }
+            fetchProductData()
         } catch (err) {
             if (err.response && err.response.status === 401) {
                 toast.error('Please Login')

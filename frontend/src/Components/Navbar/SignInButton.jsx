@@ -52,7 +52,7 @@ function SignInButton() {
     }
 
     return (
-        <div className="relative">
+        <div className="relative font-semibold">
             <div className="flex p-2  rounded justify-evenly items-center">
                 {user ? (
                     ''

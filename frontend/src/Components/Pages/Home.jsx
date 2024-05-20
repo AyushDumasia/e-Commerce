@@ -7,7 +7,7 @@ import SpecialCard from './../Cards/Home/SpecialCard'
 import {ToastContainer} from 'react-toastify'
 import CustomToastContainer from './../Toast/CustomToastContainer'
 
-function App() {
+function Home() {
     const categories = [
         {
             name: 'Electronics',
@@ -28,7 +28,7 @@ function App() {
     ]
 
     return (
-        <div className="bg-gray-100">
+        <div className="bg-slate-200">
             <CustomToastContainer />
             <Hero />
             <div className="p-6">
@@ -41,6 +41,7 @@ function App() {
                     ))}
                 </div>
             </div>
+
             <h1 className="text-3xl font-bold text-center my-6">
                 Trending Products
             </h1>
@@ -50,4 +51,4 @@ function App() {
     )
 }
 
-export default App
+export default Home
