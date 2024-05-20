@@ -22,13 +22,13 @@ export default function ChildCard({item, showProduct}) {
             }
         }
     }
-    const handleShare = async () => {
+    const handleShare = async (item) => {
         try {
             if (navigator.share) {
                 await navigator.share({
                     title: item.productName,
                     text: item.description,
-                    url: window.location.href,
+                    url: `/showProduct/${item._id}`,
                 })
             } else {
                 throw new Error('Web Share API not supported')
@@ -64,7 +64,7 @@ export default function ChildCard({item, showProduct}) {
                 className="absolute top-4 right-4 bg-[#e6e6ee2d] text-[white] px-3 py-2 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-[white] text-xl transition duration-300 opacity-0 group-hover:opacity-100"
                 onClick={(e) => {
                     e.stopPropagation()
-                    handleShare()
+                    handleShare(item)
                 }}
             >
                 <IoMdShareAlt />

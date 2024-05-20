@@ -9,6 +9,7 @@ import PaginationFooter from '../Footer/PaginationFooter'
 import VerticalBar from './VerticalBar'
 import {motion, AnimatePresence} from 'framer-motion'
 import LoadingComponent from './LoadingComponent'
+import RatingCard from './ChildCards/RatingCard'
 
 function ExploreCard() {
     const dispatch = useDispatch()
@@ -98,14 +99,12 @@ function ExploreCard() {
                                         <p className="text-gray-800 font-semibold">
                                             ₹{product.price}
                                         </p>
-                                        <Rating
-                                            value={product.rating}
-                                            count={5}
-                                            size={25}
-                                            activeColor="orange"
-                                            edit={false}
-                                            isHalf={true}
-                                        />
+                                        <div className="my-2">
+                                            <RatingCard
+                                                value={product}
+                                                size={23}
+                                            />
+                                        </div>
                                         <button
                                             onClick={(e) => {
                                                 addCart(product._id, e)

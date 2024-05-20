@@ -3,9 +3,11 @@ import Hero from '../Cards/Home/Hero'
 import axios from 'axios'
 import CategoryCard from '../Cards/Home/CategroryCard'
 import {useState} from 'react'
+import SpecialCard from './../Cards/Home/SpecialCard'
+import {ToastContainer} from 'react-toastify'
+import CustomToastContainer from './../Toast/CustomToastContainer'
 
 function App() {
-    // const [product, setProduct] = useState([])
     const categories = [
         {
             name: 'Electronics',
@@ -23,31 +25,26 @@ function App() {
             name: 'Toys',
             image: 'https://res.cloudinary.com/dxrzskzvj/image/upload/v1716201448/lpg3ntnjtbjebuxso8zn.jpg',
         },
-        // Add more categories as needed
     ]
-
-    // const fetchData = async () => {
-    //     try {
-    //         const response = await axios.get('/api/product/showLatestProducts')
-    //         console.log(response.data.data)
-    //         setProduct(response.data.data)
-    //     } catch (err) {
-    //         console.error(err)
-    //     }
-    // }
-
-    // useState(() => {
-    //     fetchData()
-    // })
 
     return (
         <div className="bg-gray-100">
+            <CustomToastContainer />
             <Hero />
-            <div className="flex flex-wrap justify-center gap-6 p-6">
-                {categories.map((category, index) => (
-                    <CategoryCard key={index} category={category} />
-                ))}
+            <div className="p-6">
+                <h1 className="text-3xl font-bold mt-4 text-center mb-6">
+                    Explore Categories
+                </h1>
+                <div className="flex flex-wrap justify-center gap-6">
+                    {categories.map((category, index) => (
+                        <CategoryCard key={index} category={category} />
+                    ))}
+                </div>
             </div>
+            <h1 className="text-3xl font-bold text-center my-6">
+                Trending Products
+            </h1>
+            <SpecialCard />
             <Footer />
         </div>
     )

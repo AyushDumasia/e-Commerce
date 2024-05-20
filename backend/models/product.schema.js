@@ -44,6 +44,17 @@ const productSchema = new Schema(
     },
 )
 
+const capitalizeWords = (str) => {
+    return str.replace(/\b\w/g, (char) => char.toUpperCase())
+}
+
+productSchema.pre('save', function (next) {
+    if (this.isModified('productName') || this.isNew) {
+        this.productName = capitalizeWords(this.productName)
+    }
+    next()
+})
+
 const Product = mongoose.model('Product', productSchema)
 
 export default Product

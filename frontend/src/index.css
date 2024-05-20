@@ -16,21 +16,21 @@ body {
 }
 
 /* Scrollbar styles */
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
     width: 0px;
-}
+} */
 
 /* Track */
-::-webkit-scrollbar-track {
+/* ::-webkit-scrollbar-track {
     background: #a89c9c;
-}
+} */
 
 /* Handle */
-::-webkit-scrollbar-thumb {
-    background: #b51616;
-}
+/* ::-webkit-scrollbar-thumb {
+    background: #b51616; */
+/* } */
 
 /* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
+/* ::-webkit-scrollbar-thumb:hover {
     background: #ffffff;
-}
+} */

@@ -27,7 +27,7 @@ export const fetchProduct = asyncHandler(async (req, res) => {
         })
     } else {
         const page = parseInt(req.query.page) || 1
-        const limit = parseInt(req.query.limit) || 2
+        const limit = parseInt(req.query.limit) || 5
         const skip = (page - 1) * limit
 
         const query = {}
@@ -53,7 +53,7 @@ export const fetchProduct = asyncHandler(async (req, res) => {
 
 // * Show Latest Products
 export const showLatestProducts = asyncHandler(async (req, res) => {
-    const products = await Product.find().sort({createdAt: -1}).limit(8)
+    const products = await Product.find().sort({createdAt: -1}).limit(6)
 
     res.status(200).json(
         new ApiResponse(200, products, 'Latest Products fetched successfully'),

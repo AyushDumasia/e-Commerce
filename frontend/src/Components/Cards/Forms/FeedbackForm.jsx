@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import axios from 'axios'
 import {toast} from 'react-toastify'
 import Rating from 'react-rating-stars-component'
@@ -6,8 +6,6 @@ import {useDispatch, useSelector} from 'react-redux'
 import Avatar from 'react-avatar'
 import {useParams} from 'react-router-dom'
 import {setFeedbackCard} from '../../../redux/feedback/feedbackSlice'
-import {CiStar} from 'react-icons/ci'
-import {FaStar} from 'react-icons/fa'
 
 function FeedbackForm() {
     const {id} = useParams()
@@ -22,6 +20,11 @@ function FeedbackForm() {
 
     const handleFeedback = async (e) => {
         e.preventDefault()
+
+        if (rating === 0) {
+            return toast.error('Select a rating')
+        }
+
         try {
             const response = await axios.post(
                 '/api/feedback/createFeedback',
@@ -29,12 +32,10 @@ function FeedbackForm() {
                 {withCredentials: true},
             )
             if (response.status === 200) {
-                if (response.data.data.rating == 0) {
-                    return toast.error('Select rating')
-                }
-                setComment('')
                 toast.success(response.data.message)
                 setRating(0)
+                setComment('')
+
                 const feedbackResponse = await axios.get(
                     `/api/feedback/fetchFeedback/${id}`,
                     {withCredentials: true},

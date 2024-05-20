@@ -36,7 +36,6 @@ function CartCard() {
                 withCredentials: true,
             })
             fetchCartData()
-            // Show toast notification for quantity update
             toast.success('Quantity updated successfully')
         } catch (error) {
             toast.error(error.message)

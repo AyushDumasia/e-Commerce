@@ -1,8 +1,19 @@
 import React from 'react'
+import {useNavigate} from 'react-router-dom'
 
 const CategoryCard = ({category}) => {
+    const navigate = useNavigate()
+    const handleCategoryClick = (category) => {
+        navigate(`/explore/search/${category.name}`)
+    }
+
     return (
-        <div className="relative overflow-hidden rounded-lg shadow-md transition-transform duration-300 ease-in-out transform hover:scale-105">
+        <div
+            className="relative overflow-hidden rounded-lg shadow-md transition-transform duration-300 ease-in-out transform hover:scale-105"
+            onClick={() => {
+                handleCategoryClick(category)
+            }}
+        >
             <div className="relative">
                 <img
                     src={category.image}
