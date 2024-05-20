@@ -26,8 +26,8 @@ export default function ChildCard({item, showProduct}) {
         try {
             if (navigator.share) {
                 await navigator.share({
-                    title: showProduct.productName,
-                    text: showProduct.description,
+                    title: item.productName,
+                    text: item.description,
                     url: window.location.href,
                 })
             } else {

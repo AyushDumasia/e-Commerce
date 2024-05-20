@@ -112,12 +112,12 @@ function ProductCard() {
                             alt={showProductCard.productName}
                             className="w-full max-h-[500px] object-contain mb-4 rounded-lg"
                         />
-                        <button
+                        {/* <button
                             className="absolute top-0 right-3 mt-4 mr-4 rounded-full p-2 shadow-md text-white bg-[#00000045]"
                             onClick={handleShare}
                         >
                             <FaShare />{' '}
-                        </button>
+                        </button> */}
                     </div>
                     <div className="flex-1 pl-4 ">
                         <h2 className="text-2xl font-bold mb-4">
@@ -142,6 +142,12 @@ function ProductCard() {
                             </button>
                             <button className="text-white bg-green-500 border border-green-500 px-6 py-3 mr-4 rounded hover:bg-green-600">
                                 Buy Now
+                            </button>
+                            <button
+                                onClick={handleShare}
+                                className="bg-gray-300 p-4 rounded-sm"
+                            >
+                                <FaShare />
                             </button>
                         </div>
                     </div>

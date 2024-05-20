@@ -12,6 +12,7 @@ import userReducer from './user/userSlice.js'
 import merchantReducer from './merchant/merchantSlice.js'
 import profileSlice from './profile/profile.js'
 import adminPanel from './adminPanel/adminPanelSlice.js'
+import homeReducer from './home/homeSlice.js'
 
 const rootReducer = combineReducers({
     user: userReducer,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
     merchant: merchantReducer,
     cart: cartReducer,
     admin: adminReducer,
+    home: homeReducer,
     explore: exploreReducer,
     productCard: productCardReducer,
     feedback: feedbackReducer,

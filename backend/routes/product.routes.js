@@ -13,6 +13,7 @@ import {
     suggestions,
     search,
     sortProducts,
+    showLatestProducts,
 } from '../controllers/product.controller.js'
 import {validateMerchant} from '../middlewares/authMerchant.js'
 import {upload} from './../middlewares/multer.js'
@@ -29,6 +30,8 @@ router.post(
 
 // * Add to Cart
 router.get('/addToCart/:id', validateToken, addCart)
+
+router.get('/showLatestProducts', showLatestProducts)
 
 // * Remove from Cart
 router.get('/removeCart/:id', validateToken, RemoveCart)

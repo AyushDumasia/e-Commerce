@@ -1,73 +1,56 @@
-import React, {useState, useEffect} from 'react'
-import Slider from './Slider'
+import Footer from './../Cards/Home/Footer'
+import Hero from '../Cards/Home/Hero'
+import axios from 'axios'
+import CategoryCard from '../Cards/Home/CategroryCard'
+import {useState} from 'react'
 
-function Carousel({images}) {
-    const [currentIndex, setCurrentIndex] = useState(0)
-
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-            setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
-        }, 5000)
-
-        return () => clearInterval(intervalId)
-    }, [images])
-
-    return (
-        <div className="relative overflow-hidden mb-8">
-            <div
-                className="flex transition-transform duration-1000 ease-in-out w-full relative"
-                style={{
-                    transform: `translateX(-${
-                        currentIndex * (100 / images.length)
-                    }%)`,
-                    width: `${images.length * 100}%`,
-                }}
-            >
-                {/* Gradient overlay */}
-                <div
-                    className="absolute inset-0"
-                    style={{
-                        background:
-                            'linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,0) 50%,rgba(0,0,0,0.5) 100%)',
-                    }}
-                ></div>
-                {/* Images */}
-                {images.map((imageUrl, index) => (
-                    <div key={index} className="w-full h-[570px] object-cover">
-                        <img
-                            src={imageUrl}
-                            alt={`Slide ${index}`}
-                            className="w-full h-full object-cover"
-                        />
-                        {/* <div className="absolute inset-0 flex items-center justify-center">
-                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg">
-                                Shop Now
-                            </button>
-                        </div> */}
-                    </div>
-                ))}
-            </div>
-        </div>
-    )
-}
-
-function Home() {
-    const images = [
-        'https://res.cloudinary.com/dxrzskzvj/image/upload/v1713254811/n43hccvhjw53mcqt4y0s.jpg',
-        'https://res.cloudinary.com/dxrzskzvj/image/upload/v1713254805/cx3kes0kx1jvrgo8sdni.jpg',
-        'https://res.cloudinary.com/dxrzskzvj/image/upload/v1714574519/lugwtmo5frftmbl8arow.jpg',
-        'https://res.cloudinary.com/dxrzskzvj/image/upload/v1714574516/rv6akq6plnizkzhohgh4.jpg',
-        'https://res.cloudinary.com/dxrzskzvj/image/upload/v1713523173/pdllkh07cwyuwtpr6ma0.jpg',
-        'https://res.cloudinary.com/dxrzskzvj/image/upload/v1711635038/cld-sample-5.jpg',
-        'https://res.cloudinary.com/dxrzskzvj/image/upload/v1713250108/aitqbjz0bnt1gegui5ra.jpg',
-        'https://res.cloudinary.com/dxrzskzvj/image/upload/v1712997842/em0f9ulrxgy1lkfwvdau.jpg',
+function App() {
+    // const [product, setProduct] = useState([])
+    const categories = [
+        {
+            name: 'Electronics',
+            image: 'https://res.cloudinary.com/dxrzskzvj/image/upload/v1716201480/bwawpfasq7hvhabsizaf.jpg',
+        },
+        {
+            name: 'Clothing',
+            image: 'https://res.cloudinary.com/dxrzskzvj/image/upload/v1716201466/qfnj6wp0kok5gflk9pxu.jpg',
+        },
+        {
+            name: 'Books',
+            image: 'https://res.cloudinary.com/dxrzskzvj/image/upload/v1716201452/dl13d82vvwfk0hot5jig.jpg',
+        },
+        {
+            name: 'Toys',
+            image: 'https://res.cloudinary.com/dxrzskzvj/image/upload/v1716201448/lpg3ntnjtbjebuxso8zn.jpg',
+        },
+        // Add more categories as needed
     ]
 
+    // const fetchData = async () => {
+    //     try {
+    //         const response = await axios.get('/api/product/showLatestProducts')
+    //         console.log(response.data.data)
+    //         setProduct(response.data.data)
+    //     } catch (err) {
+    //         console.error(err)
+    //     }
+    // }
+
+    // useState(() => {
+    //     fetchData()
+    // })
+
     return (
-        <div className="container mx-auto p-5">
-            <Carousel images={images} />
+        <div className="bg-gray-100">
+            <Hero />
+            <div className="flex flex-wrap justify-center gap-6 p-6">
+                {categories.map((category, index) => (
+                    <CategoryCard key={index} category={category} />
+                ))}
+            </div>
+            <Footer />
         </div>
     )
 }
 
-export default Home
+export default App
