@@ -135,11 +135,11 @@ function SignInButton() {
                                     <GiConfirmed /> &nbsp; My Order
                                 </li>
                             </Link>
-                            <Link to="/address">
+                            {/* <Link to="/address">
                                 <li className="p-2 cursor-pointer flex items-center border-b">
                                     <FaLocationDot /> &nbsp; Saved Address
                                 </li>
-                            </Link>
+                            </Link> */}
                         </>
                     )}
                     {((user && !merchant) || !user?.username == 'admin') && (

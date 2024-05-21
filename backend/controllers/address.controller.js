@@ -36,6 +36,12 @@ export const mergeAddress = asyncHandler(async (req, res) => {
 export const fetchAddress = asyncHandler(async (req, res) => {
     const userId = req?.user.id
     const address = await User.findById(userId).populate('address')
+    console.log(address.address.length === 0)
+    if (!address.address || address.address.length === 0) {
+        return res
+            .status(202)
+            .json(new ApiResponse(202, null, 'No address available'))
+    }
     res.status(200).json(
         new ApiResponse(200, address.address, 'Address fetched successfully'),
     )

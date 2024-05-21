@@ -10,11 +10,23 @@ const Cart = () => {
 
     const orderBtn = async () => {
         try {
-            const res = await axios.post('/api/order/createOrder', null, {
+            const response = await axios.get('/api/product/cart', {
                 withCredentials: true,
             })
-            navigate('/order')
-            console.log(res)
+            const addressResponse = await axios.get(
+                '/api/address/fetchAddress',
+                {
+                    withCredentials: true,
+                },
+            )
+            const saveOrder = localStorage.setItem(
+                'order',
+                JSON.stringify(response.data.cartItems),
+            )
+            if (addressResponse.status === 202) {
+                return navigate('/createAddress')
+            }
+            return navigate('/address')
         } catch (err) {
             console.log(err)
         }

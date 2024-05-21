@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
-import {ToastContainer, toast} from 'react-toastify'
+import {toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Input from '../../Input/Input'
 import Button from '../../Button/Button'
@@ -58,9 +58,27 @@ function AddressForm() {
                 formData,
                 {withCredentials: true},
             )
+            const orders = localStorage.getItem('orders')
+            const addressResponse = await axios.post(
+                '/api/order/createOrder',
+                {address: response.data.data, orders: orders},
+                {
+                    withCredentials: true,
+                },
+            )
+            console.log(addressResponse)
             if (response.status === 200) {
-                toast.success('Address created successfully')
+                // toast.success('Address created successfully')
+                setFormData({
+                    address1: '',
+                    address2: '',
+                    pinCode: '',
+                    city: '',
+                    state: '',
+                    country: '',
+                })
             }
+            toast.success('Order submitted successfully')
         } catch (err) {
             toast.error('Please fill in all required fields')
         }
@@ -69,6 +87,8 @@ function AddressForm() {
     const Form = () => {
         return (
             <div className="flex flex-col justify-center items-start w-96 bg-white p-8 rounded-lg shadow-lg">
+                <CustomToastContainer />
+
                 <h1 className="font-bold text-3xl mb-6">Add Address</h1>
                 <form onSubmit={handleSubmit} className="w-full">
                     <Input
@@ -141,7 +161,7 @@ function AddressForm() {
     }
 
     return (
-        <div className="mt-20 flex justify-center items-center">
+        <div className="flex justify-center items-center">
             <CustomToastContainer />
             {Form()}
         </div>

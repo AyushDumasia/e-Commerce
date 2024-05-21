@@ -21,7 +21,6 @@ function CartCard() {
             const response = await axios.get('/api/product/cart', {
                 withCredentials: true,
             })
-            console.log(response.data)
             dispatch(setCart(response.data))
         } catch (error) {
             dispatch(setApiError(error))

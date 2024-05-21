@@ -10,37 +10,45 @@ import {v4 as uuidv4} from 'uuid'
 // * Create a new Product
 export const createOrder = asyncHandler(async (req, res) => {
     const userId = req.user.id
+    const {address} = req.body
+    console.log('address : ', address)
+    const [user, cartItems] = await Promise.all([
+        User.findById(userId),
+        Cart.find({userId: userId}).populate('productId'),
+    ])
+    console.log('cartItems : ', cartItems)
+    if (!user) {
+        return res.status(404).json({message: 'User not found'})
+    }
 
-    const user = await User.findOne({_id: userId})
-
-    const cartItems = await Cart.find({userId: userId})
+    if (cartItems.length === 0) {
+        return res.status(400).json({message: 'Cart is empty'})
+    }
 
     const orderId = uuidv4().substring(0, 6)
-
     const orders = []
 
     for (const cartItem of cartItems) {
-        const product = await Cart.findOne({
-            productId: cartItem.productId,
-        }).populate('productId')
-        let price = parseInt(product.productId.price) * cartItem.quantity
+        const product = cartItem.productId
+        const price =
+            (parseInt(product.price) + parseInt(product.price / 4)) *
+            cartItem.quantity
         const newOrder = new Order({
             orderId: orderId,
-            productId: cartItem.productId._id,
+            productId: product._id,
             userId: userId,
             price: price,
-            address: user.address[0] || null,
+            address: address?._id,
             status: 'Order Confirmed',
         })
-        const validOrder = await Order.find({cartId: cartItem._id})
 
         await newOrder.save()
+        await cartItem.deleteOne()
         orders.push(newOrder)
     }
 
     res.status(200).json(orders)
 })
-
 // * Fetch an Order for a specific User
 export const fetchSpecificOrder = asyncHandler(async (req, res) => {
     const userId = req.user.id

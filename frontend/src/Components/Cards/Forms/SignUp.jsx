@@ -71,6 +71,10 @@ function SignUp() {
             const response = await axios.post('/api/auth/signup', formData, {
                 withCredentials: true,
             })
+            const localUser = localStorage.setItem(
+                'user',
+                JSON.stringify(response.data),
+            )
             navigate('/')
             checkAuthentication()
         } catch (error) {

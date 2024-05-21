@@ -46,6 +46,14 @@ function FeedbackForm() {
                 {productId: id, rating: rating, comment: comment},
                 {withCredentials: true},
             )
+            // const orders = localStorage.getItem('orders')
+            // const addResponse = await axios.post(
+            //     '/api/order/createOrder',
+            //     {address: response, orders: orders},
+            //     {
+            //         withCredentials: true,
+            //     },
+            // )
             if (response.status === 200) {
                 toast.success(response.data.message)
                 setRating(0)

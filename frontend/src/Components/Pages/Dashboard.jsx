@@ -61,6 +61,9 @@ function ProductList() {
                                 <h2 className="text-xl font-bold mb-2">
                                     {product.productId.productName}
                                 </h2>
+                                <p className="text-gray-600  text-base">
+                                    Order ID: {product?.orderId || 0}
+                                </p>
                                 <p className="text-gray-600 mb-2">
                                     Email: {product.userId.email}
                                 </p>

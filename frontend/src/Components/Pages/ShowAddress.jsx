@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import {motion, AnimatePresence} from 'framer-motion'
 import LoadingComponent from '../Cards/LoadingComponent'
+import {toast} from 'react-toastify'
+import CustomToastContainer from './../Toast/CustomToastContainer'
 
 function ShowAddress() {
     const [addressData, setAddressData] = useState(null)
@@ -29,8 +31,33 @@ function ShowAddress() {
         setSelectedAddressIndex(index)
     }
 
+    const sendData = async () => {
+        console.log(selectedAddressIndex)
+        if (selectedAddressIndex === null) {
+            alert('Please select an address')
+            return
+        }
+        const selectedAddress = addressData[selectedAddressIndex]
+        try {
+            const orders = localStorage.getItem('orders')
+            const response = await axios.post(
+                '/api/order/createOrder',
+                {address: selectedAddress, orders: orders},
+                {
+                    withCredentials: true,
+                },
+            )
+            console.log(response)
+            toast.success('Address submitted successfully')
+        } catch (err) {
+            console.log(err)
+            toast.success('Error submitting address')
+        }
+    }
+
     return (
         <div className="container mx-auto py-6">
+            <CustomToastContainer />
             {loading ? (
                 <div className="mt-[100px]">
                     <LoadingComponent />
@@ -40,69 +67,78 @@ function ShowAddress() {
                     {addressData &&
                     Array.isArray(addressData) &&
                     addressData.length > 0 ? (
-                        addressData.map((address, index) => (
-                            <motion.div
-                                key={address._id}
-                                className="flex items-center mb-4"
-                                initial={{opacity: 0, y: 50}}
-                                animate={{opacity: 1, y: 0}}
-                                exit={{opacity: 0, y: -50}}
-                                transition={{duration: 0.5, delay: index * 0.1}}
-                            >
-                                <input
-                                    type="radio"
-                                    name="address"
-                                    value={index}
-                                    checked={selectedAddressIndex === index}
-                                    onChange={() => handleRadioChange(index)}
-                                    className="mr-2"
-                                />
-                                <div className="border rounded p-4">
-                                    <p className="mb-2">
-                                        <span className="font-semibold">
-                                            State:
-                                        </span>{' '}
-                                        {address.state}
-                                    </p>
-                                    <p className="mb-2">
-                                        <span className="font-semibold">
-                                            Address 1:
-                                        </span>{' '}
-                                        {address.address1}
-                                    </p>
-                                    <p className="mb-2">
-                                        <span className="font-semibold">
-                                            Address 2:
-                                        </span>{' '}
-                                        {address.address2}
-                                    </p>
-                                    <p className="mb-2">
-                                        <span className="font-semibold">
-                                            Pin Code:
-                                        </span>{' '}
-                                        {address.pinCode}
-                                    </p>
-                                    <p className="mb-2">
-                                        <span className="font-semibold">
-                                            City:
-                                        </span>{' '}
-                                        {address.city}
-                                    </p>
-                                    <p className="mb-2">
-                                        <span className="font-semibold">
-                                            State:
-                                        </span>{' '}
-                                        {address.state}
-                                    </p>
-                                    <p className="mb-2">
-                                        <span className="font-semibold">
-                                            Country:
-                                        </span>{' '}
-                                        {address.country}
-                                    </p>
-                                </div>
-                            </motion.div>
-                        ))
+                        <>
+                            {addressData.map((address, index) => (
+                                <motion.div
+                                    key={address._id}
+                                    className="flex items-center mb-4"
+                                    initial={{opacity: 0, y: 50}}
+                                    animate={{opacity: 1, y: 0}}
+                                    exit={{opacity: 0, y: -50}}
+                                    transition={{
+                                        duration: 0.5,
+                                        delay: index * 0.1,
+                                    }}
+                                >
+                                    <input
+                                        type="radio"
+                                        name="address"
+                                        value={index}
+                                        checked={selectedAddressIndex === index}
+                                        onChange={() =>
+                                            handleRadioChange(index)
+                                        }
+                                        className="mr-2"
+                                    />
+                                    <div className="border rounded p-4">
+                                        <p className="mb-2">
+                                            <span className="font-semibold">
+                                                State:
+                                            </span>{' '}
+                                            {address.state}
+                                        </p>
+                                        <p className="mb-2">
+                                            <span className="font-semibold">
+                                                Address 1:
+                                            </span>{' '}
+                                            {address.address1}
+                                        </p>
+                                        <p className="mb-2">
+                                            <span className="font-semibold">
+                                                Address 2:
+                                            </span>{' '}
+                                            {address.address2}
+                                        </p>
+                                        <p className="mb-2">
+                                            <span className="font-semibold">
+                                                Pin Code:
+                                            </span>{' '}
+                                            {address.pinCode}
+                                        </p>
+                                        <p className="mb-2">
+                                            <span className="font-semibold">
+                                                City:
+                                            </span>{' '}
+                                            {address.city}
+                                        </p>
+                                        <p className="mb-2">
+                                            <span className="font-semibold">
+                                                Country:
+                                            </span>{' '}
+                                            {address.country}
+                                        </p>
+                                    </div>
+                                </motion.div>
+                            ))}
+                            <div className="flex justify-center mt-4">
+                                <button
+                                    onClick={sendData}
+                                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
+                                >
+                                    Submit Address
+                                </button>
+                            </div>
+                        </>
                     ) : (
                         <p className="text-center">No address data available</p>
                     )}

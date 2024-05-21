@@ -39,6 +39,10 @@ function LogIn() {
             const response = await axios.get('/api/merchant/currentMerchant', {
                 withCredentials: true,
             })
+            const localUser = localStorage.setItem(
+                'merchant',
+                JSON.stringify(response.data.licenseId),
+            )
             dispatch(setMerchant(response?.data?.licenseId))
         } catch (err) {
             dispatch(setErrMerchant(err.message))

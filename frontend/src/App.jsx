@@ -3,6 +3,7 @@ import {Outlet, useLocation} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import Navbar from './Components/Navbar/Navbar'
 import {setUser} from './redux/user/userSlice'
+import {setMerchant} from './redux/merchant/merchantSlice'
 
 function ScrollToTop() {
     const {pathname} = useLocation()
@@ -21,6 +22,11 @@ function App() {
     useEffect(() => {
         const localUser = JSON.parse(localStorage.getItem('user'))
         if (localUser) {
+            if (localStorage.getItem('merchant')) {
+                dispatch(
+                    setMerchant(JSON.parse(localStorage.getItem('merchant'))),
+                )
+            }
             dispatch(setUser(localUser))
         } else {
             dispatch(setUser(null))
@@ -28,7 +34,13 @@ function App() {
         console.log('User after : ', user)
     }, [dispatch])
 
-    const hideNavbarPaths = ['/login', '/signup', '/createProduct']
+    const hideNavbarPaths = [
+        '/login',
+        '/signup',
+        '/createProduct',
+        '/createAddress',
+        '/becomeMerchant',
+    ]
     const shouldHideNavbar = hideNavbarPaths.includes(pathname)
 
     return (
