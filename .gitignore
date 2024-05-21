@@ -8,4 +8,4 @@ node_modules/
 
 backend/public
 frontend/vite.config.js
-frontend/vercel.js
+# frontend/vercel.js
