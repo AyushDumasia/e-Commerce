@@ -85,7 +85,7 @@ function SpecialCard() {
                             className="object-cover w-full h-[50%]"
                         />
                         <div className="flex justify-center max-w-full overflow-y-hidden p-2 mt-2 gap-2">
-                            {product.images.slice(1, 5).map((image, index) => (
+                            {product.images.slice(0, 5).map((image, index) => (
                                 <img
                                     key={index}
                                     src={image}
@@ -94,10 +94,13 @@ function SpecialCard() {
                                     onClick={() =>
                                         handleImageHover(productIndex, image)
                                     }
+                                    loading="lazy"
                                 />
                             ))}
                         </div>
-                        <div className="border-b border-l border-r rounded-[8px] rounded-t-none border-gray-300">
+                        <div
+                        // className="border-b-2 border-l-2 border-r-2 rounded-[8px] rounded-t-none border-gray-300"
+                        >
                             <div className="mt-2 flex flex-col h-[100px] justify-evenly px-5">
                                 <h1 className="text-xl">{shortTitle}</h1>
                                 <h1 className="text-xl font-semibold">
