@@ -29,6 +29,19 @@ function CreateProduct() {
         }))
     }
 
+    const categoryOptions = [
+        'Electronics',
+        'Home & Kitchen',
+        'Books',
+        'Health & Personal Care',
+        'Beauty & Personal Care',
+        'Toys & Games',
+        'Sports & Outdoors',
+        'Food',
+        'Pickles and Papad',
+        'Clothing & Accessories',
+    ]
+
     const handleFileChange = (e) => {
         const files = e.target.files
         setSelectedFiles([...selectedFiles, ...files])
@@ -92,7 +105,12 @@ function CreateProduct() {
                     />
                 </div>
             )}
-            <div className="flex flex-col justify-center items-start  bg-white p-8 rounded-lg shadow-lg overflow-y-hidden">
+            <img
+                src="https://res.cloudinary.com/dxrzskzvj/image/upload/v1716264548/yn6pfxgbv9rhse49ayy0.svg"
+                alt="form pic"
+                className="w-[600px] mr-[150px]"
+            />
+            <div className="flex flex-col justify-center items-start  p-8 rounded-lg overflow-y-hidden">
                 <div className="flex mb-3  w-[100%] justify-between">
                     <h2 className="text-2xl  justify-between font-semibold">
                         Create Product
@@ -142,7 +160,7 @@ function CreateProduct() {
                         Stock :
                     </label>
                     <Input
-                        type={'text'}
+                        type={'number'}
                         name={'stock'}
                         placeholder={'Stock'}
                         value={formData.stock}
@@ -166,28 +184,11 @@ function CreateProduct() {
                             <option value="" disabled hidden>
                                 Select Category
                             </option>
-                            <option value="Electronics">Electronics</option>
-                            <option value="Home & Kitchen">
-                                Home & Kitchen
-                            </option>
-                            <option value="Books">Books</option>
-                            <option value="Health & Personal Care">
-                                Health & Personal Care
-                            </option>
-                            <option value="Beauty & Personal Care">
-                                Beauty & Personal Care
-                            </option>
-                            <option value="Toys & Games">Toys & Games</option>
-                            <option value="Sports & Outdoors">
-                                Sports & Outdoors
-                            </option>
-                            <option value="Food">Food</option>
-                            <option value="pickles and Papad">
-                                Pickles and Papad
-                            </option>
-                            <option value="Clothing & Accessories">
-                                Clothing & Accessories
-                            </option>
+                            {categoryOptions.map((category) => (
+                                <option key={category} value={category}>
+                                    {category}
+                                </option>
+                            ))}
                         </select>
                     </div>
                     <label

@@ -17,14 +17,26 @@ import {
 } from '../controllers/product.controller.js'
 import {validateMerchant} from '../middlewares/authMerchant.js'
 import {upload} from './../middlewares/multer.js'
+import {validate} from '../middlewares/zodValidator.js'
+import validProduct from '../validators/productValidators.js'
 const router = express.Router()
 
 // * Create Product
 router.post(
     '/createProduct',
+    (req, res, next) => {
+        console.log('Request body before middleware:', req.body)
+        next()
+    },
     validateToken,
     validateMerchant,
     upload?.array('images', 10),
+    (req, res, next) => {
+        req.body.userId = req.user.id
+        req.body.images = req.files
+        next()
+    },
+    validate(validProduct),
     createProduct,
 )
 
