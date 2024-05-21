@@ -51,6 +51,10 @@ function LogIn() {
                 withCredentials: true,
             })
             dispatch(setUser(response.data))
+            const localUser = localStorage.setItem(
+                'user',
+                JSON.stringify(response.data),
+            )
             fetchMerchantData()
         } catch (error) {
             dispatch(setApiError(null))

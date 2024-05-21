@@ -67,7 +67,7 @@ function FeedbackForm() {
 
     return (
         <div>
-            <div className="mt-8">
+            <div className="mt-8 p-6">
                 <h1 className="text-2xl font-semibold">Rate this product</h1>
                 <form className="flex flex-col mt-4" onSubmit={handleFeedback}>
                     <div className="mb-4">

@@ -24,10 +24,6 @@ const router = express.Router()
 // * Create Product
 router.post(
     '/createProduct',
-    (req, res, next) => {
-        console.log('Request body before middleware:', req.body)
-        next()
-    },
     validateToken,
     validateMerchant,
     upload?.array('images', 10),

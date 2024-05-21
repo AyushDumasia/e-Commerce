@@ -33,7 +33,7 @@ function FeedbackCard() {
     }
 
     return (
-        <div className="mt-8">
+        <div className="mt-8 p-4">
             <h2 className="text-3xl mt-8 mb-4 text-center font-semibold text-gray-800">
                 Customer Feedback
             </h2>

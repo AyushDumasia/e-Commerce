@@ -42,7 +42,10 @@ function SignInButton() {
             await axios.get('/api/auth/logout', {
                 withCredentials: true,
             })
+            const delUser = localStorage.removeItem('user')
+            console.log(delUser)
             dispatch(setUser(null))
+            navigate('/')
         } catch (err) {
             console.log(err)
         }

@@ -106,7 +106,7 @@ function CreateProduct() {
                 </div>
             )}
             <img
-                src="https://res.cloudinary.com/dxrzskzvj/image/upload/v1716264548/yn6pfxgbv9rhse49ayy0.svg"
+                src="https://res.cloudinary.com/dxrzskzvj/image/upload/v1716275353/p8f1zwfykz5o6aps7wlc.svg"
                 alt="form pic"
                 className="w-[600px] mr-[150px]"
             />

@@ -37,7 +37,7 @@ function ProductList() {
     }
 
     return (
-        <div className="p-5">
+        <div className="p-8">
             {loading ? (
                 <div className="flex justify-center items-center mt-[200px]">
                     <LoadingComponent />
