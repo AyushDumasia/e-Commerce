@@ -49,8 +49,14 @@ function ShowAddress() {
                     withCredentials: true,
                 },
             )
+            const payment = await axios.get('/api/payment/checkOut', {
+                withCredentials: true,
+            })
+            console.log(payment)
+            const link = payment.data.session.url
+            console.log(link)
             toast.success('Address submitted successfully')
-            navigate('/order')
+            window.location.href = link
         } catch (err) {
             console.log(err)
             toast.error('Error submitting address')

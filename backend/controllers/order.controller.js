@@ -11,12 +11,10 @@ import {v4 as uuidv4} from 'uuid'
 export const createOrder = asyncHandler(async (req, res) => {
     const userId = req.user.id
     const {address} = req.body
-    console.log('address : ', address)
     const [user, cartItems] = await Promise.all([
         User.findById(userId),
         Cart.find({userId: userId}).populate('productId'),
     ])
-    console.log('cartItems : ', cartItems)
     if (!user) {
         return res.status(404).json({message: 'User not found'})
     }

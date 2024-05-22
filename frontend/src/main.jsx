@@ -33,6 +33,7 @@ import AdminPage from './Components/Pages/AdminPage.jsx'
 import AuthProvider from './Components/auth/AuthProvider'
 import Profile from './Components/Pages/Profile'
 import AuthAdmin from './Components/auth/AuthAdmin.jsx'
+import SuccessPayment from './Components/Pages/SuccessPayment.jsx'
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -57,6 +58,7 @@ const router = createBrowserRouter(
             </Route>
             <Route path="showProduct/:id" element={<ShowInfo />} />
             <Route path="explore/search/:searchTerm" element={<SearchPage />} />
+            <Route path="checkout-success" element={<SuccessPayment />} />
             <Route
                 path="explore/search/:searchTerm/:option"
                 element={<FilterPage />}

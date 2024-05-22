@@ -40,6 +40,7 @@ function App() {
         '/createProduct',
         '/createAddress',
         '/becomeMerchant',
+        '/checkout-success',
     ]
     const shouldHideNavbar = hideNavbarPaths.includes(pathname)
 

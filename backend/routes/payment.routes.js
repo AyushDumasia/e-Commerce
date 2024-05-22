@@ -1,7 +1,8 @@
 import express from 'express'
-import {checkOut} from '../controllers/payment.controller'
+import {checkOut} from '../controllers/payment.controller.js'
+import validateToken from './../middlewares/validateUser.js'
 const router = express.Router()
 
-router.route('/checkOut', checkOut)
+router.get('/checkOut', validateToken, checkOut)
 
 export default router
