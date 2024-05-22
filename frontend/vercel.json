@@ -1,8 +1,13 @@
 {
-    "rewrites": [
+    "version": 2,
+    "routes": [
         {
-            "source": "/api/(.*)",
-            "destination": "https://e-commerce-ayushdumasias-projects.vercel.app"
+            "src": "/api/product/(.*)",
+            "dest": "https://e-commerce-zlme.onrender.com/api/product/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/"
         }
     ]
 }
