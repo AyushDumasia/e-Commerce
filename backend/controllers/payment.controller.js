@@ -53,8 +53,8 @@ export const checkOut = asyncHandler(async (req, res) => {
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         mode: 'payment',
-        success_url: `${process.env.CORS_ORIGIN}/checkout-success`,
-        cancel_url: `${process.env.CORS_ORIGIN}/checkout-cancel`,
+        success_url: `${process.env.CLIENT_SIDE}/checkout-success`,
+        cancel_url: `${process.env.CLIENT_SIDE}/checkout-cancel`,
         line_items: lineItems,
         shipping_address_collection: {
             allowed_countries: [
