@@ -207,8 +207,8 @@ export const getCart = asyncHandler(async (req, res) => {
     const cartItems = await Cart.find({userId: findUser._id}).populate(
         'productId',
     )
-    if (!cartItems) {
-        return res.status(404).json({message: 'Cart items not found'})
+    if (!cartItems || cartItems.length === 0) {
+        return res.status(202).json({message: 'Cart items not found'})
     }
 
     let totalPrice = 0
@@ -301,8 +301,8 @@ export const search = asyncHandler(async (req, res) => {
     })
     if (!results || results.length === 0) {
         return res
-            .status(201)
-            .json(new ApiResponse(201, results, 'There are no products'))
+            .status(202)
+            .json(new ApiResponse(202, results, 'There are no products'))
     }
     return res.status(201).json(new ApiResponse(201, results, 'Products find'))
 })

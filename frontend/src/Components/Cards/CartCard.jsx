@@ -21,6 +21,7 @@ function CartCard() {
             const response = await axios.get('/api/product/cart', {
                 withCredentials: true,
             })
+            console.log(response.data)
             dispatch(setCart(response.data))
         } catch (error) {
             dispatch(setApiError(error))
@@ -52,12 +53,12 @@ function CartCard() {
                         width={50}
                     />
                 </div>
-            ) : !cart || cart.cartItems.length === 0 ? (
-                <p className="text-center text-gray-600 my-4">
+            ) : cart?.message === 'Cart items not found' ? (
+                <p className="text-center flex items-center justify-center h-[200px]  text-gray-600 my-4">
                     Nothing in cart
                 </p>
             ) : (
-                cart.cartItems.map((item) => (
+                cart?.cartItems.map((item) => (
                     <div
                         key={item._id}
                         className="rounded-lg p-4 flex items-center justify-between bg-white mb-4"

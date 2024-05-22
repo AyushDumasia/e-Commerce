@@ -3,6 +3,7 @@ import {useSelector} from 'react-redux'
 import CustomToastContainer from './../Toast/CustomToastContainer'
 import axios from 'axios'
 import CartCard from './../Cards/CartCard'
+import {toast} from 'react-toastify'
 
 const Cart = () => {
     const {cart} = useSelector((state) => state.cart)
@@ -13,6 +14,9 @@ const Cart = () => {
             const response = await axios.get('/api/product/cart', {
                 withCredentials: true,
             })
+            if (response.status === 202) {
+                return toast.error('Nothing in Cart')
+            }
             const addressResponse = await axios.get(
                 '/api/address/fetchAddress',
                 {
@@ -46,10 +50,10 @@ const Cart = () => {
                 <div className="flex self-start flex-col">
                     <div className="mb-[20px] flex flex-col gap-2">
                         <h2>Subtotal : &nbsp;&nbsp;₹{cart?.totalPrice ?? 0}</h2>
-                        <h2>Quantity({cart?.count})</h2>
+                        <h2>Quantity({cart?.count ?? 0})</h2>
                         <h2>
                             Shipping Charges: &nbsp;&nbsp;₹
-                            {cart?.totalPrice / 4}
+                            {cart?.totalPrice / 4 || 0}
                         </h2>
                     </div>
                 </div>

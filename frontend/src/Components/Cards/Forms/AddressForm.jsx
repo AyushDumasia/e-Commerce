@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import axios from 'axios'
-import {Link} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Input from '../../Input/Input'
@@ -8,6 +8,7 @@ import Button from '../../Button/Button'
 import CustomToastContainer from '../../Toast/CustomToastContainer'
 
 function AddressForm() {
+    const navigate = useNavigate()
     const [formData, setFormData] = useState({
         address1: '',
         address2: '',
@@ -30,7 +31,7 @@ function AddressForm() {
     const validateForm = () => {
         const errors = {}
         if (!formData.address1) {
-            toast.address1 = 'Address Line 1 is required'
+            errors.address1 = 'Address Line 1 is required'
         }
         if (!formData.pinCode) {
             errors.pinCode = 'Pin Code is required'
@@ -52,6 +53,11 @@ function AddressForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        if (!validateForm()) {
+            toast.error('Please fill in all required fields')
+            return
+        }
+
         try {
             const response = await axios.post(
                 '/api/address/createAddress',
@@ -59,111 +65,90 @@ function AddressForm() {
                 {withCredentials: true},
             )
             const orders = localStorage.getItem('orders')
-            const addressResponse = await axios.post(
+            await axios.post(
                 '/api/order/createOrder',
                 {address: response.data.data, orders: orders},
-                {
-                    withCredentials: true,
-                },
+                {withCredentials: true},
             )
-            console.log(addressResponse)
-            if (response.status === 200) {
-                // toast.success('Address created successfully')
-                setFormData({
-                    address1: '',
-                    address2: '',
-                    pinCode: '',
-                    city: '',
-                    state: '',
-                    country: '',
-                })
-            }
             toast.success('Order submitted successfully')
+            navigate('/order')
         } catch (err) {
-            toast.error('Please fill in all required fields')
+            toast.error('Error submitting order')
         }
     }
 
-    const Form = () => {
-        return (
-            <div className="flex flex-col justify-center items-start w-96 bg-white p-8 rounded-lg shadow-lg">
-                <CustomToastContainer />
-
-                <h1 className="font-bold text-3xl mb-6">Add Address</h1>
-                <form onSubmit={handleSubmit} className="w-full">
-                    <Input
-                        label={'Address Line 1'}
-                        type={'text'}
-                        placeholder={'Address Line 1'}
-                        name={'address1'}
-                        value={formData.address1}
-                        handler={handleData}
-                        error={errors.address1}
-                        className="mb-4"
-                    />
-                    <Input
-                        label={'Address Line 2'}
-                        type={'text'}
-                        placeholder={'Address Line 2'}
-                        name={'address2'}
-                        value={formData.address2}
-                        handler={handleData}
-                        className="mb-4"
-                    />
-                    <Input
-                        label={'Pin Code'}
-                        type={'number'}
-                        placeholder={'Pin Code'}
-                        name={'pinCode'}
-                        value={formData.pinCode}
-                        handler={handleData}
-                        error={errors.pinCode}
-                        className="mb-4"
-                    />
-                    <Input
-                        label={'City'}
-                        type={'text'}
-                        placeholder={'City'}
-                        name={'city'}
-                        value={formData.city}
-                        handler={handleData}
-                        error={errors.city}
-                        className="mb-4"
-                    />
-                    <Input
-                        label={'State'}
-                        type={'text'}
-                        placeholder={'State'}
-                        name={'state'}
-                        value={formData.state}
-                        handler={handleData}
-                        error={errors.state}
-                        className="mb-4"
-                    />
-                    <Input
-                        label={'Country'}
-                        type={'text'}
-                        placeholder={'Country'}
-                        name={'country'}
-                        value={formData.country}
-                        handler={handleData}
-                        error={errors.country}
-                        className="mb-4"
-                    />
-                    <Button
-                        text={'Submit'}
-                        onClick={validateForm}
-                        className="w-full"
-                    />
-                </form>
-            </div>
-        )
-    }
-
     return (
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center min-h-screen bg-gray-100">
             <CustomToastContainer />
-            {Form()}
+            <div className="flex w-[90%] justify-between items-center rounded-lg overflow-hidden ">
+                <div className="hidden md:block md:w-1/2">
+                    <img
+                        src="https://res.cloudinary.com/dxrzskzvj/image/upload/v1716357918/coewsg6bwrje701xbp5o.svg"
+                        alt="Illustration"
+                        className="object-cover"
+                    />
+                </div>
+                <div className="w-full ml-[100px] md:w-1/2 p-8">
+                    <h1 className="text-3xl font-bold mb-6">Add Address</h1>
+                    <form onSubmit={handleSubmit} className="w-[70%]">
+                        <Input
+                            label="Address Line 1"
+                            type="text"
+                            placeholder="Address Line 1"
+                            name="address1"
+                            value={formData.address1}
+                            handler={handleData}
+                            error={errors.address1}
+                            className="mb-4"
+                        />
+                        <Input
+                            label="Address Line 2"
+                            type="text"
+                            placeholder="Address Line 2"
+                            name="address2"
+                            value={formData.address2}
+                            handler={handleData}
+                        />
+                        <Input
+                            label="Pin Code"
+                            type="number"
+                            placeholder="Pin Code"
+                            name="pinCode"
+                            value={formData.pinCode}
+                            handler={handleData}
+                            error={errors.pinCode}
+                        />
+                        <Input
+                            label="City"
+                            type="text"
+                            placeholder="City"
+                            name="city"
+                            value={formData.city}
+                            handler={handleData}
+                            error={errors.city}
+                        />
+                        <Input
+                            label="State"
+                            type="text"
+                            placeholder="State"
+                            name="state"
+                            value={formData.state}
+                            handler={handleData}
+                            error={errors.state}
+                        />
+                        <Input
+                            label="Country"
+                            type="text"
+                            placeholder="Country"
+                            name="country"
+                            value={formData.country}
+                            handler={handleData}
+                            error={errors.country}
+                        />
+                        <Button text="Submit" />
+                    </form>
+                </div>
+            </div>
         </div>
     )
 }

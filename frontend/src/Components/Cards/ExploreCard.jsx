@@ -63,7 +63,7 @@ function ExploreCard() {
 
     return (
         <div className="overflow-hidden flex">
-            <div className="sticky top-0">
+            <div className="sticky top-0 h-screen">
                 <VerticalBar />
             </div>
             <AnimatePresence>

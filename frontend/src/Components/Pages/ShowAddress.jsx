@@ -4,8 +4,10 @@ import {motion, AnimatePresence} from 'framer-motion'
 import LoadingComponent from '../Cards/LoadingComponent'
 import {toast} from 'react-toastify'
 import CustomToastContainer from './../Toast/CustomToastContainer'
+import {useNavigate} from 'react-router'
 
 function ShowAddress() {
+    const navigate = useNavigate()
     const [addressData, setAddressData] = useState(null)
     const [selectedAddressIndex, setSelectedAddressIndex] = useState(null)
     const [loading, setLoading] = useState(true)
@@ -34,7 +36,7 @@ function ShowAddress() {
     const sendData = async () => {
         console.log(selectedAddressIndex)
         if (selectedAddressIndex === null) {
-            alert('Please select an address')
+            toast.error('Please select an address')
             return
         }
         const selectedAddress = addressData[selectedAddressIndex]
@@ -47,11 +49,11 @@ function ShowAddress() {
                     withCredentials: true,
                 },
             )
-            console.log(response)
             toast.success('Address submitted successfully')
+            navigate('/order')
         } catch (err) {
             console.log(err)
-            toast.success('Error submitting address')
+            toast.error('Error submitting address')
         }
     }
 
@@ -90,7 +92,7 @@ function ShowAddress() {
                                         }
                                         className="mr-2"
                                     />
-                                    <div className="border rounded p-4">
+                                    <div className="rounded p-4">
                                         <p className="mb-2">
                                             <span className="font-semibold">
                                                 State:
@@ -136,6 +138,12 @@ function ShowAddress() {
                                     className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
                                 >
                                     Submit Address
+                                </button>
+                                <button
+                                    onClick={() => navigate('/createAddress')}
+                                    className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700 ml-4"
+                                >
+                                    Add New Address
                                 </button>
                             </div>
                         </>
