@@ -1,13 +1,8 @@
 {
-    "version": 2,
-    "routes": [
+    "rewrites": [
         {
-            "src": "/api/product/(.*)",
-            "dest": "https://e-commerce-zlme.onrender.com/api/product/$1"
-        },
-        {
-            "src": "/(.*)",
-            "dest": "/"
+            "source": "/api/(.*)",
+            "destination": "https://e-commerce-zlme.onrender.com/api/$1"
         }
     ]
 }
