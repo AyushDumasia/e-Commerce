@@ -1,8 +1,8 @@
 {
     "rewrites": [
         {
-            "source": "/api/(.*)",
-            "destination": "https://e-commerce-zlme.onrender.com/api/$1"
+            "source": "/(.*)",
+            "destination": "/"
         }
     ]
 }
