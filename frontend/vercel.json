@@ -1,4 +1,14 @@
 {
+    "routes": [
+        {
+            "src": "/",
+            "dest": "/"
+        },
+        {
+            "src": "/api/(.*)",
+            "dest": "/"
+        }
+    ],
     "rewrites": [
         {
             "source": "/api/(.*)",
