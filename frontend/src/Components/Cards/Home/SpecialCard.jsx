@@ -83,12 +83,12 @@ function SpecialCard() {
                 return (
                     <div
                         key={product._id}
-                        className="border border-gray-100  h-[560px] bg-white rounded-[8px] w-[400px]"
+                        className=" border-gray-100 h-[560px] bg-white rounded-[8px] w-[400px]"
                     >
                         <img
                             src={currentImages[productIndex]}
                             alt={product.name}
-                            className="object-cover w-full h-[50%]"
+                            className="object-cover w-full h-[50%] rounded-[8px] rounded-b-none"
                         />
                         <div className="flex justify-center max-w-full overflow-x-hidden p-2 mt-2 gap-2">
                             {product.images.slice(0, 4).map((image, index) => (
@@ -96,7 +96,7 @@ function SpecialCard() {
                                     key={index}
                                     src={image}
                                     alt={product.name}
-                                    className="border-blue-600 border-[1px] w-[120px] object-cover rounded-[3px] h-[60px]"
+                                    className="border-[1px] w-[120px] object-cover rounded-[3px] h-[60px] "
                                     onClick={() =>
                                         handleImageHover(productIndex, image)
                                     }

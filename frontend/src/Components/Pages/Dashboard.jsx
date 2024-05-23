@@ -58,8 +58,11 @@ function ProductList() {
 
                         <div className="p-4 flex-1">
                             <div>
-                                <h2 className="text-xl font-bold mb-2">
-                                    {product.productId.productName}
+                                <h2 className="text-xl font-bold mb-2 sm:text-[18px]">
+                                    {product.productId.productName
+                                        .split(' ')
+                                        .slice(0, 7)
+                                        .join(' ')}
                                 </h2>
                                 <p className="text-gray-600  text-base">
                                     Order ID: {product?.orderId || 0}

@@ -110,7 +110,7 @@ function CreateProduct() {
                 alt="form pic"
                 className="w-[600px]  mr-[150px] hidden lg:block"
             />
-            <div className="flex flex-col justify-center items-start sm:p-0 lg:p-8 rounded-lg overflow-y-hidden">
+            <div className="flex flex-col justify-center items-start  lg:p-8 rounded-lg overflow-y-hidden lg:bg-transparent sm:bg-white sm:p-6">
                 <div className="flex mb-3  w-[100%] justify-between">
                     <h2 className="text-2xl  justify-between font-semibold">
                         Create Product

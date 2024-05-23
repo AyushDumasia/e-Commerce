@@ -101,11 +101,10 @@ function SignUp() {
                         backgroundPosition: 'center',
                         backgroundSize: 'contain',
                         backgroundRepeat: 'no-repeat',
-                        backgroundColor: 'white',
                         backgroundImage: `url("https://res.cloudinary.com/dxrzskzvj/image/upload/v1715968502/ypm6dg1vuogboygjkdmt.svg")`,
                     }}
                 ></div>
-                <div className="w-full lg:w-[40%] p-10 bg-white relative">
+                <div className="w-full lg:w-[40%] p-10  relative sm:w-[70%]  sm:mx-auto">
                     {loading && (
                         <div className="absolute inset-0 flex justify-center items-center bg-opacity-75 z-10">
                             <ClipLoader

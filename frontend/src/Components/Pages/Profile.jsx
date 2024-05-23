@@ -59,9 +59,11 @@ function Profile() {
                         <div>
                             {profile?.merchant ? (
                                 <>
-                                    <h3 className="text-lg flex font-semibold mb-2">
-                                        Merchant ID:&nbsp;&nbsp;
-                                        <p className="text-gray-700 font-medium">
+                                    <h3 className="text-lg flex flex-wrap font-semibold mb-2 sm:text-base sm:mb-1">
+                                        <span className="mr-1">
+                                            Merchant ID:&nbsp;&nbsp;
+                                        </span>
+                                        <p className="text-gray-700 font-medium sm:text-base">
                                             {profile?.merchant?.licenseId}
                                         </p>
                                     </h3>

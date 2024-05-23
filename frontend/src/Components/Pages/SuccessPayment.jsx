@@ -28,7 +28,7 @@ const SuccessPayment = () => {
             <img
                 src="https://res.cloudinary.com/dxrzskzvj/image/upload/v1716377097/oloqtuumuegu2qdzsjpu.svg"
                 alt="Logo"
-                className="mb-8 w-[500px]"
+                className="mb-8 w-[450px]"
             />
             <h1 className="text-3xl font-bold mb-4">Payment Successful!</h1>
             <p className="text-lg text-gray-700">

@@ -114,7 +114,7 @@ function LogIn() {
                         backgroundImage: `url("https://res.cloudinary.com/dxrzskzvj/image/upload/v1715968109/mmhwlbsmptyvmubyfcr6.svg")`,
                     }}
                 ></div>
-                <div className="w-full lg:w-1/2 px-10 py-16 relative">
+                <div className="w-full lg:w-1/2 px-10 py-16 relative sm:w-[80%]  sm:mx-auto">
                     {loading && (
                         <div className="absolute inset-0 flex justify-center items-center bg-white bg-opacity-75 z-10">
                             <Loading type="spin" color="#000" />

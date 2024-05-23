@@ -110,7 +110,7 @@ function SignInButton() {
                 />
             </div>
             <div
-                className={`absolute font-normal p-[15px]  top-[50px] left-[-120px] bg-[#ffffff] shadow rounded-lg w-[250px] h-auto transition-opacity duration-300 ${
+                className={`absolute font-normal p-[15px]  top-[60px] left-[-130px] bg-[#ffffff] shadow rounded-lg w-[250px] h-auto transition-opacity duration-300 ${
                     showMenu ? 'opacity-100' : 'opacity-0 pointer-events-none'
                 }`}
             >
@@ -135,11 +135,6 @@ function SignInButton() {
                                     <GiConfirmed /> &nbsp; My Order
                                 </li>
                             </Link>
-                            {/* <Link to="/address">
-                                <li className="p-2 cursor-pointer flex items-center border-b">
-                                    <FaLocationDot /> &nbsp; Saved Address
-                                </li>
-                            </Link> */}
                         </>
                     )}
                     {((user && !merchant) || !user?.username == 'admin') && (
