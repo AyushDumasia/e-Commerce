@@ -68,7 +68,7 @@ function SpecialCard() {
     }
 
     return (
-        <div className="m-4 flex flex-wrap justify-center gap-6">
+        <div className="m-4 flex flex-wrap justify-center gap-6 sm:hidden lg:flex">
             {products.map((product, productIndex) => {
                 const title = product.productName || ''
                 const shortTitle = capitalizeWords(

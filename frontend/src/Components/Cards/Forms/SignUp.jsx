@@ -4,7 +4,6 @@ import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import {css} from '@emotion/react'
 import {ClipLoader} from 'react-spinners'
-
 import Button from '../../Button/Button'
 import Password from '../../Password/Password'
 import Input from '../../Input/Input'
@@ -93,11 +92,11 @@ function SignUp() {
     `
 
     return (
-        <div className="flex justify-center items-center min-h-screen ">
+        <div className="flex justify-center items-center min-h-screen relative">
             <ToastContainer />
-            <div className="flex w-[75%] justify-center max-w-screen-xl relative">
+            <div className="flex flex-col lg:flex-row w-full lg:w-[70%] max-w-screen-xl">
                 <div
-                    className="lg:block lg:w-[70%] bg-cover bg-center"
+                    className="hidden lg:block lg:w-[70%] bg-cover bg-center"
                     style={{
                         backgroundPosition: 'center',
                         backgroundSize: 'contain',
@@ -106,9 +105,9 @@ function SignUp() {
                         backgroundImage: `url("https://res.cloudinary.com/dxrzskzvj/image/upload/v1715968502/ypm6dg1vuogboygjkdmt.svg")`,
                     }}
                 ></div>
-                <div className="bg-white lg:w-[40%] p-10 relative">
+                <div className="w-full lg:w-[40%] p-10 bg-white relative">
                     {loading && (
-                        <div className="absolute inset-0 flex justify-center items-center  bg-opacity-75 z-10">
+                        <div className="absolute inset-0 flex justify-center items-center bg-opacity-75 z-10">
                             <ClipLoader
                                 color="#000"
                                 loading={loading}

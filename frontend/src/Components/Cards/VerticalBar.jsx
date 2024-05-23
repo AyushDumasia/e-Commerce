@@ -22,7 +22,7 @@ function VerticalBar() {
     }
 
     return (
-        <div className="bg-white sticky top-0 rounded-lg top-0 h-auto  p-3 mr-2 w-[13rem] min-w-[13rem] flex flex-col">
+        <div className="bg-white sticky sm:hidden rounded-lg top-0 h-auto  p-3 mr-2 w-[13rem] min-w-[13rem] flex flex-col lg:block">
             <h2 className="text-lg font-semibold mt-4 mb-2 flex items-center">
                 <BiSolidCategory />
                 &nbsp; Categories

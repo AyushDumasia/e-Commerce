@@ -94,8 +94,12 @@ function ExploreCard() {
                                 <div className="flex flex-col justify-between">
                                     <div>
                                         <h1 className="text-[20px] font-medium mb-2">
-                                            {product.productName}
+                                            {product.productName
+                                                .split(' ')
+                                                .slice(0, 7)
+                                                .join(' ')}
                                         </h1>
+
                                         <p className="text-gray-800 font-semibold">
                                             ₹{product.price}
                                         </p>

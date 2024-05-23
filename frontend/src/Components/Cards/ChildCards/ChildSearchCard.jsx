@@ -43,7 +43,7 @@ export default function ChildCard({item, showProduct}) {
         <div
             onClick={() => showProduct(item._id)}
             key={item._id}
-            className="border rounded-lg overflow-hidden cursor-pointer relative group transition duration-300 transform hover:scale-105"
+            className="border rounded-lg overflow-hidden cursor-pointer relative group transition duration-300 transform hover:scale-105 sm:w-[40%] sm:justify-center xl:w-[30%]"
         >
             <img
                 src={item.images[0]}

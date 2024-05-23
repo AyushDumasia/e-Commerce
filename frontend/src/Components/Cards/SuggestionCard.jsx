@@ -38,7 +38,7 @@ function SuggestionCard() {
     }
 
     return (
-        <div className="grid   p-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid  p-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:hidden lg:flex">
             {suggestedCard?.length > 0 ? (
                 suggestedCard.map((item) => (
                     <ChildCard

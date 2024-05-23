@@ -42,7 +42,7 @@ function Home() {
                 </div>
             </div>
 
-            <h1 className="text-3xl font-bold text-center my-6">
+            <h1 className="text-3xl font-bold text-center my-6 sm:hidden lg:block">
                 Trending Products
             </h1>
             <SpecialCard />

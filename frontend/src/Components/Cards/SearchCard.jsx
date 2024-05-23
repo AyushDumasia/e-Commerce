@@ -42,7 +42,7 @@ function SearchCard() {
     }, [searchTerm])
 
     return (
-        <div className="container mx-auto p-3">
+        <div className="container mx-auto p-3 ">
             <CustomToastContainer />
             {loading ? (
                 <LoadingComponent />
@@ -51,7 +51,7 @@ function SearchCard() {
                     <h1 className="text-xl font-semibold mb-8">
                         Search Results for '{searchTerm}'
                     </h1>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:flex sm:flex-wrap sm:justify-center xl:justify-start">
                         {searchCard.length === 0 ? (
                             <p>No results found for '{searchTerm}'</p>
                         ) : (

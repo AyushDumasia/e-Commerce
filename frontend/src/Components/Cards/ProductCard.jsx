@@ -92,7 +92,7 @@ function ProductCard() {
                 </div>
             ) : showProductCard ? (
                 <div className="flex flex-col md:flex-row ">
-                    <div className="flex flex-col items-center mr-4">
+                    <div className="flex flex-col items-center mr-4 lg:block  sm:hidden">
                         {sidebarImages.map((image, index) => (
                             <img
                                 key={index}

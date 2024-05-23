@@ -104,18 +104,17 @@ function LogIn() {
     return (
         <div className="flex justify-center items-center min-h-screen relative">
             <ToastContainer />
-            <div className="flex w-[70%] max-w-screen-xl">
+            <div className="flex flex-col lg:flex-row w-full lg:w-[70%] max-w-screen-xl">
                 <div
-                    className="lg:block lg:w-[70%] bg-cover bg-center"
+                    className="hidden lg:block lg:w-[70%] bg-cover bg-center"
                     style={{
                         backgroundPosition: 'center',
                         backgroundSize: 'contain',
                         backgroundRepeat: 'no-repeat',
-                        // backgroundImage: `url(${images[imageIndex]})`,
                         backgroundImage: `url("https://res.cloudinary.com/dxrzskzvj/image/upload/v1715968109/mmhwlbsmptyvmubyfcr6.svg")`,
                     }}
                 ></div>
-                <div className="lg:w-1/2 px-10 py-16 relative">
+                <div className="w-full lg:w-1/2 px-10 py-16 relative">
                     {loading && (
                         <div className="absolute inset-0 flex justify-center items-center bg-white bg-opacity-75 z-10">
                             <Loading type="spin" color="#000" />

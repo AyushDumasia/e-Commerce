@@ -108,9 +108,9 @@ function CreateProduct() {
             <img
                 src="https://res.cloudinary.com/dxrzskzvj/image/upload/v1716275353/p8f1zwfykz5o6aps7wlc.svg"
                 alt="form pic"
-                className="w-[600px] mr-[150px]"
+                className="w-[600px]  mr-[150px] hidden lg:block"
             />
-            <div className="flex flex-col justify-center items-start  p-8 rounded-lg overflow-y-hidden">
+            <div className="flex flex-col justify-center items-start sm:p-0 lg:p-8 rounded-lg overflow-y-hidden">
                 <div className="flex mb-3  w-[100%] justify-between">
                     <h2 className="text-2xl  justify-between font-semibold">
                         Create Product

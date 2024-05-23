@@ -22,7 +22,7 @@ function FilterCard() {
     }
 
     return (
-        <div className=" rounded-lg">
+        <div className=" rounded-lg sm:hidden xl:block">
             <label
                 htmlFor="filterDropdown"
                 className="block text-sm font-medium text-gray-700 mb-2"
