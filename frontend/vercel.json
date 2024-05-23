@@ -2,15 +2,11 @@
     "rewrites": [
         {
             "source": "/api/(.*)",
-            "destination": "/index.html"
-        }
-    ]
-}
-{
-    "rewrites": [
+            "destination": "/api/$1"
+        },
         {
-            "source": "/api/(.*)",
-            "destination": "https://e-commerce-zlme.onrender.com/api/$1"
+            "source": "/(.*)",
+            "destination": "/index.html"
         }
     ]
 }
