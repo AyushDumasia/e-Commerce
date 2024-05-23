@@ -28,6 +28,12 @@ function SpecialCard() {
                 `/api/product/addToCart/${productId}`,
                 {withCredentials: true},
             )
+            if (response.status === 203) {
+                return toast.error('Product is out of stock')
+            }
+            // if (response.status === 204) {
+            //     return toast.warn('Product has less stock')
+            // }
             if (response.status === 200) {
                 toast.success(response.data.message)
             }
@@ -84,8 +90,8 @@ function SpecialCard() {
                             alt={product.name}
                             className="object-cover w-full h-[50%]"
                         />
-                        <div className="flex justify-center max-w-full overflow-y-hidden p-2 mt-2 gap-2">
-                            {product.images.slice(0, 5).map((image, index) => (
+                        <div className="flex justify-center max-w-full overflow-x-hidden p-2 mt-2 gap-2">
+                            {product.images.slice(0, 4).map((image, index) => (
                                 <img
                                     key={index}
                                     src={image}

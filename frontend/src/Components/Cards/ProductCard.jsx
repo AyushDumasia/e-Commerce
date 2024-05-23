@@ -70,6 +70,9 @@ function ProductCard() {
                     withCredentials: true,
                 },
             )
+            if (response.status === 203) {
+                return toast.error('Product is out of stock')
+            }
             if (response.status === 200) {
                 toast.success(response.data.message)
             }

@@ -114,19 +114,23 @@ export const addCart = asyncHandler(async (req, res) => {
     const quantity = req.body.quantity || 1
 
     const currUser = await User.findOne({email: user.email})
-    if (!currUser) {
-        return res.status(404).json({message: 'User not found'})
-    }
 
     const product = await Product.findOne({_id: productId})
     if (!product) {
         return res.status(404).json({message: 'Product not found'})
     }
+    if (product.stock <= 1) {
+        return res.status(203).json({message: 'All products sell out'})
+    }
+
+    if (product.stock < 5) {
+        res.status(204).json({message: 'Product has less stock'})
+    }
 
     let cartItem = await Cart.findOne({productId, userId: user.id})
-
+    console.log(cartItem)
     if (cartItem) {
-        // const availableQuantity = -cartItem.quantity
+        const availableQuantity = -cartItem.quantity
         if (quantity <= product.stock) {
             cartItem.quantity += quantity
         } else {

@@ -32,10 +32,16 @@ function CartCard() {
 
     const updateQuantity = async (id, action) => {
         try {
-            await axios.get(`/api/product/${action}/${id}`, {
+            const response = await axios.get(`/api/product/${action}/${id}`, {
                 withCredentials: true,
             })
             fetchCartData()
+            if (response.status === 203) {
+                return toast.error('Product is out of stock')
+            }
+            if (response.status === 204) {
+                return toast.warn('Product has less stock')
+            }
             toast.success('Quantity updated successfully')
         } catch (error) {
             toast.error(error.message)
