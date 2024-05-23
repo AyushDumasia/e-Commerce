@@ -34,7 +34,6 @@ function ShowAddress() {
     }
 
     const sendData = async () => {
-        console.log(selectedAddressIndex)
         if (selectedAddressIndex === null) {
             toast.error('Please select an address')
             return

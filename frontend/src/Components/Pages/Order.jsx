@@ -11,7 +11,6 @@ function Order() {
             const response = await axios.get('/api/order/fetchOrder', {
                 withCredentials: true,
             })
-            console.log(response.data.order)
             setOrders(response.data.order)
         } catch (err) {
             console.log(err)
@@ -58,8 +57,9 @@ function Order() {
                             <p>
                                 Date:{' '}
                                 <span className="font-medium text-gray-900">
+                                    {/* {order.createdAt} */}
                                     {new Date(
-                                        order.address.createdAt,
+                                        order.createdAt,
                                     ).toLocaleDateString('en-US', {
                                         day: 'numeric',
                                         month: 'long',

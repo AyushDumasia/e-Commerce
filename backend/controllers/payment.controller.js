@@ -3,7 +3,6 @@ import {asyncHandler} from './../utils/asyncHandler.js'
 import User from './../models/user.schema.js'
 import Order from './../models/order.schema.js'
 import Payment from './../models/payment.schema.js'
-import mongoose from 'mongoose'
 
 export const checkOut = asyncHandler(async (req, res) => {
     const userId = req?.user.id
@@ -14,6 +13,7 @@ export const checkOut = asyncHandler(async (req, res) => {
         .sort({createdAt: -1})
         .populate('productId')
         .populate('userId')
+        .populate('address')
 
     if (!recentOrder) {
         return res.status(404).json({

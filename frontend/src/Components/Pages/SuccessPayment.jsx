@@ -1,9 +1,28 @@
 // PaymentSuccess.js
-import React from 'react'
+import React, {useEffect} from 'react'
 import {useNavigate} from 'react-router'
+import axios from 'axios'
 
 const SuccessPayment = () => {
     const navigate = useNavigate()
+
+    const sendData = async () => {
+        const address = localStorage.getItem('address')
+        const order = localStorage.getItem('orders')
+
+        const response = await axios.post(
+            '/api/order/createOrder',
+            {address: address, orders: order},
+            {
+                withCredentials: true,
+            },
+        )
+    }
+
+    // useEffect(() => {
+    //     sendData()
+    // }, [])
+
     return (
         <div className="flex flex-col items-center justify-center h-screen">
             <img
