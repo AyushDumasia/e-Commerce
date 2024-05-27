@@ -4,7 +4,6 @@ const validUser = z.object({
     username: z
         .string()
         .trim()
-        .min(5, 'Username must be at least 5 characters long')
         .max(200, 'Username must be at most 200 characters long'),
     email: z
         .string()
