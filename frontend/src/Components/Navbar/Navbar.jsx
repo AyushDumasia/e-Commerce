@@ -13,7 +13,7 @@ function Navbar() {
                     </Link>
                 </div>
 
-                <div className="flex items-center w-[400px] ml-3 sm:hidden">
+                <div className="flex items-center w-[400px] ml-3">
                     <SearchBar />
                 </div>
 
