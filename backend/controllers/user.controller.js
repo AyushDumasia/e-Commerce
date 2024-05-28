@@ -111,8 +111,11 @@ export const logIn = asyncHandler(async (req, res) => {
     }
     countUser()
 
+    const hundredYearsInMilliseconds = 100 * 365.25 * 24 * 60 * 60 * 1000
+
     res.cookie('userCookie', accessToken, {
         httpOnly: true,
+        maxAge: hundredYearsInMilliseconds,
     })
         .status(200)
         .json({user, accessToken})

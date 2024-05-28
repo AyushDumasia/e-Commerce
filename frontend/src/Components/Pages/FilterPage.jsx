@@ -50,7 +50,7 @@ export default function FilterPage() {
                         <h1 className="text-xl font-semibold mb-8">
                             Search Results for "{searchTerm}"
                         </h1>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:flex sm:flex-wrap sm:justify-center xl:justify-start">
                             {searchCard !== null &&
                                 searchCard.map((item) => (
                                     <ChildCard

@@ -23,10 +23,11 @@ const orderSchema = new Schema(
         address: {
             type: Schema.Types.ObjectId,
             ref: 'Address',
-            // required: true,
         },
         status: {
-            type: String,
+            type: Boolean,
+            enum: [true, false],
+            default: false,
         },
     },
     {

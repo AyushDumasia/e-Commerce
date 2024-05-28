@@ -37,7 +37,6 @@ export const createOrder = asyncHandler(async (req, res) => {
             userId: userId,
             price: price,
             address: address?._id,
-            status: 'Order Confirmed',
         })
 
         await newOrder.save()

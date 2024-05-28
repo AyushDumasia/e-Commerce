@@ -3,6 +3,9 @@ const Schema = mongoose.Schema
 
 const paymentSchema = new Schema(
     {
+        sessionId: {
+            type: String,
+        },
         orderId: {
             type: String,
             // type: Schema.Types.ObjectId,
