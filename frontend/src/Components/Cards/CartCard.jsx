@@ -71,7 +71,7 @@ function CartCard() {
                     >
                         <div className="flex items-center ">
                             <img
-                                src={item.productId?.images[0]}
+                                src={item?.productId?.images[0]}
                                 alt={item.productId.productName}
                                 className="w-36 h-36 object-cover rounded mr-4"
                             />
