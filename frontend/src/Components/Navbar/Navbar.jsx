@@ -13,7 +13,7 @@ function Navbar() {
                     </Link>
                 </div>
 
-                <div className="flex items-center w-[400px] ml-3">
+                <div className="flex items-center border-black rounded-md w-[500px] ml-3">
                     <SearchBar />
                 </div>
 

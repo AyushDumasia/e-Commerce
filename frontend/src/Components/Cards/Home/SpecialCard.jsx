@@ -113,7 +113,7 @@ function SpecialCard() {
                         >
                             <div className="mt-2 flex flex-col h-[100px] justify-evenly px-5">
                                 <h1 className="text-xl">{shortTitle}</h1>
-                                <h1 className="text-xl font-semibold">
+                                <h1 className="text-[1rem] font-semibold">
                                     ₹{product.price}
                                 </h1>
                                 <div className="mt-1">

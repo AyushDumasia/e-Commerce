@@ -87,14 +87,22 @@ function ProductCard() {
         setCurrentImage(image)
     }
 
+    const capitalizeWords = (str) => {
+        return str.replace(/\b\w/g, (char) => char.toUpperCase())
+    }
+
+    const truncateName = (name) => {
+        return capitalizeWords(name.split(' ').slice(0, 10).join(' '))
+    }
+
     return (
-        <div className="p-4  rounded-sm">
+        <div className="p-6 bg-white">
             {loading ? (
                 <div className="mt-[100px] overflow-x-hidden ml-[50px] w-[100%]">
                     <LoadingComponent />
                 </div>
             ) : showProductCard ? (
-                <div className="flex flex-col md:flex-row ">
+                <div className=" flex flex-col md:flex-row ">
                     <div className="flex flex-col items-center mr-4 lg:block  sm:hidden">
                         {sidebarImages.map((image, index) => (
                             <img
@@ -125,9 +133,9 @@ function ProductCard() {
                     </div>
                     <div className="flex-1 pl-4 ">
                         <h2 className="text-2xl font-bold mb-2">
-                            {showProductCard.productName}
+                            {truncateName(showProductCard.productName)}
                         </h2>
-                        <div className="flex  items-center">
+                        <div className="flex  items-center my-4">
                             <RatingCard value={showProductCard} size={22} />
                             &nbsp;
                             <span>({showProductCard.rating.toFixed(1)})</span>
@@ -136,15 +144,15 @@ function ProductCard() {
                         {/* <p className="text-xl mb-4">
                             {showProductCard.category}
                         </p> */}
-                        <p className="text-[1rem] mb-4">
+                        <p className="text-[1rem] text-zinc-600 mb-4">
                             {showProductCard.description}
                         </p>
                         <p className="text-lg  mb-2">
-                            ₹{showProductCard.price}
+                            ₹{showProductCard?.price}
                         </p>
                         <p className="text-[1rem] text-gray-400  mb-4">
                             Imported Fees Deposit and Shipping Changes included
-                            : ₹{showProductCard.price / 4}
+                            : ₹{(showProductCard?.price / 4) | 0}
                         </p>
                         <div className="flex  items-center">
                             <button

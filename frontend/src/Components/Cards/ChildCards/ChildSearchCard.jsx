@@ -5,6 +5,7 @@ import {IoMdShareAlt} from 'react-icons/io'
 import axios from 'axios'
 import {toast} from 'react-toastify'
 import {IoCartOutline} from 'react-icons/io5'
+import RatingCard from './RatingCard'
 
 export default function ChildCard({item, showProduct}) {
     const addToCart = async (productId) => {
@@ -41,15 +42,21 @@ export default function ChildCard({item, showProduct}) {
             toast.error('Error sharing product')
         }
     }
+    const capitalizeWords = (str) => {
+        return str.replace(/\b\w/g, (char) => char.toUpperCase())
+    }
+    const shortTitle = capitalizeWords(
+        item.productName.split(' ').slice(0, 5).join(' '),
+    )
 
     return (
         <div
             onClick={() => showProduct(item._id)}
             key={item._id}
-            className="border rounded-lg overflow-hidden cursor-pointer relative group transition duration-300 transform hover:scale-105 sm:w-[40%] sm:justify-center xl:w-[30%]"
+            className="  bg-white  rounded-lg overflow-hidden cursor-pointer relative group transition duration-300 transform hover:scale-105 sm:w-[40%] sm:justify-center xl:w-[30%]"
         >
             <div
-                className="w-full h-48 "
+                className="w-full h-[200px]  "
                 style={{
                     backgroundImage: `url(${item?.images[0]})`,
                     backgroundSize: 'contain',
@@ -68,7 +75,7 @@ export default function ChildCard({item, showProduct}) {
                 <IoCartOutline />
             </button>
             <button
-                className="absolute top-4 right-4 bg-[#e6e6ee2d] text-[white] px-3 py-2 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-[white] text-xl transition duration-300 opacity-0 group-hover:opacity-100"
+                className="absolute top-4 right-4 bg-[#e6e6ee2d] text-black px-3 py-2 rounded-full flex items-center justify-center hover:bg-blue-600 hover:text-[white] text-xl transition duration-300 opacity-0 group-hover:opacity-100"
                 onClick={(e) => {
                     e.stopPropagation()
                     handleShare(item)
@@ -78,17 +85,19 @@ export default function ChildCard({item, showProduct}) {
             </button>
             <div className="p-4 flex flex-col flex-grow">
                 <h2 className="text-[15px] font-[600] mb-2">
-                    {item.productName}
+                    {/* {item.productName} */}
+                    {shortTitle}
                 </h2>
-                <p className="text-gray-700">₹{item.price}</p>
-                <Rating
+                <p className="text-gray-700 text-[1rem]">₹{item.price}</p>
+                {/* <Rating
                     value={item.rating}
                     count={5}
                     size={25}
-                    activeColor="orange"
+                    activeColor="yellow"
                     edit={false}
                     isHalf={true}
-                />
+                /> */}
+                <RatingCard value={item} size={18} />
             </div>
         </div>
     )

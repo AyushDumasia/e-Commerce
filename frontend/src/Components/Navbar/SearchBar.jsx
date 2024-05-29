@@ -31,7 +31,7 @@ function SearchBar() {
     }
 
     return (
-        <div className="flex bg-[red] items-center border border-gray-300 rounded-md overflow-hidden">
+        <div className="flex w-full items-center border border-gray-300 rounded-md overflow-hidden">
             <button
                 onClick={handleSubmit}
                 className="flex items-center justify-center bg-white text-gray-600 focus:outline-none px-3 h-10"
@@ -46,7 +46,7 @@ function SearchBar() {
                 onKeyPress={handleSubmit}
                 type="text"
                 placeholder="Search..."
-                className="border-none w-[700px] focus:outline-none flex-grow px-4 py-2"
+                className="border-none focus:outline-none flex-grow px-4 py-2"
             />
             {search ? (
                 <button
