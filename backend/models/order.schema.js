@@ -25,10 +25,7 @@ const orderSchema = new Schema(
             ref: 'Address',
         },
         status: {
-            type: Boolean,
-            enum: [true, false],
-            default: false,
-        },
+            type: String,
     },
     {
         timestamps: true,
