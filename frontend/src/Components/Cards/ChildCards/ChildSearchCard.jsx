@@ -48,11 +48,15 @@ export default function ChildCard({item, showProduct}) {
             key={item._id}
             className="border rounded-lg overflow-hidden cursor-pointer relative group transition duration-300 transform hover:scale-105 sm:w-[40%] sm:justify-center xl:w-[30%]"
         >
-            <img
-                src={item.images[0]}
-                alt={item.productName}
-                className="w-full h-48 object-cover"
-            />
+            <div
+                className="w-full h-48 "
+                style={{
+                    backgroundImage: `url(${item?.images[0]})`,
+                    backgroundSize: 'contain',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                }}
+            ></div>
             <div className="absolute inset-0  opacity-0 group-hover:opacity-60 transition-opacity"></div>
             <button
                 onClick={(e) => {

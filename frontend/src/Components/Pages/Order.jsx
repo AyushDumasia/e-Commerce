@@ -11,6 +11,7 @@ function Order() {
             const response = await axios.get('/api/order/fetchOrder', {
                 withCredentials: true,
             })
+            console.log(response)
             setOrders(response.data.order)
         } catch (err) {
             console.log(err)

@@ -70,8 +70,12 @@ function AddressForm() {
                 {address: response.data.data, orders: orders},
                 {withCredentials: true},
             )
+            const payment = await axios.get('/api/payment/checkOut', {
+                withCredentials: true,
+            })
+            const link = payment.data.session.url
             toast.success('Order submitted successfully')
-            navigate('/order')
+            window.location.href = link
         } catch (err) {
             toast.error('Error submitting order')
         }

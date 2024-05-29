@@ -101,7 +101,7 @@ function ProductCard() {
                                 key={index}
                                 src={image}
                                 alt={`Preview ${index + 1}`}
-                                className={`w-16 h-16 mb-2 cursor-pointer border border-gray-300  ${
+                                className={`w-16 h-16 mb-2 cursor-pointer object-contain  ${
                                     currentImage === image
                                         ? 'border-blue-500 border-[2px]'
                                         : ''

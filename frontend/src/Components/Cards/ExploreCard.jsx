@@ -87,12 +87,15 @@ function ExploreCard() {
                                 }}
                                 onClick={() => showProduct(product._id)}
                             >
-                                <img
-                                    src={product?.images[0]}
-                                    alt={product.productName}
-                                    className="w-[250px] h-[250px] object-cover rounded-md mr-4"
-                                    loading="lazy"
-                                />
+                                <div
+                                    className="image-container w-[250px] h-auto rounded-md mr-4"
+                                    style={{
+                                        backgroundImage: `url(${product?.images[0]})`,
+                                        backgroundSize: 'contain',
+                                        backgroundPosition: 'center',
+                                        backgroundRepeat: 'no-repeat',
+                                    }}
+                                ></div>
 
                                 <div className="flex flex-col justify-between">
                                     <div>

@@ -53,7 +53,7 @@ export const fetchProduct = asyncHandler(async (req, res) => {
 
 // * Show Latest Products
 export const showLatestProducts = asyncHandler(async (req, res) => {
-    const products = await Product.find().sort({createdAt: -1}).limit(6)
+    const products = await Product.find().sort({createdAt: -1}).limit(9)
 
     res.status(200).json(
         new ApiResponse(200, products, 'Latest Products fetched successfully'),
