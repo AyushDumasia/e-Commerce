@@ -26,6 +26,7 @@ const orderSchema = new Schema(
         },
         status: {
             type: String,
+        }
     },
     {
         timestamps: true,
